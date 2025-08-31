@@ -1,0 +1,7 @@
+#pragma once
+#ifndef MY_STATIC_LIBRARY_INCLUDES
+#define MY_STATIC_LIBRARY_INCLUDES
+
+#include "./includes/common_functions.hpp"
+
+#endif  // MY_STATIC_LIBRARY_INCLUDES
