@@ -6,11 +6,16 @@ project(cpp_my_isda_cds LANGUAGES C CXX)
 # set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Handle C standard (skip for AppleClang)
-if(NOT "${CMAKE_C_COMPILER_ID}" STREQUAL "AppleClang")
+# Handle C standard for Clang vs. other compilers
+if("${CMAKE_C_COMPILER_ID}" MATCHES "Clang|AppleClang")
+    # Clang: Use GNU89 (C89 + extensions)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu89")
+else()
+    # Other compilers (e.g., GCC): Use C89
     set(CMAKE_C_STANDARD 89)
     set(CMAKE_C_STANDARD_REQUIRED ON)
 endif()
+
 
 # Set C++ standard to C++98 (for C++ sources)
 set(CMAKE_CXX_STANDARD 98)
@@ -41,4 +46,4 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 add_subdirectory(libraries)
-# add_subdirectory(apps)
+add_subdirectory(apps)
