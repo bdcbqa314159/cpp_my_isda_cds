@@ -1,11 +1,11 @@
 project(isda_lib)
 
 set(includes includes/)
-# set(sources src/my_isda_cds_lib.cpp)
-file(GLOB SOURCES "src/*.c" "src/*.cpp")
+set(sources src/new_code/badday.cpp)
+# file(GLOB SOURCES "src/*.c" "src/*.cpp")
 
 
-add_library(${PROJECT_NAME} SHARED ${SOURCES})
+add_library(${PROJECT_NAME} SHARED ${sources})
 target_include_directories(${PROJECT_NAME} PUBLIC ${includes} ${common_includes_dir})
 
 target_compile_options(${PROJECT_NAME} PRIVATE
