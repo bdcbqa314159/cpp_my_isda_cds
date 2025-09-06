@@ -1,4 +1,5 @@
 #pragma once
+#include "old_code/cgeneral.h"
 #ifndef CGENERAL_HPP
 #define CGENERAL_HPP
 
@@ -6,10 +7,9 @@
 #include <stdlib.h>
 
 #include "code_cpp.hpp"
-// #include "exported.hpp"
 
 EXPORT_C {
-  typedef int TBoolean;
+  using TBoolean = int;
 
 #ifndef TRUE
 #define TRUE 1

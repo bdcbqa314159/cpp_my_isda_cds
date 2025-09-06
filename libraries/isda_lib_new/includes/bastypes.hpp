@@ -10,59 +10,62 @@
 #include "mdydate.hpp"  // IWYU pragma: keep
 
 EXPORT_C {
-  /*t
-   */
-  typedef struct {
+  struct TRatePt {
     TDate fDate;
     double fRate;
-  } TRatePt;
+  };
 
   /*t
    * Holds a zero-coupon rate curve or clean spread curve.
    */
-  typedef struct _TCurve {
+
+  struct TCurve {
     int fNumItems;      /* Number of TRatePts in fArray */
     TRatePt *fArray;    /* Dates & rates */
     TDate fBaseDate;    /* Discount date */
     double fBasis;      /* Number compounding periods / year */
     long fDayCountConv; /* How the year fraction is computed */
-  } TCurve;
+  };
 
   /*t
    * Defines a single fixed cashflow.
    */
-  typedef struct {
+
+  struct TCashFlow {
     TDate fDate;
     double fAmount;
-  } TCashFlow;
+  };
 
   /*t
    * CashFlowList is a list of CashFlows (date and amount)
    */
-  typedef struct {
+
+  struct TCashFlowList {
     int fNumItems;
     TCashFlow *fArray;
-  } TCashFlowList;
+  };
 
   /*t
    * Defines dates required for one floating payment.
    */
-  typedef struct _TCouponDates {
+
+  struct TCouponDates {
     TDate resetDate;
     TDate payDate;
     TDate accrueStartDate;
     TDate accrueEndDate;
     TDate exDividendDate;
-  } TCouponDates;
+  };
 
   /*t
    * Defines dates needed for a list of floating payments.
    */
-  typedef struct _TCouponDateList {
+
+  struct TCouponDateList {
     int fNumItems;
     TCouponDates *fArray;
     long stubLocation;
-  } TCouponDateList;
+  };
 
   /*t
    * TFloatRate defines a floating rate. For example, a 5 year semi-annual
@@ -83,7 +86,8 @@ EXPORT_C {
    * the holiday file and bad day convention in the TDateAdjIntvl are used to
    * adjust dates used to compute the rate.
    */
-  typedef struct _TFloatRate {
+
+  struct TFloatRate {
     TDateInterval matInterval; /* Time to maturity of rate */
     TDateInterval payInterval; /* Time between payments for rate */
     long dayCountConv;         /* Day count convention of rate */
@@ -91,7 +95,7 @@ EXPORT_C {
     double spread;             /* Added to the rate  */
     long rateType;             /* JPMCDS_SIMPLE_BASIS, JPMCDS_ANNUAL_BASIS*/
     double weight;             /* Multiplied by rate */
-  } TFloatRate;
+  };
 }
 
 #endif  // BASTYPES_HPP
