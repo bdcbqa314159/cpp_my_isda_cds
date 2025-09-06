@@ -1,7 +1,9 @@
 project(isda_lib)
 
 set(includes ./includes/)
-set(sources src/new_code/badday.cpp)
+set(sources src/new_code/badday.cpp
+            src/new_code/bsearch.cpp
+)
 # file(GLOB SOURCES "src/*.c" "src/*.cpp")
 
 

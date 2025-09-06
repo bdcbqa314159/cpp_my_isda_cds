@@ -87,9 +87,9 @@ EXPORT_C {
   ** Assumes that the array is in sequence.
   ***************************************************************************
   */
-  int JpmcdsBSearchLongFast(double xDesired, /* (I) X for which Y is desired */
-                            long *x,         /* (I) Ordered Array of X values */
-                            int skip,        /* (I) # bytes between X values */
+  int JpmcdsBSearchLongFast(long xDesired, /* (I) X for which Y is desired */
+                            long *x,       /* (I) Ordered Array of X values */
+                            int skip,      /* (I) # bytes between X values */
                             /* (=sizeof(X_TYPE) if x is an array)*/
                             int N,        /* (I) # elements of X array */
                             int *lo_idx,  /* (O) Low index for X array */
