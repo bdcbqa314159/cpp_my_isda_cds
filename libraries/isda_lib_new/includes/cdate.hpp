@@ -5,8 +5,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "busday.hpp"
-#include "cgeneral.hpp"  // IWYU pragma: keep
+// #include "cgeneral.hpp"  // IWYU pragma: keep
+#include "mainDefinitions.hpp"
 
 EXPORT_C {
   using TDate = long;
@@ -17,17 +17,6 @@ EXPORT_C {
    */
 
   using TDateTime = double;
-
-  /* Date constants */
-  const int MAX_DAYS_PER_MONTH = 31;
-  const int JPMCDS_MONTHS_PER_YEAR = 12;
-  const int JPMCDS_MONTHS_PER_SEMI = 6;
-  const int JPMCDS_MONTHS_PER_QUARTER = 3;
-  const int JPMCDS_DAYS_PER_WEEK = 7;
-  const int JPMCDS_DAYS_PER_YEAR = 365;
-  const double JPMCDS_YEARS_PER_DAY = 1. / 365;
-  const int JPMCDS_DAYS_PER_LUNAR_MONTH = 28;
-  const int JPMCDS_WEEKS_PER_LUNAR_MONTH = 4;
 
   /* --------- Definition of a date interval -------------------- */
   struct TDateInterval {
@@ -84,14 +73,6 @@ struct TDateList {
   int fNumItems;
   TDate *fArray;
 };
-
-/*t
- * TDateAdjIntvl is a time interval expressed in business
- * or calendar days or week days.
- */
-const int JPMCDS_DATE_ADJ_TYPE_CALENDAR = 0;
-const int JPMCDS_DATE_ADJ_TYPE_BUSINESS = 1;
-const int JPMCDS_DATE_ADJ_TYPE_WEEKDAY = 2;
 
 /*t
 ** TDateAdjIntvl is a holiday-adjusted date interval.

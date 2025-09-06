@@ -3,21 +3,12 @@
 #define BUSDAY_HPP
 
 #include "buscache.hpp"
-#include "cdate.hpp"
+// #include "cdate.hpp"
 #include "cgeneral.hpp"  // IWYU pragma: keep
 #include "code_cpp.hpp"
 #include "exported.hpp"
 
 EXPORT_C {
-  /* Bad Day conventions
-   */
-#define JPMCDS_BAD_DAY_FOLLOW ((long)'F')   /* Use following good day */
-#define JPMCDS_BAD_DAY_PREVIOUS ((long)'P') /* Use previous good day */
-#define JPMCDS_BAD_DAY_NONE ((long)'N')     /* Dont check for bad days */
-#define JPMCDS_BAD_DAY_MODIFIED ((long)'M') /* Try following, then previous*/
-                                            /* if a month boundary is crossed.*/
-#define JPMCDS_NUM_BAD_DAY_CONVS 4          /* # bad day conventions */
-
 /*m
 ***************************************************************************
 ** Determines whether a day is at a weekend as given by the weekends flag.
