@@ -5,30 +5,32 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "busday.hpp"
 #include "cgeneral.hpp"  // IWYU pragma: keep
 
 EXPORT_C {
-  typedef long int TDate;
+  using TDate = long;
 
   /*
    * (double) value of TDate with any fractional part
    * being a fraction of elapsed day.
    */
-  typedef double TDateTime;
 
-/* Date constants */
-#define MAX_DAYS_PER_MONTH 31
-#define JPMCDS_MONTHS_PER_YEAR 12
-#define JPMCDS_MONTHS_PER_SEMI 6
-#define JPMCDS_MONTHS_PER_QUARTER 3
-#define JPMCDS_DAYS_PER_WEEK 7
-#define JPMCDS_DAYS_PER_YEAR 365
-#define JPMCDS_YEARS_PER_DAY (1. / 365.)
-#define JPMCDS_DAYS_PER_LUNAR_MONTH 28
-#define JPMCDS_WEEKS_PER_LUNAR_MONTH 4
+  using TDateTime = double;
+
+  /* Date constants */
+  const int MAX_DAYS_PER_MONTH = 31;
+  const int JPMCDS_MONTHS_PER_YEAR = 12;
+  const int JPMCDS_MONTHS_PER_SEMI = 6;
+  const int JPMCDS_MONTHS_PER_QUARTER = 3;
+  const int JPMCDS_DAYS_PER_WEEK = 7;
+  const int JPMCDS_DAYS_PER_YEAR = 365;
+  const double JPMCDS_YEARS_PER_DAY = 1. / 365;
+  const int JPMCDS_DAYS_PER_LUNAR_MONTH = 28;
+  const int JPMCDS_WEEKS_PER_LUNAR_MONTH = 4;
 
   /* --------- Definition of a date interval -------------------- */
-  typedef struct {
+  struct TDateInterval {
     int prd;      /* number of periods from offset date                  */
     char prd_typ; /* type of periods                                     */
                   /* D - day; M - month; W - week                        */
@@ -47,8 +49,19 @@ EXPORT_C {
                  -1 - offset is the previous date in the date array
                  x - any other number is index into array of intervals.
                      the date at that location is an offset */
-  } TDateInterval;
 
+    void setInterval(int periods, char period_type) {
+      prd = periods;
+      prd_typ = period_type;
+      flag = 0;
+    }
+
+    bool operator==(const TDateInterval &other) const {
+      return (prd == other.prd && prd_typ == other.prd_typ);
+    }
+  };
+
+// TODO: replace these macros with the methods above
 /*
  * SET_TDATE_INTERVAL macro.
  */
@@ -61,26 +74,24 @@ EXPORT_C {
 
 #define TDATE_INTERVALS_EQUAL(d1, d2) \
   ((d1).prd == (d2).prd && (d1).prd_typ == (d2).prd_typ)
-
-#ifdef __cplusplus
 }
-#endif
 
 /*t
  *  TDateList is a list of dates.
  */
-typedef struct {
+
+struct TDateList {
   int fNumItems;
   TDate *fArray;
-} TDateList;
+};
 
 /*t
  * TDateAdjIntvl is a time interval expressed in business
  * or calendar days or week days.
  */
-#define JPMCDS_DATE_ADJ_TYPE_CALENDAR 0
-#define JPMCDS_DATE_ADJ_TYPE_BUSINESS 1
-#define JPMCDS_DATE_ADJ_TYPE_WEEKDAY 2
+const int JPMCDS_DATE_ADJ_TYPE_CALENDAR = 0;
+const int JPMCDS_DATE_ADJ_TYPE_BUSINESS = 1;
+const int JPMCDS_DATE_ADJ_TYPE_WEEKDAY = 2;
 
 /*t
 ** TDateAdjIntvl is a holiday-adjusted date interval.
@@ -99,13 +110,23 @@ typedef struct {
 ** the last business day of the month, but this is not done
 ** automatically).
 */
-typedef struct {
+
+struct TDateAdjIntvl {
   TDateInterval interval; /* Must be in days if isBusDays=T */
   int isBusDays;          /* see JPMCDS_DATE_ADJ_TYPE_... constants */
   char *holidayFile;      /* Holiday file specification */
   long badDayConv;        /* Only applies if isBusDays=F */
-} TDateAdjIntvl;
 
+  void setAdjIntervalDays(int days) {
+    interval.prd = days;
+    interval.prd_typ = 'D';
+    isBusDays = JPMCDS_DATE_ADJ_TYPE_CALENDAR;
+    holidayFile = nullptr;
+    badDayConv = JPMCDS_BAD_DAY_NONE;
+  }
+};
+
+// TODO: replace these macros with the methods above
 #define JPMCDS_SET_ADJ_INTERVAL_DAYS(adjIntval, days)  \
   adjIntval.interval.prd = days;                       \
   adjIntval.interval.prd_typ = 'D';                    \

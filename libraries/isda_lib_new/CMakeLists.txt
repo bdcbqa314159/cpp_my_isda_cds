@@ -1,6 +1,6 @@
 project(isda_lib)
 
-set(includes includes/)
+set(includes ./includes/)
 set(sources src/new_code/badday.cpp)
 # file(GLOB SOURCES "src/*.c" "src/*.cpp")
 

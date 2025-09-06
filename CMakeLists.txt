@@ -16,9 +16,8 @@ else()
     set(CMAKE_C_STANDARD_REQUIRED ON)
 endif()
 
-
-# Set C++ standard to C++98 (for C++ sources)
-set(CMAKE_CXX_STANDARD 98)
+# Set C++ standard to C++17 (for C++ sources)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)  # Disable compiler-specific extensions
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
