@@ -6,7 +6,7 @@
 #include <stdarg.h>
 
 #include "cfileio.hpp"
-#include "cgeneral.hpp"
+#include "cgeneral.hpp"  // IWYU pragma: keep
 
 EXPORT_C {
   /*f

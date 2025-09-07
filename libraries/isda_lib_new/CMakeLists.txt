@@ -7,11 +7,8 @@ set(sources src/new_code/badday.cpp
             src/new_code/lprintf.cpp
             src/new_code/lscanf.cpp
             src/new_code/cfileio.cpp
+            src/new_code/dateconv.cpp
             # src/new_code/cerror.cpp
-            # 
-            # 
-            # 
-            # src/new_code/dateconv.cpp
             # src/new_code/busday.cpp
 )
 # file(GLOB SOURCES "src/*.c" "src/*.cpp")
