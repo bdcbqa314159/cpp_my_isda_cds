@@ -17,7 +17,9 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#include "cerror.hpp"
+#include <iostream>
+
+// #include "cerror.hpp"
 // #include "cgeneral.hpp"
 #include "cmemory.hpp"
 #include "lprintf.hpp"
@@ -47,7 +49,9 @@ TFile *JpmcdsFopen(char *filename, /* (I) Filename. */
   TFile *tFile = NULL;
 
   if (filename == NULL || *filename == '\0') {
-    JpmcdsErrMsg("%s: Unspecified file name\n", routine);
+    // TODO work here
+    // JpmcdsErrMsg("%s: Unspecified file name\n", routine);
+    std::cout << routine << ": Unspecified filename\n";
     return NULL;
   }
 
@@ -84,14 +88,20 @@ TFile *JpmcdsFopen(char *filename, /* (I) Filename. */
       tFile->fileP = (void *)fopen(filename, "r");
       break;
     default:
-      JpmcdsErrMsg("%s:  Unknown mode %d\n", routine, mode);
+      // TODO work here
+      // JpmcdsErrMsg("%s:  Unknown mode %d\n", routine, mode);
+      std::cout << routine << ":  Unknown mode " << mode << "\n";
+
       FREE(tFile->filename);
       FREE(tFile);
       return NULL;
   }
   if (tFile->fileP == NULL) {
-    JpmcdsErrMsg("%s:  Error using file %s, errno %d\n", routine, filename,
-                 errno);
+    // TODO work here
+    std::cout << routine << ":  Error using file " << filename << ", errno "
+              << errno << "\n";
+    //  JpmcdsErrMsg("%s:  Error using file %s, errno %d\n", routine, filename,
+    //               errno);
     FREE(tFile->filename);
     FREE(tFile);
     return NULL;
@@ -118,7 +128,10 @@ int JpmcdsFclose(TFile *tFile) /* (I) File handle. */
 
 done:
   if (status == FAILURE) {
-    JpmcdsErrMsg("%s:  Error closing file %s.\n", routine, tFile->filename);
+    // TODO work here
+    std::cout << routine << ":  Error closing file " << tFile->filename
+              << ".\n";
+    // JpmcdsErrMsg("%s:  Error closing file %s.\n", routine, tFile->filename);
   }
   FREE(tFile->filename);
   FREE(tFile);
@@ -135,7 +148,10 @@ int JpmcdsFflush(TFile *tFile) /* (I) File handle. */
   static char routine[] = "JpmcdsFflush";
 
   if (fflush((FILE *)tFile->fileP) != 0) {
-    JpmcdsErrMsg("%s:  Error flushing file %s.\n", routine, tFile->filename);
+    // TODO work here
+    std::cout << routine << ":  Error flushing file " << tFile->filename
+              << ".\n";
+    // JpmcdsErrMsg("%s:  Error flushing file %s.\n", routine, tFile->filename);
     return FAILURE;
   }
   return SUCCESS;
@@ -178,7 +194,10 @@ int JpmcdsFputs(char *output, /* (I) Strings which contain data. */
   static char routine[] = "JpmcdsFputs";
 
   if (fputs(output, (FILE *)tFile->fileP) == EOF) {
-    JpmcdsErrMsg("%s:  Error writing file %s.\n", routine, tFile->filename);
+    // TODO work here
+    std::cout << routine << ":  Error writing file " << tFile->filename
+              << ".\n";
+    // JpmcdsErrMsg("%s:  Error writing file %s.\n", routine, tFile->filename);
     return FAILURE;
   }
   return SUCCESS;
@@ -197,7 +216,9 @@ int JpmcdsFread(char *ptr,    /* (I) Pointer to memory to store data. */
   int numRead;
 
   if (tFile->hasLastChar == TRUE) {
-    JpmcdsErrMsg("%s:  Error mixing read and scanf.\n", routine);
+    // TODO work here
+    std::cout << routine << ":  Error mixing read and scanf.\n";
+    // JpmcdsErrMsg("%s:  Error mixing read and scanf.\n", routine);
     return FAILURE;
   }
 
@@ -221,7 +242,10 @@ int JpmcdsFwrite(char *ptr,    /* (I) Pointer to data to write. */
 
   numWrite = fwrite(ptr, 1, numItems, (FILE *)tFile->fileP);
   if (numWrite < 1) {
-    JpmcdsErrMsg("%s:  Error writing file %s.\n", routine, tFile->filename);
+    // TODO work here
+    std::cout << routine << ":  Error writing file " << tFile->filename
+              << ".\n";
+    // JpmcdsErrMsg("%s:  Error writing file %s.\n", routine, tFile->filename);
     return FAILURE;
   }
   return numWrite;
@@ -264,7 +288,10 @@ int JpmcdsFputc(char c,       /* (I) Character to write. */
 
   rc = putc(c, (FILE *)tFile->fileP);
   if (rc == EOF) {
-    JpmcdsErrMsg("%s:  Error writing file %s.\n", routine, tFile->filename);
+    // TODO work here
+    std::cout << routine << ":  Error writing file " << tFile->filename
+              << ".\n";
+    // JpmcdsErrMsg("%s:  Error writing file %s.\n", routine, tFile->filename);
     return FAILURE;
   }
 

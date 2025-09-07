@@ -7,7 +7,7 @@
 #include "cgeneral.hpp"
 
 EXPORT_C {
-  typedef struct {
+  struct TFile {
     void *fileP;
     char *filename;
     int type;
@@ -17,7 +17,7 @@ EXPORT_C {
     int lastChar;         /* Make this int instead of char */
     TBoolean hasLastChar; /* to avoid problems with char/int */
     int stringBufSize;    /* conversion. */
-  } TFile;
+  };
 }
 
 /* lprintf.h needs to use a TFile and so also includes this file. Therefore
@@ -32,12 +32,13 @@ EXPORT_C {
   /*
    *  Added JPMCDS_FAPPEND.  Trying to phase out JPMCDS_APPEND.
    */
-  typedef enum {
+
+  enum TMODE {
     JPMCDS_FWRITE = 1,
     JPMCDS_APPEND = 2,
     JPMCDS_FREAD = 3,
     JPMCDS_FAPPEND = 4
-  } TMODE;
+  };
 
 #ifndef JPMCDS_PATH_SEPARATOR
 

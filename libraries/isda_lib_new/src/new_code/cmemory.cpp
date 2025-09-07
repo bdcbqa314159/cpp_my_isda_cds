@@ -13,7 +13,9 @@
 #include <memory.h>
 #include <stdlib.h>
 
-#include "cerror.hpp"
+#include <iostream>
+
+// #include "cerror.hpp"
 
 /*
 ***************************************************************************
@@ -27,14 +29,21 @@ void *JpmcdsMallocSafe(size_t theSize) {
   void *ptr;
 
   if (theSize <= 0) {
-    JpmcdsErrMsg("%s: Number of bytes (%lu) must be at least 1.\n", routine,
-                 (unsigned long)theSize);
+    // TODO work here
+    std::cout << routine << ": Number of bytes (" << (unsigned long)theSize
+              << ") must be at least 1.\n";
+    // JpmcdsErrMsg("%s: Number of bytes (%lu) must be at least 1.\n", routine,
+    //              (unsigned long)theSize);
     return NULL;
   }
   ptr = malloc(theSize); /* Don't use calloc due to RS6000. */
   if (ptr == NULL) {
-    JpmcdsErrMsg("%s: Insufficient memory to allocate %lu bytes.\n", routine,
-                 (unsigned long)theSize);
+    // TODO work here
+    //  JpmcdsErrMsg("%s: Insufficient memory to allocate %lu bytes.\n",
+    //  routine,
+    //               (unsigned long)theSize);
+    std::cout << routine << ": Insufficient memory to allocate "
+              << (unsigned long)theSize << " bytes.\n";
   } else {
     /* Clear out the memory for safety. */
     (void)memset((char *)ptr, (size_t)0, theSize);
