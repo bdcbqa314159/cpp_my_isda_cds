@@ -6,12 +6,12 @@
 #include "code_cpp.hpp"
 
 EXPORT_C {
-  typedef struct {  /* Bad day list */
-    int count;      /* number of items currently in list */
-    int maxAllowed; /* max no of items allowed in arrays */
-    TDate *badDay;  /* array of bad business days */
-    TDate *goodDay; /* array of corresponding good ays */
-  } TBadDayList;
+  struct TBadDayList { /* Bad day list */
+    int count;         /* number of items currently in list */
+    int maxAllowed;    /* max no of items allowed in arrays */
+    TDate *badDay;     /* array of bad business days */
+    TDate *goodDay;    /* array of corresponding good ays */
+  };
 
   /*f
   ***************************************************************************

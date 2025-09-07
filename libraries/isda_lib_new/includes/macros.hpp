@@ -6,7 +6,8 @@
 #include <float.h>
 // #include <string.h>
 
-#include "cmemory.hpp"
+// #include "cmemory.hpp"
+#include "code_cpp.hpp"
 
 EXPORT_C {
 #ifndef MAX
