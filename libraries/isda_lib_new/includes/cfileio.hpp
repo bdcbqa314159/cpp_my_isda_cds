@@ -4,21 +4,8 @@
 
 #include <stdarg.h>
 
-#include "cgeneral.hpp"
-
-EXPORT_C {
-  struct TFile {
-    void *fileP;
-    char *filename;
-    int type;
-    char *charPtr;
-    int size;
-    int curSize;
-    int lastChar;         /* Make this int instead of char */
-    TBoolean hasLastChar; /* to avoid problems with char/int */
-    int stringBufSize;    /* conversion. */
-  };
-}
+#include "code_cpp.hpp"
+#include "common_files.hpp"
 
 /* lprintf.h needs to use a TFile and so also includes this file. Therefore
  * define TFile before including lprintf.h
@@ -32,13 +19,6 @@ EXPORT_C {
   /*
    *  Added JPMCDS_FAPPEND.  Trying to phase out JPMCDS_APPEND.
    */
-
-  enum TMODE {
-    JPMCDS_FWRITE = 1,
-    JPMCDS_APPEND = 2,
-    JPMCDS_FREAD = 3,
-    JPMCDS_FAPPEND = 4
-  };
 
 #ifndef JPMCDS_PATH_SEPARATOR
 

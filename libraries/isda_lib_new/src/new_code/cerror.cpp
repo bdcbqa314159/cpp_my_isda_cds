@@ -19,8 +19,8 @@
 #include <time.h>
 
 #include "cfileio.hpp"
-// #include "cgeneral.hpp"
 #include "cmemory.hpp"
+#include "common_files.hpp"
 #include "macros.hpp"
 
 #define JPMCDS_ERR_MSG_BUFFER 4096
@@ -130,7 +130,7 @@ void JpmcdsErrMsgOff(void) { pWriteMessage = FALSE; }
 ** Returns the current logging state.
 ***************************************************************************
 */
-EXPORT TBoolean JpmcdsErrMsgStatus(void) { return pWriteMessage; }
+TBoolean JpmcdsErrMsgStatus(void) { return pWriteMessage; }
 
 /*
 ***************************************************************************
@@ -139,7 +139,7 @@ EXPORT TBoolean JpmcdsErrMsgStatus(void) { return pWriteMessage; }
 ** successfully opened or not.
 ***************************************************************************
 */
-EXPORT int JpmcdsErrMsgFileName(char *fileName, TBoolean append) {
+int JpmcdsErrMsgFileName(char *fileName, TBoolean append) {
   static char routine[] = "JpmcdsErrMsgFileName";
 
   if (fileName == (char *)NULL) fileName = GetDefaultFileName();
@@ -187,7 +187,7 @@ EXPORT int JpmcdsErrMsgFileName(char *fileName, TBoolean append) {
 ** JpmcdsErrMsgFileName.
 ***************************************************************************
 */
-EXPORT char *JpmcdsErrMsgGetFileName(void) { return GetFileName(); }
+char *JpmcdsErrMsgGetFileName(void) { return GetFileName(); }
 
 /*
 ***************************************************************************
@@ -461,7 +461,8 @@ static int JpmcdsWriteToLog(TBoolean formatted, char *format,
   char *bufp = buffer;
 
   if (formatted) {
-    vsprintf(buffer, format, parminfo);
+    // vsprintf(buffer, format, parminfo);
+    vsnprintf(buffer, sizeof(buffer), format, parminfo);
   } else {
     bufp = format;
   }
@@ -495,7 +496,7 @@ done:
 ** Turns on the error message record facility.
 ***************************************************************************
 */
-EXPORT int JpmcdsErrMsgEnableRecord(
+int JpmcdsErrMsgEnableRecord(
     int numberOfMessages, /* (I) Number of messages to save. */
     int messageSize)      /* (I) Maximum size of each message. */
 {
@@ -533,7 +534,7 @@ EXPORT int JpmcdsErrMsgEnableRecord(
 ** Turns off the error message record facility.
 ***************************************************************************
 */
-EXPORT int JpmcdsErrMsgDisableRecord(void) {
+int JpmcdsErrMsgDisableRecord(void) {
   if (record.on) /* only bother if recording is on */
   {
     record.on = FALSE;
@@ -569,7 +570,7 @@ TBoolean JpmcdsErrMsgRecordEnabled(void) { return (record.on); }
 ** Turns on the error message record facility.
 ***************************************************************************
 */
-EXPORT char **JpmcdsErrGetMsgRecord(void) {
+char **JpmcdsErrGetMsgRecord(void) {
   static char routine[] = "JpmcdsErrGetMsgRecord";
   char **temp;
   int i;
@@ -700,9 +701,8 @@ static char *GetDefaultFileName(void) {
 ** Allows the user to supply a callback.
 ***************************************************************************
 */
-EXPORT void JpmcdsErrMsgAddCallback(JpmcdsErrCallBackFunc *userFunc,
-                                    TBoolean sendTimeStamp,
-                                    void *callBackData) {
+void JpmcdsErrMsgAddCallback(JpmcdsErrCallBackFunc *userFunc,
+                             TBoolean sendTimeStamp, void *callBackData) {
   errorUserFunc = userFunc;
   errorSendTimeStamp = sendTimeStamp;
   errorCallBackData = callBackData;
@@ -713,9 +713,9 @@ EXPORT void JpmcdsErrMsgAddCallback(JpmcdsErrCallBackFunc *userFunc,
 ** Returns callback information currently in use.
 ***************************************************************************
 */
-EXPORT void JpmcdsErrMsgGetCallback(JpmcdsErrCallBackFunc **userFunc, /* (O) */
-                                    TBoolean *sendTimeStamp,          /* (O) */
-                                    void **callBackData)              /* (O) */
+void JpmcdsErrMsgGetCallback(JpmcdsErrCallBackFunc **userFunc, /* (O) */
+                             TBoolean *sendTimeStamp,          /* (O) */
+                             void **callBackData)              /* (O) */
 {
   *userFunc = errorUserFunc;
   *sendTimeStamp = errorSendTimeStamp;
