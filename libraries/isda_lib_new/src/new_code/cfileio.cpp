@@ -23,7 +23,8 @@
 // #include "cgeneral.hpp"
 #include "cmemory.hpp"
 #include "lprintf.hpp"
-#include "macros.hpp"
+// #include "macros.hpp"
+#include "memory_utils.hpp"
 
 #if defined(WIN32) /* Windows */
 #include <direct.h>
@@ -64,7 +65,7 @@ TFile *JpmcdsFopen(char *filename, /* (I) Filename. */
   tFile->lastChar = 0;
   tFile->hasLastChar = FALSE;
 
-  tFile->filename = NEW_ARRAY(char, strlen(filename) + 2);
+  tFile->filename = NEW_ARRAY<char>(strlen(filename) + 2);
   if (tFile->filename == NULL) {
     FREE(tFile);
     return NULL;

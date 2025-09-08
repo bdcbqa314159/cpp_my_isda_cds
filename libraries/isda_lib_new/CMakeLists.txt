@@ -22,6 +22,8 @@ target_compile_options(${PROJECT_NAME} PRIVATE
         -Wno-logical-not-parentheses
         -Wno-writable-strings
         -Wno-implicit-function-declaration
+        -Wdeprecated-declarations
+        -Wgcc-compat
     >
 )
 
@@ -31,5 +33,7 @@ target_compile_options(${PROJECT_NAME} PRIVATE
         -Wno-logical-not-parentheses
         -Wno-writable-strings
         -Wno-implicit-function-declaration
+        -Wdeprecated-declarations
+        -Wgcc-compat
     >
 )

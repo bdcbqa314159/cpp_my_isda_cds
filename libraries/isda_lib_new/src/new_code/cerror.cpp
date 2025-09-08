@@ -19,9 +19,9 @@
 #include <time.h>
 
 #include "cfileio.hpp"
-#include "cmemory.hpp"
+// #include "cmemory.hpp"
 #include "common_files.hpp"
-#include "macros.hpp"
+#include "memory_utils.hpp"
 
 #define JPMCDS_ERR_MSG_BUFFER 4096
 
@@ -159,7 +159,7 @@ int JpmcdsErrMsgFileName(char *fileName, TBoolean append) {
   if (FileCreate(fileName, append) == SUCCESS) {
     /* Now close it.
      */
-    JpmcdsFclose(pFp);
+    // JpmcdsFclose(pFp);
     pFp = NULL;
 
     /* If we're appending, we don't want to reopen the file a fresh
@@ -514,10 +514,10 @@ int JpmcdsErrMsgEnableRecord(
   ** The extra pointer is allocated and always set to NULL to provide a "NULL"
   ** terminator of the array of pointers in JpmcdsErrGetMsgRecord
   */
-  record.buf = NEW_ARRAY(char *, record.number + 1);
+  record.buf = NEW_ARRAY<char *>(record.number + 1);
   if (record.buf == NULL) return FAILURE;
 
-  all = NEW_ARRAY(char, record.number *messageSize);
+  all = NEW_ARRAY<char>(record.number * messageSize);
   if (all == NULL) return FAILURE;
   record.alloc = all;
   for (i = 0; i < record.number; i++) {

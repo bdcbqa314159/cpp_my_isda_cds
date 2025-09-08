@@ -104,21 +104,6 @@ EXPORT_C {
 #define IS_EQUAL(x, y) ((x) == (y))
 
 #endif
-
-#ifndef NEW
-#define NEW(t) (t *)JpmcdsMallocSafe(sizeof(t))
-#define NEW_ARRAY(t, n) (t *)JpmcdsMallocSafe(sizeof(t) * (n))
-#define FREE_ARRAY(ptr) FREE(ptr)
-#endif
-
-#ifndef COPY_ARRAY
-#define COPY_ARRAY(dst, src, t, n) \
-  memcpy((char *)(dst), (char *)(src), (n) * sizeof(t))
-#endif
-
-#ifndef FREE
-#define FREE(x) JpmcdsFreeSafe((void *)(x))
-#endif
 }
 
 #endif  // MACROS_HPP
