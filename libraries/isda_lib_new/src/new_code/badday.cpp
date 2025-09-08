@@ -2,6 +2,8 @@
 
 #include <stdlib.h>
 
+#include <cstddef>
+
 #include "bastypes.hpp"  // IWYU pragma: keep
 #include "cerror.hpp"    // IWYU pragma: keep
 #include "cmemory.hpp"   // IWYU pragma: keep
@@ -17,14 +19,12 @@
 TDate JpmcdsBad2GoodBadDayList(TBadDayList *bdl, /* (I) bad day list */
                                TDate d)          /* (I) bad date to convert */
 {
-  int i;
-
-  if (bdl == NULL) /* allow NULL to ignore list */
+  if (bdl == nullptr) /* allow NULL to ignore list */
   {
     return d;
   }
 
-  for (i = 0; i < bdl->count; i++) {
+  for (size_t i = 0; i < bdl->count; ++i) {
     if (bdl->badDay[i] == d) {
       return bdl->goodDay[i];
     }
@@ -40,14 +40,12 @@ TDate JpmcdsBad2GoodBadDayList(TBadDayList *bdl, /* (I) bad day list */
 TDate JpmcdsGood2BadBadDayList(TBadDayList *bdl, /* (I) bad day list */
                                TDate d)          /* (I) bad date to convert */
 {
-  int i;
-
-  if (bdl == NULL) /* allow NULL to ignore list */
+  if (bdl == nullptr) /* allow NULL to ignore list */
   {
     return d;
   }
 
-  for (i = 0; i < bdl->count; i++) {
+  for (size_t i = 0; i < bdl->count; ++i) {
     if (bdl->goodDay[i] == d) {
       return bdl->badDay[i];
     }
@@ -64,13 +62,11 @@ TDate JpmcdsGood2BadBadDayList(TBadDayList *bdl, /* (I) bad day list */
 void JpmcdsFixBadDLBadDayList(TBadDayList *bdl, /* (I) bad day list */
                               TDateList *dl)    /* (M) date list to convert */
 {
-  int i;
-
   if (dl == NULL) {
     return;
   }
 
-  for (i = 0; i < dl->fNumItems; i++) {
+  for (size_t i = 0; i < dl->fNumItems; ++i) {
     dl->fArray[i] = JpmcdsBad2GoodBadDayList(bdl, dl->fArray[i]);
   }
 }

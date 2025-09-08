@@ -99,14 +99,14 @@ static int FileCreate(char *fileName, TBoolean append);
 static int TimeStampFill(time_t aStamp_t);
 static int TimeStampRequired(void);
 
-typedef struct record_s {
+struct Record {
   TBoolean on;
   int number;
   int size;
   int lastLine;
   char *alloc;
   char **buf;
-} Record;
+};
 
 static Record record = {FALSE, 0, 0, 0, NULL, NULL};
 
@@ -514,10 +514,10 @@ int JpmcdsErrMsgEnableRecord(
   ** The extra pointer is allocated and always set to NULL to provide a "NULL"
   ** terminator of the array of pointers in JpmcdsErrGetMsgRecord
   */
-  record.buf = NEW_ARRAY<char *>(record.number + 1);
+  record.buf = NewArray<char *>(record.number + 1);
   if (record.buf == NULL) return FAILURE;
 
-  all = NEW_ARRAY<char>(record.number * messageSize);
+  all = NewArray<char>(record.number * messageSize);
   if (all == NULL) return FAILURE;
   record.alloc = all;
   for (i = 0; i < record.number; i++) {
@@ -539,10 +539,10 @@ int JpmcdsErrMsgDisableRecord(void) {
   {
     record.on = FALSE;
 
-    FREE(record.alloc);
+    free(record.alloc);
     record.alloc = NULL;
 
-    FREE(record.buf);
+    free(record.buf);
     record.buf = NULL;
   }
 
@@ -606,7 +606,7 @@ char **JpmcdsErrGetMsgRecord(void) {
     record.lastLine = record.number - 1;
   }
 
-  FREE(record.buf);
+  free(record.buf);
   record.buf = temp;
 
   return record.buf;
