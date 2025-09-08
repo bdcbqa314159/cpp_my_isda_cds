@@ -13,12 +13,13 @@
 #include <ctype.h>
 #include <limits.h>
 
-// #include "cerror.hpp"
+#include "cerror.hpp"
 #include "cfileio.hpp"
 #include "convert.hpp"
 #include "dateconv.hpp"
 #include "dtlist.hpp"
-#include "macros.hpp"
+// #include "macros.hpp"
+#include "memory_utils.hpp"
 #include "strutil.hpp"
 
 // #ifdef LINUX
@@ -46,7 +47,7 @@
 ** does length-checking
 */
 #define COPY_CAPITALIZE(pTarget, pSrc, len)                \
-  if (pSrc != NULL && pTarget != NULL) {                   \
+  if (pSrc != nullptr && pTarget != nullptr) {             \
     char *PSRC = (pSrc);                                   \
     char *PTARGET = (pTarget);                             \
     while ((*PSRC) != 0 && (PTARGET - pTarget) <= (len)) { \
@@ -60,13 +61,13 @@
 /*t
  * Holiday cache information
  * */
-typedef struct _THoliday {
+struct THoliday {
   char *name;       /* Upper case name associated with this entry */
   THolidayList *hl; /* Holiday list */
-  void *next;
-} THoliday;
+  THoliday *next;
+};
 
-THoliday *cache = NULL;
+THoliday *cache = nullptr;
 
 /*
 ***************************************************************************
@@ -119,7 +120,7 @@ void JpmcdsFreeHoliday(THoliday *holiday);
 ** This behaviour exactly duplicates the behaviour when using a holiday
 ** name as an input to any analytics function.
 **
-** Returns NULL on failure, a valid THolidayList pointer on success.
+** Returns nullptr on failure, a valid THolidayList pointer on success.
 ***************************************************************************
 */
 THolidayList *JpmcdsHolidayListFromCache(
@@ -128,24 +129,24 @@ THolidayList *JpmcdsHolidayListFromCache(
   static char routine[] = "JpmcdsHolidayListFromCache";
   int status = FAILURE;
 
-  THolidayList *hl = NULL; /* To be returned */
+  THolidayList *hl = nullptr; /* To be returned */
   THoliday *hol;
 
   /* Must have a name. */
-  if (name == NULL) {
-    JpmcdsErrMsg("%s: NULL inputs.\n", routine);
+  if (name == nullptr) {
+    JpmcdsErrMsg("%s: nullptr inputs.\n", routine);
     goto done;
   }
 
   /* Use holidayFind to find in the cache. Note that NONE and NO_WEEKENDS are
    * always in the cache. */
   hol = holidayFind(name);
-  if (hol != NULL) {
+  if (hol != nullptr) {
     hl = hol->hl;
   } else {
     /* Not in the cache, so use JpmcdsHolidayListRead to read from file. */
     hl = JpmcdsHolidayListRead(name);
-    if (hl == NULL) goto done;
+    if (hl == nullptr) goto done;
 
     /* Now add hl to the cache. This takes a shallow copy, but is
        guaranteed to be destructive if the operation fails. */
@@ -158,7 +159,7 @@ done:
 
   if (status != SUCCESS) {
     JpmcdsErrMsg("%s: Failed.\n", routine);
-    return NULL;
+    return nullptr;
   }
 
   return hl;
@@ -186,12 +187,12 @@ int JpmcdsHolidayListAddToCache(
      that we can be sure that either hl is owned by hol or hl is
      deleted. */
   hol = JpmcdsNewHoliday(hl, name);
-  if (hol == NULL) goto done;
+  if (hol == nullptr) goto done;
 
   /* If necessary get rid of the old entry with the same name.
      Use hol->name since this has been capitalized. */
   oldHol = holidayFind(hol->name);
-  if (oldHol != NULL) {
+  if (oldHol != nullptr) {
     /*
     ** Cannot delete NONE or NO_WEEKENDS at this point. This is a sign
     ** that somebody is trying to overwrite these standard names.
@@ -211,7 +212,7 @@ int JpmcdsHolidayListAddToCache(
   /* Insert into cache */
   hol->next = cache;
   cache = hol;
-  hol = NULL; /* Now owned by cache */
+  hol = nullptr; /* Now owned by cache */
   status = SUCCESS;
 
 done:
@@ -231,7 +232,7 @@ void JpmcdsHolidayEmptyCache(void) {
   THoliday *node;
   THoliday *next;
 
-  if (cache != NULL) {
+  if (cache != nullptr) {
     node = cache;
     next = node->next;
     while (node) {
@@ -239,7 +240,7 @@ void JpmcdsHolidayEmptyCache(void) {
       node = next;
       if (node) next = node->next;
     }
-    cache = NULL;
+    cache = nullptr;
   }
 }
 
@@ -250,31 +251,31 @@ void JpmcdsHolidayEmptyCache(void) {
 ***************************************************************************
 */
 static THoliday *holidayFind(char *name) {
-  THoliday *hol = NULL;
+  THoliday *hol = nullptr;
 
   /* ensure that built-in calendars are present in the cache */
-  if (cache == NULL) {
+  if (cache == nullptr) {
     THoliday *h;
 
     h = JpmcdsNewHoliday(
         JpmcdsHolidayListNewGeneral(
-            NULL, JPMCDS_WEEKEND_SATURDAY | JPMCDS_WEEKEND_SUNDAY),
+            nullptr, JPMCDS_WEEKEND_SATURDAY | JPMCDS_WEEKEND_SUNDAY),
         "NONE");
-    if (h == NULL) return NULL;
+    if (h == nullptr) return nullptr;
 
     cache = h;
 
     h = JpmcdsNewHoliday(
-        JpmcdsHolidayListNewGeneral(NULL, JPMCDS_WEEKEND_NO_WEEKENDS),
+        JpmcdsHolidayListNewGeneral(nullptr, JPMCDS_WEEKEND_NO_WEEKENDS),
         "NO_WEEKENDS");
-    if (h == NULL) return NULL;
+    if (h == nullptr) return nullptr;
 
     cache->next = h;
-    h->next = NULL;
+    h->next = nullptr;
   }
 
   hol = cache;
-  if (name != NULL) {
+  if (name != nullptr) {
     while (hol) {
       if (stricmp(name, hol->name) == 0) return hol;
 
@@ -283,7 +284,7 @@ static THoliday *holidayFind(char *name) {
   }
 
   /* not necessarily an error */
-  return NULL;
+  return nullptr;
 }
 
 /*
@@ -324,29 +325,29 @@ static THoliday *JpmcdsNewHoliday(
   static char routine[] = "JpmcdsNewHoliday";
   int status = FAILURE;
 
-  THoliday *hol = NULL;
+  THoliday *hol = nullptr;
 
-  if (hl == NULL || name == NULL) {
-    JpmcdsErrMsg("%s: NULL inputs.\n", routine);
+  if (hl == nullptr || name == nullptr) {
+    JpmcdsErrMsg("%s: nullptr inputs.\n", routine);
     goto done;
   }
 
-  hol = NEW(THoliday);
-  if (hol == NULL) goto done;
+  hol = New<THoliday>();
+  if (hol == nullptr) goto done;
 
   hol->hl = hl;
   hol->name = JpmcdsStringDuplicate(name);
-  hl = NULL; /* Now owned by hol */
-  if (hol->name == NULL) goto done;
+  hl = nullptr; /* Now owned by hol */
+  if (hol->name == nullptr) goto done;
 
-  hol->next = NULL;
+  hol->next = nullptr;
   status = SUCCESS;
 
 done:
   JpmcdsHolidayListDelete(hl);
   if (status != SUCCESS) {
     JpmcdsFreeHoliday(hol);
-    hol = NULL;
+    hol = nullptr;
     JpmcdsErrMsg("%s: Failed.\n", routine);
   }
 
@@ -360,11 +361,11 @@ done:
 ***************************************************************************
 */
 void JpmcdsFreeHoliday(THoliday *holiday) {
-  if (holiday != NULL) {
+  if (holiday != nullptr) {
     JpmcdsHolidayListDelete(holiday->hl);
-    FREE_ARRAY(holiday->name);
-    FREE(holiday);
-    holiday = NULL;
+    FreeArray(holiday->name);
+    Free(holiday);
+    holiday = nullptr;
   }
 }
 
@@ -380,7 +381,7 @@ void JpmcdsFreeHoliday(THoliday *holiday) {
 ***************************************************************************
 ** Creates a new holiday structure.
 **
-** The date list can be NULL, in which case the resulting date list in the
+** The date list can be nullptr, in which case the resulting date list in the
 ** holiday structure will be a date list with no dates, e.g.
 **      hl->dateList->fNumItems = 0;
 ***************************************************************************
@@ -392,29 +393,29 @@ THolidayList *JpmcdsHolidayListNewGeneral(
   static char routine[] = "JpmcdsHolidayListNewGeneral";
   int status = FAILURE;
 
-  THolidayList *hl = NULL;
-  TDateList *dl = NULL;
+  THolidayList *hl = nullptr;
+  TDateList *dl = nullptr;
 
   /* get new date list */
-  if (dateList == NULL) {
+  if (dateList == nullptr) {
     dl = JpmcdsNewEmptyDateList(0);
   } else {
     dl = JpmcdsCopyDateList(dateList);
   }
-  if (dl == NULL) {
+  if (dl == nullptr) {
     goto done;
   }
 
   /* get new holiday list */
-  hl = NEW(THolidayList);
-  if (hl == NULL) {
+  hl = New<THolidayList>();
+  if (hl == nullptr) {
     goto done;
   }
 
   /* fill in holiday list */
   hl->dateList = dl;
   hl->weekends = weekends;
-  dl = NULL; /* Now owned by hl */
+  dl = nullptr; /* Now owned by hl */
 
   if (verifyHolidayList(hl) != SUCCESS) goto done;
 
@@ -426,7 +427,7 @@ done:
 
   if (status != SUCCESS) {
     JpmcdsHolidayListDelete(hl);
-    hl = NULL;
+    hl = nullptr;
     JpmcdsErrMsg("%s: Failed.\n", routine);
   }
 
@@ -440,7 +441,7 @@ done:
 */
 void JpmcdsHolidayListDelete(THolidayList *hl) /* (I) Holiday list to delete */
 {
-  if (hl != NULL) {
+  if (hl != nullptr) {
     JpmcdsFreeDateList(hl->dateList);
     FREE(hl);
   }
@@ -470,17 +471,17 @@ THolidayList *JpmcdsHolidayListRead(
   static char routine[] = "JpmcdsHolidayListRead";
   int status = FAILURE;
 
-  int numHols;               /* count of holidays */
-  int idx;                   /* counts over holidays */
-  char buffer[MAX_BUFFER];   /* line of text from file */
-  char ucBuffer[MAX_BUFFER]; /* upper case line of text from file */
-  TFile *fp = NULL;          /* file handle */
-  THolidayList *hl = NULL;   /* to be returned */
-  TDateList *dl = NULL;      /* date list read in */
+  int numHols;                /* count of holidays */
+  int idx;                    /* counts over holidays */
+  char buffer[MAX_BUFFER];    /* line of text from file */
+  char ucBuffer[MAX_BUFFER];  /* upper case line of text from file */
+  TFile *fp = nullptr;        /* file handle */
+  THolidayList *hl = nullptr; /* to be returned */
+  TDateList *dl = nullptr;    /* date list read in */
   long weekends;
 
   fp = JpmcdsFopen(fileName, JPMCDS_FREAD);
-  if (fp == NULL) {
+  if (fp == nullptr) {
     JpmcdsErrMsg("%s: Couldn't open file %s.\n", routine, fileName);
     goto done;
   }
@@ -493,20 +494,20 @@ THolidayList *JpmcdsHolidayListRead(
 
   if (JpmcdsFclose(fp) == FAILURE) /* close file, reopen to read again */
   {
-    fp = NULL;
+    fp = nullptr;
     goto done;
   }
-  fp = NULL;
+  fp = nullptr;
 
   fp = JpmcdsFopen(fileName, JPMCDS_FREAD);
-  if (fp == NULL) {
+  if (fp == nullptr) {
     JpmcdsErrMsg("%s: Couldn't open file %s twice.\n", routine, fileName);
     goto done;
   }
 
   dl = JpmcdsNewEmptyDateList(numHols);
 
-  if (dl == NULL) goto done;
+  if (dl == nullptr) goto done;
 
   idx = 0;
   weekends = JPMCDS_WEEKEND_STANDARD; /* Includes SAT and SUN */
@@ -586,13 +587,13 @@ THolidayList *JpmcdsHolidayListRead(
   }
 
   if (JpmcdsFclose(fp) == FAILURE) {
-    fp = NULL;
+    fp = nullptr;
     goto done;
   }
-  fp = NULL;
+  fp = nullptr;
 
   hl = JpmcdsHolidayListNewGeneral(dl, weekends);
-  if (hl == NULL) goto done;
+  if (hl == nullptr) goto done;
 
   status = SUCCESS;
 
