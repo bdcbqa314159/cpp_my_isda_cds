@@ -17,8 +17,6 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#include <iostream>
-
 #include "cerror.hpp"
 // #include "cgeneral.hpp"
 #include "cmemory.hpp"
