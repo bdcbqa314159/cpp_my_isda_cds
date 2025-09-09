@@ -19,6 +19,7 @@
 #include "dateconv.hpp"
 #include "dtlist.hpp"
 // #include "macros.hpp"
+#include "mainDefinitions.hpp"
 #include "memory_utils.hpp"
 #include "strutil.hpp"
 
@@ -645,7 +646,7 @@ static int verifyHolidayList(THolidayList *hl /* (I/O) Holiday list */
     lastDate = thisDate;
 
     /* remove weekends */
-    if (JPMCDS_IS_WEEKDAY(thisDate, hl->weekends)) {
+    if (JpmcdsIsWeekday(thisDate, hl->weekends)) {
       hl->dateList->fArray[count] = thisDate;
       ++count;
     }

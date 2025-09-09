@@ -9,15 +9,6 @@
 #include "exported.hpp"
 
 EXPORT_C {
-/*m
-***************************************************************************
-** Determines whether a day is at a weekend as given by the weekends flag.
-***************************************************************************
-*/
-#define JPMCDS_IS_WEEKEND(date, weekends) ((1 << ((date) % 7)) & (weekends))
-#define JPMCDS_IS_WEEKDAY(date, weekends) \
-  (!(JPMCDS_IS_WEEKEND((date), (weekends))))
-
   /*
   ***************************************************************************
   ** This file is broken into three types of functions.

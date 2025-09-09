@@ -62,10 +62,10 @@ EXPORT_C {
     }                                                                        \
   } while (0)
 
-#ifndef PROGRAM_BUG
-#define PROGRAM_BUG() \
-  JpmcdsErrMsg("Program bug:%s line %d\n", __FILE__, __LINE__)
-#endif
+  // #ifndef PROGRAM_BUG
+  // #define PROGRAM_BUG() \
+//   JpmcdsErrMsg("Program bug:%s line %d\n", __FILE__, __LINE__)
+  // #endif
 
 #ifndef JPMCDS_HUGE_RATE
 #define JPMCDS_HUGE_RATE 1E10 /* Used for root finding  */
