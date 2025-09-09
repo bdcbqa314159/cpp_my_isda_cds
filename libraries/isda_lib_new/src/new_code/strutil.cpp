@@ -261,7 +261,7 @@ int JpmcdsStringSplit(
 
 done:
 
-  FREE(mySplit);
+  Free(mySplit);
   if (status != SUCCESS) JpmcdsErrMsgFailure(routine);
   return status;
 }

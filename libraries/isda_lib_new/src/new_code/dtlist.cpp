@@ -119,8 +119,8 @@ done:
 */
 void JpmcdsFreeDateList(TDateList *theDL) {
   if (theDL != NULL) {
-    FREE(theDL->fArray);
-    FREE(theDL);
+    Free(theDL->fArray);
+    Free(theDL);
   }
 }
 

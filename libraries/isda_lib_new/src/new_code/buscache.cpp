@@ -443,7 +443,7 @@ void JpmcdsHolidayListDelete(THolidayList *hl) /* (I) Holiday list to delete */
 {
   if (hl != nullptr) {
     JpmcdsFreeDateList(hl->dateList);
-    FREE(hl);
+    Free(hl);
   }
 }
 

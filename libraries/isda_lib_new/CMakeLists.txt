@@ -14,7 +14,7 @@ set(sources src/new_code/badday.cpp
             src/new_code/buscache.cpp
             src/new_code/convert.cpp
             src/new_code/strutil.cpp
-            # src/new_code/busday.cpp
+            src/new_code/busday.cpp
 )
 # file(GLOB SOURCES "src/*.c" "src/*.cpp")
 
