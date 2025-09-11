@@ -3,14 +3,14 @@
 #ifndef STRUTIL_HPP
 #define STRUTIL_HPP
 
-#include "cgeneral.hpp"
+#include <cstddef>
 
 /*f
 ***************************************************************************
 ** Duplicates a string using our memory allocation.
 ***************************************************************************
 */
-char *JpmcdsStringDuplicate(char *in); /* (I) input string to duplicate */
+char *JpmcdsStringDuplicate(const char *in); /* (I) input string to duplicate */
 
 /*f
 ***************************************************************************

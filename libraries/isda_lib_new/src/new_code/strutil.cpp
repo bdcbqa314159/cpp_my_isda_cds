@@ -28,25 +28,22 @@
 ** Duplicates a string using our memory allocation.
 ***************************************************************************
 */
-char *JpmcdsStringDuplicate(          /* duplicate a string */
-                            char *in) /* (I) input string to duplicate */
-{
-  static char routine[] = "JpmcdsStringDuplicate";
 
-  char *out;  /* duplicated string */
-  size_t len; /* length of string we want duped */
-
-  if (in == NULL) return NULL;
-
-  len = strlen(in) + 1;
-  out = NewArray<char>(len);
-
-  if (out == NULL) {
-    JpmcdsErrMsg("%s: out of memory\n", routine);
-    return NULL;
+char *JpmcdsStringDuplicate(const char *in) {
+  /* duplicate a string */
+  /* (I) input string to duplicate */
+  if (in == nullptr) {
+    return nullptr;
   }
 
-  (void)strcpy(out, in);
+  size_t len = strlen(in) + 1;
+  char *out = NewArray<char>(len);
+  if (out == nullptr) {
+    JpmcdsErrMsg("JpmcdsStringDuplicate: out of memory\n");
+    return nullptr;
+  }
+
+  std::memcpy(out, in, len);  // Faster and safer than strcpy
   return out;
 }
 
@@ -65,8 +62,9 @@ int JpmcdsStringPreprocess(
 ) {
   int i;
 
-  if (inputString == NULL || outputString == NULL) {
-    JpmcdsErrMsg("JpmcdsStringPreprocess: Input or output string is NULL.\n");
+  if (inputString == nullptr || outputString == nullptr) {
+    JpmcdsErrMsg(
+        "JpmcdsStringPreprocess: Input or output string is nullptr.\n");
     return FAILURE;
   }
 
@@ -99,7 +97,7 @@ int JpmcdsStringPreprocess(
 ** components using a number of delimiters.
 **
 ** If a delimiter is missing in the input string, then this is not an
-** error. Instead all remaining constituent strings are returned as NULL.
+** error. Instead all remaining constituent strings are returned as nullptr.
 **
 ** You need to provide the same number of pointers to char* as the number
 ** delimiters provided.
@@ -145,8 +143,8 @@ int JpmcdsStringParser(
 
   va_start(ap, delimiters);
 
-  if (str == NULL || delimiters == NULL) {
-    JpmcdsErrMsg("%s: NULL inputs.\n", routine);
+  if (str == nullptr || delimiters == nullptr) {
+    JpmcdsErrMsg("%s: nullptr inputs.\n", routine);
     goto done;
   }
 
@@ -155,10 +153,10 @@ int JpmcdsStringParser(
   buf = str;
   for (idx = 0; idx < len; ++idx) {
     subString = va_arg(ap, char **);
-    if (buf != NULL) {
+    if (buf != nullptr) {
       delimiter = strchr(buf, delimiters[idx]);
-      if (delimiter == NULL) {
-        buf = NULL;
+      if (delimiter == nullptr) {
+        buf = nullptr;
       } else {
         *delimiter = '\0'; /* Terminate previous component */
         buf = delimiter + 1;
@@ -189,7 +187,7 @@ done:
 ** the array of strings using FREE() or JpmcdsFreeSafe().
 **
 ** Note that the split array returned is an array of (numItems+1) with the
-** final item being NULL. This means that you can iterate this array either
+** final item being nullptr. This means that you can iterate this array either
 ** using numItems or by testing the string pointer.
 ***************************************************************************
 */
@@ -206,15 +204,15 @@ int JpmcdsStringSplit(
   size_t myNumItems = 0;
   size_t len;
   char c;
-  char **mySplit = NULL;
+  char **mySplit = nullptr;
   char *myString;
   char *ptr;
   size_t pos;
 
-  if (split != NULL) *split = NULL;
-  if (numItems != NULL) *numItems = 0;
-  if (str == NULL || numItems == NULL || split == NULL) {
-    JpmcdsErrMsg("%s: NULL inputs\n", routine);
+  if (split != nullptr) *split = nullptr;
+  if (numItems != nullptr) *numItems = 0;
+  if (str == nullptr || numItems == nullptr || split == nullptr) {
+    JpmcdsErrMsg("%s: nullptr inputs\n", routine);
     goto done;
   }
 
@@ -235,7 +233,7 @@ int JpmcdsStringSplit(
   */
   mySplit =
       (char **)(JpmcdsMallocSafe(sizeof(char *) * (myNumItems + 1) + len + 1));
-  if (mySplit == NULL) goto done;
+  if (mySplit == nullptr) goto done;
   myString = ((char *)mySplit) + sizeof(char *) * (myNumItems + 1);
   strcpy(myString, str);
 
@@ -256,7 +254,7 @@ int JpmcdsStringSplit(
 
   *split = mySplit;
   *numItems = myNumItems;
-  mySplit = NULL;
+  mySplit = nullptr;
   status = SUCCESS;
 
 done:
