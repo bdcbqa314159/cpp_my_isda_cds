@@ -62,7 +62,7 @@ TDate JpmcdsGood2BadBadDayList(TBadDayList *bdl, /* (I) bad day list */
 void JpmcdsFixBadDLBadDayList(TBadDayList *bdl, /* (I) bad day list */
                               TDateList *dl)    /* (M) date list to convert */
 {
-  if (dl == NULL) {
+  if (dl == nullptr) {
     return;
   }
 

@@ -4,13 +4,37 @@
 #define STRUTIL_HPP
 
 #include <cstddef>
+#include <string>
+
+#include "cerror.hpp"
+#include "memory_utils.hpp"
 
 /*f
 ***************************************************************************
 ** Duplicates a string using our memory allocation.
 ***************************************************************************
 */
-char *JpmcdsStringDuplicate(const char *in); /* (I) input string to duplicate */
+[[deprecated(
+    "Use JpmcdsStringDuplicate with const char* or std::string instead")]]
+char *JpmcdsStringDuplicate(char *in); /* (I) input string to duplicate */
+
+std::string JpmcdsStringDuplicate(const std::string &in);
+std::string JpmcdsStringDuplicate(const char *in);
+
+// Helper for incremental migration
+inline char *JpmcdsStringDuplicateModern(const char *in) {
+  if (in == nullptr) {
+    return nullptr;
+  }
+  std::string temp = JpmcdsStringDuplicate(in);
+  char *out = NewArray<char>(temp.length() + 1);
+  if (out == nullptr) {
+    JpmcdsErrMsg("JpmcdsStringDuplicateModern: out of memory\n");
+    return nullptr;
+  }
+  std::strcpy(out, temp.c_str());
+  return out;
+}
 
 /*f
 ***************************************************************************

@@ -14,11 +14,8 @@
 #include <stdarg.h>
 #include <string.h>
 
-#include "cerror.hpp"
-// #include "cgeneral.hpp"
 #include "cmemory.hpp"
 #include "macros.hpp"
-#include "memory_utils.hpp"
 
 #define TOUPPER(_c) ((islower(_c)) ? COND_TOUPPER(_c) : (_c))
 #define COND_TOUPPER(_c) ((_c) - 'a' + 'A')
@@ -29,7 +26,7 @@
 ***************************************************************************
 */
 
-char *JpmcdsStringDuplicate(const char *in) {
+char *JpmcdsStringDuplicate(char *in) {
   /* duplicate a string */
   /* (I) input string to duplicate */
   if (in == nullptr) {
@@ -45,6 +42,14 @@ char *JpmcdsStringDuplicate(const char *in) {
 
   std::memcpy(out, in, len);  // Faster and safer than strcpy
   return out;
+}
+
+std::string JpmcdsStringDuplicate(const std::string &in) {
+  return in;  // std::string handles copying
+}
+
+std::string JpmcdsStringDuplicate(const char *in) {
+  return in ? std::string(in) : std::string{};
 }
 
 /*

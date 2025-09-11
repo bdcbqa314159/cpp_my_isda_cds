@@ -337,7 +337,7 @@ static THoliday *JpmcdsNewHoliday(
   if (hol == nullptr) goto done;
 
   hol->hl = hl;
-  hol->name = JpmcdsStringDuplicate(name);
+  hol->name = JpmcdsStringDuplicateModern(name);
   hl = nullptr; /* Now owned by hol */
   if (hol->name == nullptr) goto done;
 
