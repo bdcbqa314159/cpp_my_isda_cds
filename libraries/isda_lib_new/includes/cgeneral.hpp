@@ -1,5 +1,4 @@
 #pragma once
-#include "old_code/cgeneral.h"
 #ifndef CGENERAL_HPP
 #define CGENERAL_HPP
 
@@ -11,29 +10,16 @@
 EXPORT_C {
   using TBoolean = int;
 
-#ifndef TRUE
-#define TRUE 1
-#endif
+  constexpr int TRUE = 1;
+  constexpr int FALSE = 0;
+  constexpr int SUCCESS = 0;
+  constexpr int FAILURE = -1;
 
-#ifndef FALSE
-#define FALSE 0
-#endif
-
-#ifndef SUCCESS
-#define SUCCESS 0
-#endif
-
-#ifndef FAILURE
-#define FAILURE -1
-#endif
-
-/* This special value means one of three things:  "use the default value",
-   "this value does not exist", or "it doesn't matter what this value is".
-   This symbol must be set to a negative number, although it need not be
-   set to -1. */
-#ifndef JPMCDS_DEFAULT
-#define JPMCDS_DEFAULT -1
-#endif
+  /* This special value means one of three things:  "use the default value",
+     "this value does not exist", or "it doesn't matter what this value is".
+     This symbol must be set to a negative number, although it need not be
+     set to -1. */
+  constexpr int JPMCDS_DEFAULT = -1;
 }
 
 #endif  // CGENERAL_HPP
