@@ -6,6 +6,7 @@
 #include <stdlib.h>
 
 #include "cdate.hpp"  // IWYU pragma: keep
+#include "cgeneral.hpp"
 
 EXPORT_C {
   /* The following enum is used to pass the default stub position */

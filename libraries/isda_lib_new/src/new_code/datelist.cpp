@@ -90,7 +90,7 @@ TDateList *JpmcdsNewDateList(
   return dateList;
 
 done:
-  JpmcdsErrMsg("%s: Failed.\n", routine);
+  Jpmcds::ErrMsg("%s: Failed.\n", routine);
   JpmcdsFreeDateList(dateList);
   return NULL;
 }
@@ -163,7 +163,7 @@ TDateList *JpmcdsNewDateListExtended(
   return dateList;
 
 done:
-  JpmcdsErrMsg("%s: Failed.\n", routine);
+  Jpmcds::ErrMsg("%s: Failed.\n", routine);
   JpmcdsFreeDateList(dateList);
   return NULL;
 }
@@ -204,7 +204,7 @@ TDateList *JpmcdsNewDateListExtendedRoll(
   if (extraDays == 0) {
     /* We can use the roll date - so we count forward from this day */
     if (startDate < rollDate) {
-      JpmcdsErrMsg("%s: Start date cannot be before roll date.\n", routine);
+      Jpmcds::ErrMsg("%s: Start date cannot be before roll date.\n", routine);
       goto done;
     }
 
@@ -231,7 +231,7 @@ TDateList *JpmcdsNewDateListExtendedRoll(
   }
 
 done:
-  JpmcdsErrMsg("%s: Failed.\n", routine);
+  Jpmcds::ErrMsg("%s: Failed.\n", routine);
   return NULL;
 }
 
@@ -255,7 +255,8 @@ TDateList *JpmcdsNewDateListFromTCurve(TCurve *curve) /* (I) Given curve */
   }
 
 done:
-  if (newDateList == (TDateList *)NULL) JpmcdsErrMsg("%s: Failed.\n", routine);
+  if (newDateList == (TDateList *)NULL)
+    Jpmcds::ErrMsg("%s: Failed.\n", routine);
 
   return newDateList;
 }
@@ -288,7 +289,7 @@ TDateList *JpmcdsNewPayDates(
   payDates->fNumItems--;
 
 done:
-  if (payDates == (TDateList *)NULL) JpmcdsErrMsg("%s: Failed.\n", routine);
+  if (payDates == (TDateList *)NULL) Jpmcds::ErrMsg("%s: Failed.\n", routine);
 
   return payDates;
 }
@@ -319,7 +320,7 @@ TDateList *JpmcdsNewDateListBusDayAdj(
   if (status == SUCCESS) return adjDateList;
 
 error:
-  JpmcdsErrMsg(" %s: Failed.\n", routine);
+  Jpmcds::ErrMsg(" %s: Failed.\n", routine);
   JpmcdsFreeDateList(adjDateList);
   return (TDateList *)NULL;
 }
@@ -341,7 +342,7 @@ int JpmcdsDateListBusDayAdj(
   for (idx = 0; idx < dateList->fNumItems; idx++) {
     if (JpmcdsBusinessDay(dateList->fArray[idx], badDayConv, holidayFile,
                           &dateList->fArray[idx]) == FAILURE) {
-      JpmcdsErrMsg(" %s: Failed.\n", routine);
+      Jpmcds::ErrMsg(" %s: Failed.\n", routine);
       return FAILURE;
     }
   }
