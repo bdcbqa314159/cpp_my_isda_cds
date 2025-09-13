@@ -20,6 +20,7 @@ set(sources src/new_code/badday.cpp
             src/new_code/cashflow.cpp
             src/new_code/datelist.cpp
             src/new_code/stub.cpp
+            src/new_code/lintrp1.cpp
 )
 # file(GLOB SOURCES "src/*.c" "src/*.cpp")
 
