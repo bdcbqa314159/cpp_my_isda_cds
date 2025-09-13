@@ -53,13 +53,13 @@ EXPORT_C {
 /* ASSERT is checked in release code, unlike assert() which is only checked  */
 /*        in debug code.                                                     */
 #undef ASSERT
-#define ASSERT(cond)                                                         \
-  do {                                                                       \
-    if (!(cond)) {                                                           \
-      JpmcdsErrMsg("%s: Assertion (%s) fails: %s line %d\n", routine, #cond, \
-                   __FILE__, __LINE__);                                      \
-      goto done;                                                             \
-    }                                                                        \
+#define ASSERT(cond)                                                           \
+  do {                                                                         \
+    if (!(cond)) {                                                             \
+      Jpmcds::ErrMsg("%s: Assertion (%s) fails: %s line %d\n", routine, #cond, \
+                     __FILE__, __LINE__);                                      \
+      goto done;                                                               \
+    }                                                                          \
   } while (0)
 
   // #ifndef PROGRAM_BUG

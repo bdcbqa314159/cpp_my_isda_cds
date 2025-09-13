@@ -43,7 +43,7 @@ TDateList *JpmcdsNewEmptyDateList(int numDates) {
   TDateList *dateList = NULL;
 
   if (numDates < 0) {
-    JpmcdsErrMsg("%s: # dates (%d) must be >= 0.\n", routine, numDates);
+    Jpmcds::ErrMsg("%s: # dates (%d) must be >= 0.\n", routine, numDates);
     goto done;
   }
 
@@ -64,7 +64,7 @@ TDateList *JpmcdsNewEmptyDateList(int numDates) {
   return dateList;
 
 done:
-  JpmcdsErrMsg("%s: Failed.\n", routine);
+  Jpmcds::ErrMsg("%s: Failed.\n", routine);
   JpmcdsFreeDateList(dateList);
   return NULL;
 }
@@ -85,7 +85,7 @@ int JpmcdsExtendDateList(TDateList *dateList, /* (I/O) Date list to extend. */
   int status = FAILURE;
 
   if (numDates < dateList->fNumItems) {
-    JpmcdsErrMsg(
+    Jpmcds::ErrMsg(
         "%s: Number of dates requested (%d) smaller than existing "
         "size of date list (%d).\n",
         routine, numDates, dateList->fNumItems);
@@ -140,11 +140,11 @@ TDateList *JpmcdsCopyDateList(TDateList *a) /* (I) Date list to copy */
     b = JpmcdsNewDateListFromDates(a->fArray, a->fNumItems);
     if (b == NULL) goto done;
   } else {
-    JpmcdsErrMsg("%s: Cannot copy NULL TDateList.\n", routine);
+    Jpmcds::ErrMsg("%s: Cannot copy NULL TDateList.\n", routine);
   }
 
 done:
-  if (b == NULL) JpmcdsErrMsg("%s: Failed.\n", routine);
+  if (b == NULL) Jpmcds::ErrMsg("%s: Failed.\n", routine);
 
   return b;
 }
@@ -167,7 +167,8 @@ TDateList *JpmcdsNewDateListFromDates(TDate *dates, /* (I) */
   }
 
 done:
-  if (newDateList == (TDateList *)NULL) JpmcdsErrMsg("%s: Failed.\n", routine);
+  if (newDateList == (TDateList *)NULL)
+    Jpmcds::ErrMsg("%s: Failed.\n", routine);
 
   return newDateList;
 }
@@ -193,7 +194,7 @@ TDateList *JpmcdsMergeDateLists(TDateList *dateList1, /* (I) */
 
   outputDates = mergeDateLists(dateList1, dateList2, FALSE);
   if (outputDates == (TDateList *)NULL)
-    JpmcdsErrMsg("%s: Failed to Merge Date Lists.\n", routine);
+    Jpmcds::ErrMsg("%s: Failed to Merge Date Lists.\n", routine);
 
   return outputDates;
 }
@@ -223,7 +224,7 @@ TDateList *JpmcdsSortDateList(TDateList *dl) /* (I) */
 
 done:
   JpmcdsFreeDateList(sortedDL);
-  if (distinctDL == NULL) JpmcdsErrMsg("%s: Failed.\n", routine);
+  if (distinctDL == NULL) Jpmcds::ErrMsg("%s: Failed.\n", routine);
 
   return distinctDL;
 }
@@ -297,12 +298,12 @@ TDateList *JpmcdsJpmcdsDateListAddDates(
   TDateList *outputDates = NULL;
 
   if (dateList == NULL || (numDates > 0 && addDates == NULL)) {
-    JpmcdsErrMsg("%s: NULL inputs.\n", routine);
+    Jpmcds::ErrMsg("%s: NULL inputs.\n", routine);
     goto done;
   }
 
   if (dateList->fNumItems < 0 || numDates < 0) {
-    JpmcdsErrMsg("%s: Negative number of dates specified.\n", routine);
+    Jpmcds::ErrMsg("%s: Negative number of dates specified.\n", routine);
     goto done;
   }
 
@@ -382,12 +383,12 @@ TDateList *JpmcdsSubtractDateLists(
   TDateList *sortedDates = NULL;   /* after sorting and what we send back */
 
   if (dateList == NULL || subDates == NULL) {
-    JpmcdsErrMsg("%s: NULL inputs.\n", routine);
+    Jpmcds::ErrMsg("%s: NULL inputs.\n", routine);
     goto done;
   }
 
   if (dateList->fNumItems < 0 || subDates->fNumItems < 0) {
-    JpmcdsErrMsg("%s: Negative number of dates specified.\n", routine);
+    Jpmcds::ErrMsg("%s: Negative number of dates specified.\n", routine);
     goto done;
   }
 
@@ -480,7 +481,7 @@ TDateList *JpmcdsNewDateListDistinct(
   distinctDL->fNumItems = distIdx;
 
 done:
-  if (distinctDL == NULL) JpmcdsErrMsg("%s: Failed.\n", routine);
+  if (distinctDL == NULL) Jpmcds::ErrMsg("%s: Failed.\n", routine);
 
   return distinctDL;
 }
@@ -511,7 +512,7 @@ TDateList *JpmcdsJpmcdsDateListTruncate(
   int i;
 
   if (dateList == NULL) {
-    JpmcdsErrMsg("%s: Null inputs.\n", routine);
+    Jpmcds::ErrMsg("%s: Null inputs.\n", routine);
     goto done;
   }
 

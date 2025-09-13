@@ -86,7 +86,7 @@ int JpmcdsDtFwdAny(TDate startDate,         /* (I) date */
   char upperPrdTyp;
 
   if (startDate <= 0) {
-    JpmcdsErrMsg("%s: startDate must be > 0.\n", routine);
+    Jpmcds::ErrMsg("%s: startDate must be > 0.\n", routine);
     goto done;
   }
 
@@ -135,11 +135,11 @@ int JpmcdsDtFwdAny(TDate startDate,         /* (I) date */
 
     default:
       if (isalpha((int)interval->prd_typ)) {
-        JpmcdsErrMsg("%s:  Period type %c unknown.\n", routine,
-                     interval->prd_typ);
+        Jpmcds::ErrMsg("%s:  Period type %c unknown.\n", routine,
+                       interval->prd_typ);
       } else {
-        JpmcdsErrMsg("%s:  Period type %d unknown.\n", routine,
-                     (int)interval->prd_typ);
+        Jpmcds::ErrMsg("%s:  Period type %d unknown.\n", routine,
+                       (int)interval->prd_typ);
       }
 
       goto done;
@@ -148,7 +148,7 @@ int JpmcdsDtFwdAny(TDate startDate,         /* (I) date */
   status = SUCCESS;
 
 done:
-  if (status == FAILURE) JpmcdsErrMsg("%s: Failed.\n", routine);
+  if (status == FAILURE) Jpmcds::ErrMsg("%s: Failed.\n", routine);
 
   return status;
 }
@@ -327,7 +327,7 @@ int JpmcdsDayCountFraction(TDate date1,   /* (I) Start date */
       break;
 
     default:
-      JpmcdsErrMsg("Invalid method (%ld).\n", method);
+      Jpmcds::ErrMsg("Invalid method (%ld).\n", method);
       goto done;
   }
   status = SUCCESS;
@@ -335,7 +335,7 @@ int JpmcdsDayCountFraction(TDate date1,   /* (I) Start date */
   *result *= sign;
 
 done:
-  if (status == FAILURE) JpmcdsErrMsg("%s: Failed.\n", routine);
+  if (status == FAILURE) Jpmcds::ErrMsg("%s: Failed.\n", routine);
 
   return status;
 }
@@ -433,7 +433,7 @@ int JpmcdsDaysDiff(TDate date1, /* (I) start date */
       break;
 
     default:
-      JpmcdsErrMsg("%s: Invalid method (%ld).\n", routine, method);
+      Jpmcds::ErrMsg("%s: Invalid method (%ld).\n", routine, method);
       goto done;
   }
 
@@ -442,7 +442,7 @@ int JpmcdsDaysDiff(TDate date1, /* (I) start date */
   status = SUCCESS;
 
 done:
-  if (status == FAILURE) JpmcdsErrMsg("%s: Failed.\n", routine);
+  if (status == FAILURE) Jpmcds::ErrMsg("%s: Failed.\n", routine);
 
   return status;
 }
@@ -554,7 +554,7 @@ int JpmcdsDateFwdThenAdjust(
   status = SUCCESS;
 
 done:
-  if (status == FAILURE) JpmcdsErrMsg("%s: Failed.\n", routine);
+  if (status == FAILURE) Jpmcds::ErrMsg("%s: Failed.\n", routine);
 
   return status;
 }

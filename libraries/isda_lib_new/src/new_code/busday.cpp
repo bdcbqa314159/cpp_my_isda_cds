@@ -209,7 +209,7 @@ int JpmcdsDateFromBusDaysOffset(
 
 done:
   // TODO :work on error handling
-  if (status != SUCCESS) JpmcdsErrMsg("%s: Failed.\n", routine);
+  if (status != SUCCESS) Jpmcds::ErrMsg("%s: Failed.\n", routine);
 
   return status;
 }
@@ -250,7 +250,7 @@ int JpmcdsBusinessDay(TDate date,        /* Input Date */
 done:
 
   // TODO :work on error handling
-  if (status != SUCCESS) JpmcdsErrMsg("%s: Failed.\n", routine);
+  if (status != SUCCESS) Jpmcds::ErrMsg("%s: Failed.\n", routine);
 
   return status;
 }
@@ -280,14 +280,14 @@ int JpmcdsBadDayConvValid(char *routine, long badDayConv) {
         case JPMCDS_BAD_DAY_NONE:
         case JPMCDS_BAD_DAY_MODIFIED:
 
-          JpmcdsErrMsg("%s: Bad day convention %ld must be uppercase\n",
-                       routine, badDayConv);
+          Jpmcds::ErrMsg("%s: Bad day convention %ld must be uppercase\n",
+                         routine, badDayConv);
           break;
         default:
           std::cout << "Error: Bad day convention " << (char)badDayConv
                     << " must be uppercase\n";
-          JpmcdsErrMsg("%s: Bad day convention %ld must be uppercase\n",
-                       routine, badDayConv);
+          Jpmcds::ErrMsg("%s: Bad day convention %ld must be uppercase\n",
+                         routine, badDayConv);
           break;
       }
       return FAILURE;
@@ -318,7 +318,7 @@ int JpmcdsIsBusinessDay(TDate date,              /* (I) Input Date */
 
 done:
   // TODO work here
-  if (status != SUCCESS) JpmcdsErrMsg("%s: Failed.\n", routine);
+  if (status != SUCCESS) Jpmcds::ErrMsg("%s: Failed.\n", routine);
 
   return status;
 }
@@ -348,7 +348,7 @@ int JpmcdsDateToBusinessEOM(TDate inDate,  /* (I) Date to be tested */
 done:
 
   // TODO work here
-  if (status != SUCCESS) JpmcdsErrMsg("%s: Failed.\n", routine);
+  if (status != SUCCESS) Jpmcds::ErrMsg("%s: Failed.\n", routine);
 
   return status;
 }
@@ -378,7 +378,7 @@ int JpmcdsHolidayLoadFromDisk(
 done:
 
   // TODO work here
-  if (status != SUCCESS) JpmcdsErrMsg("%s: Failed.\n", routine);
+  if (status != SUCCESS) Jpmcds::ErrMsg("%s: Failed.\n", routine);
 
   return status;
 }
@@ -409,7 +409,7 @@ int JpmcdsHolidayListIsBusinessDay(
   /* Must have a holiday list */
   if (hl == NULL) {
     // TODO work here
-    JpmcdsErrMsg("%s: hl is NULL.\n", routine);
+    Jpmcds::ErrMsg("%s: hl is NULL.\n", routine);
     return FAILURE;
   }
 
@@ -422,7 +422,7 @@ int JpmcdsHolidayListIsBusinessDay(
   /* Check if it is a holiday. */
   if (JpmcdsHolidayListIsHoliday(date, hl, &aHoliday) == FAILURE) {
     // TODO work here
-    JpmcdsErrMsg("%s: Failed.\n", routine);
+    Jpmcds::ErrMsg("%s: Failed.\n", routine);
     return FAILURE;
   }
 
@@ -452,7 +452,7 @@ int JpmcdsHolidayListIsHoliday(
 
   if (hl == NULL || hl->dateList == NULL) {
     // TODO work here
-    JpmcdsErrMsg("%s: hl is NULL.\n", routine);
+    Jpmcds::ErrMsg("%s: hl is NULL.\n", routine);
     return FAILURE;
   }
 
@@ -537,7 +537,7 @@ int JpmcdsHolidayListBusinessDay(
 
   status = JpmcdsMultiHolidayListBusinessDay(date, badDayConv, 1, &hl, outDate);
   // TODO work here
-  if (status != SUCCESS) JpmcdsErrMsg("%s: Failed.\n", routine);
+  if (status != SUCCESS) Jpmcds::ErrMsg("%s: Failed.\n", routine);
 
   return status;
 }
@@ -569,7 +569,7 @@ int JpmcdsMultiHolidayListBusinessDay(
 
   if (holidayLists == NULL) {
     // TODO work here
-    JpmcdsErrMsg("%s: hl is NULL.\n", routine);
+    Jpmcds::ErrMsg("%s: hl is NULL.\n", routine);
     return FAILURE;
   }
 
@@ -618,8 +618,8 @@ int JpmcdsMultiHolidayListBusinessDay(
 
     default:
       // TODO work here
-      JpmcdsErrMsg("%s: Unrecognized bad day convention = %ld.\n", routine,
-                   badDayConv);
+      Jpmcds::ErrMsg("%s: Unrecognized bad day convention = %ld.\n", routine,
+                     badDayConv);
       goto done;
   }
 
@@ -628,7 +628,7 @@ int JpmcdsMultiHolidayListBusinessDay(
 
 done:
   // TODO work here
-  if (status != SUCCESS) JpmcdsErrMsg("%s: Failed.\n", routine);
+  if (status != SUCCESS) Jpmcds::ErrMsg("%s: Failed.\n", routine);
 
   return status;
 }
@@ -691,7 +691,7 @@ static int getNextBusDateMulti(
 
 done:
   // TODO work here
-  if (status != SUCCESS) JpmcdsErrMsg("%s: Failed.\n", routine);
+  if (status != SUCCESS) Jpmcds::ErrMsg("%s: Failed.\n", routine);
 
   return status;
 }
@@ -721,7 +721,7 @@ static int getNextBusDate(TDate startDate,  /* (I) starting date. */
     if (findFirstHolidayIdx(startDate, hl->dateList, direction, &holIdx,
                             &doneSearchingList) != SUCCESS) {
       // TODO work here
-      JpmcdsErrMsg("getNextBusDate: Failed.\n");
+      Jpmcds::ErrMsg("getNextBusDate: Failed.\n");
       return FAILURE;
     }
   }
@@ -830,7 +830,7 @@ int JpmcdsHolidayListBusinessDaysDiff(
 
   if (hl == NULL) {
     // TODO work here
-    JpmcdsErrMsg("%s: hl is NULL.\n", routine);
+    Jpmcds::ErrMsg("%s: hl is NULL.\n", routine);
     return FAILURE;
   }
 
@@ -940,7 +940,7 @@ int JpmcdsHolidayListAddBusinessDays(
 
   if (hl == NULL) {
     // TODO work here
-    JpmcdsErrMsg("%s: hl is NULL.\n", routine);
+    Jpmcds::ErrMsg("%s: hl is NULL.\n", routine);
 
     goto done;
   }
@@ -1011,7 +1011,7 @@ int JpmcdsHolidayListAddBusinessDays(
 
 done:
   // TODO work here
-  if (status == FAILURE) JpmcdsErrMsg("%s: Failed.\n", routine);
+  if (status == FAILURE) Jpmcds::ErrMsg("%s: Failed.\n", routine);
 
   return status;
 }
@@ -1068,7 +1068,7 @@ static int findFirstHolidayIdx(
     if (JpmcdsBSearchLong((double)date, holArray, sizeof(TDate), numHols,
                           &idxHi, &idxLo) != SUCCESS) {
       // TODO work here
-      JpmcdsErrMsg("findFirstHolidayIdx: Failed.\n");
+      Jpmcds::ErrMsg("findFirstHolidayIdx: Failed.\n");
       return FAILURE;
     }
     JpmcdsBSearchCheckOrder(1); /* Turn order checking back ON. */
@@ -1195,7 +1195,7 @@ static int forwardNonStandardWeekends(
 
 done:
   // TODO work here
-  if (status != SUCCESS) JpmcdsErrMsg("%s: Failed.\n", routine);
+  if (status != SUCCESS) Jpmcds::ErrMsg("%s: Failed.\n", routine);
 
   return status;
 }
@@ -1282,8 +1282,7 @@ static int holAdjustStandardWeekends(
 
 done:
 
-  // TODO work here
-  if (status != SUCCESS) JpmcdsErrMsg("%s: Failed.\n", routine);
+  if (status != SUCCESS) Jpmcds::ErrMsg("%s: Failed.\n", routine);
 
   return status;
 }

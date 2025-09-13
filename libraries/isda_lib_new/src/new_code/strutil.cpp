@@ -68,7 +68,7 @@ int JpmcdsStringPreprocess(
   int i;
 
   if (inputString == nullptr || outputString == nullptr) {
-    JpmcdsErrMsg(
+    Jpmcds::ErrMsg(
         "JpmcdsStringPreprocess: Input or output string is nullptr.\n");
     return FAILURE;
   }
@@ -149,7 +149,7 @@ int JpmcdsStringParser(
   va_start(ap, delimiters);
 
   if (str == nullptr || delimiters == nullptr) {
-    JpmcdsErrMsg("%s: nullptr inputs.\n", routine);
+    Jpmcds::ErrMsg("%s: nullptr inputs.\n", routine);
     goto done;
   }
 
@@ -217,7 +217,7 @@ int JpmcdsStringSplit(
   if (split != nullptr) *split = nullptr;
   if (numItems != nullptr) *numItems = 0;
   if (str == nullptr || numItems == nullptr || split == nullptr) {
-    JpmcdsErrMsg("%s: nullptr inputs\n", routine);
+    Jpmcds::ErrMsg("%s: nullptr inputs\n", routine);
     goto done;
   }
 

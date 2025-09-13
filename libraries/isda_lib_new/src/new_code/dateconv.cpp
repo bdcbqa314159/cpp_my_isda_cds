@@ -596,7 +596,7 @@ TDate JpmcdsDate(long year,  /* (I) Year */
 
   if (JpmcdsMDYToDate(&mdy, &date) != SUCCESS) {
     // TODO work here
-    JpmcdsErrMsg("%s: Failed.\n", routine);
+    Jpmcds::ErrMsg("%s: Failed.\n", routine);
     date = FAILURE;
   }
 
@@ -646,7 +646,7 @@ int JpmcdsDateToMDY(TDate date,         /* (I) Days since 1/1/BASE_YEAR. */
 
   if (date < 0) {
     // TODO work here
-    JpmcdsErrMsg("%s: negative  TDate %ld received.\n", routine, date);
+    Jpmcds::ErrMsg("%s: negative  TDate %ld received.\n", routine, date);
     return FAILURE;
   }
 
@@ -732,7 +732,8 @@ int JpmcdsMDYToDate(TMonthDayYear *mdy, /* (I) Month/Day/Year format */
 
       if (day < 1 || 31 < day || month < 1 || 12 < month) {
         // TODO work here
-        JpmcdsErrMsg("%s: Invalid date: %d/%d/%d\n", routine, month, day, year);
+        Jpmcds::ErrMsg("%s: Invalid date: %d/%d/%d\n", routine, month, day,
+                       year);
         return FAILURE;
       }
 
@@ -741,7 +742,8 @@ int JpmcdsMDYToDate(TMonthDayYear *mdy, /* (I) Month/Day/Year format */
           *odate >= gDateCacheArray[i + 1].date) { /* note: don't have to check
                                                       last, as it's december */
                                                    // TODO work here
-        JpmcdsErrMsg("%s: Invalid date: %d/%d/%d\n", routine, month, day, year);
+        Jpmcds::ErrMsg("%s: Invalid date: %d/%d/%d\n", routine, month, day,
+                       year);
         return FAILURE;
       }
 
@@ -760,8 +762,8 @@ int JpmcdsMDYToDate(TMonthDayYear *mdy, /* (I) Month/Day/Year format */
   else if (day < 1 || (isLeap ? day > leapDays[month] : day > (days[month]))) {
     // TODO work here
 
-    JpmcdsErrMsg("%s: date %ld/%ld/%ld  not valid.\n", routine, mdy->month,
-                 mdy->day, mdy->year);
+    Jpmcds::ErrMsg("%s: date %ld/%ld/%ld  not valid.\n", routine, mdy->month,
+                   mdy->day, mdy->year);
     return FAILURE;
   }
 
@@ -770,8 +772,8 @@ int JpmcdsMDYToDate(TMonthDayYear *mdy, /* (I) Month/Day/Year format */
   if (month < 1 || month > JPMCDS_MONTHS_PER_YEAR ||
       mdy->year < JPMCDS_TDATE_BASE_YEAR) {
     // TODO work here
-    JpmcdsErrMsg("%s: date %ld/%ld/%ld is not valid.\n", routine, mdy->month,
-                 mdy->day, mdy->year);
+    Jpmcds::ErrMsg("%s: date %ld/%ld/%ld is not valid.\n", routine, mdy->month,
+                   mdy->day, mdy->year);
     return FAILURE;
   }
 
@@ -847,7 +849,7 @@ int JpmcdsNormalizeMDY(TMonthDayYear *mdy) /* (I/O) */
 
   if (day < 1 || day > MAX_DAYS_PER_MONTH) {
     // TODO work here
-    JpmcdsErrMsg("%s: day %d invalid.\n", routine, day);
+    Jpmcds::ErrMsg("%s: day %d invalid.\n", routine, day);
     return FAILURE;
   }
 

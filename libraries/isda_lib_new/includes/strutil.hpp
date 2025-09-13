@@ -29,7 +29,7 @@ inline char *JpmcdsStringDuplicateModern(const char *in) {
   std::string temp = JpmcdsStringDuplicate(in);
   char *out = NewArray<char>(temp.length() + 1);
   if (out == nullptr) {
-    JpmcdsErrMsg("JpmcdsStringDuplicateModern: out of memory\n");
+    Jpmcds::ErrMsg("JpmcdsStringDuplicateModern: out of memory\n");
     return nullptr;
   }
   std::strcpy(out, temp.c_str());

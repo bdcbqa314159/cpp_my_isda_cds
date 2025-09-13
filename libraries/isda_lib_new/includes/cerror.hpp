@@ -9,6 +9,18 @@
 EXPORT_C {
   /*t
    */
+
+  class WriteMessageGuard {
+   public:
+    WriteMessageGuard(TBoolean &flag);
+
+    ~WriteMessageGuard();
+
+   private:
+    TBoolean &m_flag;
+    TBoolean m_oldValue;
+  };
+
   typedef TBoolean(JpmcdsErrCallBackFunc)(char *string, void *callBackData);
 
   /*f
@@ -17,6 +29,13 @@ EXPORT_C {
   ** file.
   ***************************************************************************
   */
+
+  namespace Jpmcds {
+  void ErrMsg(const char *format, ...);
+  }
+
+  // Deprecated C-style version
+  [[deprecated("Use Jpmcds::ErrMsg(const char*, ...) instead")]]
   void JpmcdsErrMsg(char *format, /* (I) printf style format string. */
                     ...)          /* (I) Variable arguments. */
 #if __GNUC__ > 1
@@ -29,15 +48,27 @@ EXPORT_C {
   ** Same as JpmcdsErrMsg but using va_list for its arguments instead of ...
   ***************************************************************************
   */
-  void JpmcdsErrMsgV(char *format, /* (I) printf style format string */
-                     va_list args  /* (I) Variable arguments */
-  );
+  //   void JpmcdsErrMsgV(char *format, /* (I) printf style format string */
+  //                      va_list args  /* (I) Variable arguments */
+  //   );
+
+  namespace Jpmcds {
+  void ErrMsgV(const char *format, va_list args);
+  }
+
+  // Deprecated C-style version
+  [[deprecated("Use Jpmcds::ErrMsgV(const char*, va_list) instead")]]
+  void JpmcdsErrMsgV(char *format, va_list parminfo);
 
   /*f
   ***************************************************************************
   ** Writes an error message to a log file.
   ***************************************************************************
   */
+  namespace Jpmcds {
+  void ErrLogWrite(const char *message);
+  }
+  [[deprecated("Use Jpmcds::ErrLogWrite(const char*) instead")]]
   void JpmcdsErrLogWrite(char *message);
 
   /*f

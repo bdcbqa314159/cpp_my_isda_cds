@@ -143,7 +143,7 @@ int JpmcdsCountDates(TDate fromDate,          /* (I) Date to count from */
 
   *numIntervals = index - 1; /* step back inside (fromDate,toDate) interval */
   if (*numIntervals < lowNumIntervals) {
-    JpmcdsErrMsg(
+    Jpmcds::ErrMsg(
         "%s: Failed with parameters:\n"
         "\tfromDate: %s  toDate: %s interval: %s\n",
         routine, JpmcdsFormatDate(fromDate), JpmcdsFormatDate(toDate),
@@ -155,7 +155,7 @@ int JpmcdsCountDates(TDate fromDate,          /* (I) Date to count from */
   status = SUCCESS;
 
 done:
-  if (status == FAILURE) JpmcdsErrMsg("%s: Failed.\n", routine);
+  if (status == FAILURE) Jpmcds::ErrMsg("%s: Failed.\n", routine);
 
   return status;
 }
@@ -177,7 +177,7 @@ int JpmcdsFreq2TDateInterval(long freq,               /* (I) */
     SET_TDATE_INTERVAL((*interval), JPMCDS_MONTHS_PER_YEAR / (int)freq, 'M');
     return SUCCESS;
   } else {
-    JpmcdsErrMsg("%s: bogus frequency %ld detected.\n", routine, freq);
+    Jpmcds::ErrMsg("%s: bogus frequency %ld detected.\n", routine, freq);
     return FAILURE;
   }
 }
@@ -194,14 +194,14 @@ int JpmcdsDateIntervalToFreq(TDateInterval *interval, /* (I) */
   static char routine[] = "JpmcdsDateIntervalToFreq";
 
   if (JpmcdsDateIntervalToYears(interval, &years) == FAILURE) {
-    JpmcdsErrMsg("%s: Failed.\n", routine);
+    Jpmcds::ErrMsg("%s: Failed.\n", routine);
     return FAILURE;
   }
   if (years > 0.) {
     *freq = 1. / years;
     return SUCCESS;
   } else {
-    JpmcdsErrMsg("%s: interval is zero.\n", routine);
+    Jpmcds::ErrMsg("%s: interval is zero.\n", routine);
     return FAILURE;
   }
 }
@@ -252,8 +252,8 @@ int JpmcdsDateIntervalToYears(TDateInterval *interval, /* (I) */
       *years = (double)interval->prd * (double)JPMCDS_DAYS_PER_LUNAR_MONTH /
                JPMCDS_DAYS_PER_YEAR; /* Act/365F*/
     default:
-      JpmcdsErrMsg("%s: unknown interval type %c.\n", routine,
-                   interval->prd_typ);
+      Jpmcds::ErrMsg("%s: unknown interval type %c.\n", routine,
+                     interval->prd_typ);
       return FAILURE;
   }
 
@@ -287,14 +287,14 @@ int JpmcdsDateFromDateAndOffset(TDate oldDate, TDateInterval *pInterval,
 static TBoolean checkDateInterval(TDateInterval *interval, TDate fromDate,
                                   TDate toDate, char *caller) {
   if (interval->prd == 0) {
-    JpmcdsErrMsg("%s: Zero TDateInterval is not accepted.\n", caller);
+    Jpmcds::ErrMsg("%s: Zero TDateInterval is not accepted.\n", caller);
     return FAILURE;
   }
 
   if ((toDate - fromDate) * interval->prd < 0) {
-    JpmcdsErrMsg("%s: cannot count from %s to %s with interval %s.\n", caller,
-                 JpmcdsFormatDate(fromDate), JpmcdsFormatDate(toDate),
-                 JpmcdsFormatDateInterval(interval));
+    Jpmcds::ErrMsg("%s: cannot count from %s to %s with interval %s.\n", caller,
+                   JpmcdsFormatDate(fromDate), JpmcdsFormatDate(toDate),
+                   JpmcdsFormatDateInterval(interval));
     return FAILURE;
   }
   return SUCCESS;

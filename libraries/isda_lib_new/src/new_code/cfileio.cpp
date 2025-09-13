@@ -49,7 +49,7 @@ TFile *JpmcdsFopen(char *filename, /* (I) Filename. */
 
   if (filename == NULL || *filename == '\0') {
     // TODO work here
-    JpmcdsErrMsg("%s: Unspecified file name\n", routine);
+    Jpmcds::ErrMsg("%s: Unspecified file name\n", routine);
     return NULL;
   }
 
@@ -87,7 +87,7 @@ TFile *JpmcdsFopen(char *filename, /* (I) Filename. */
       break;
     default:
       // TODO work here
-      JpmcdsErrMsg("%s:  Unknown mode %d\n", routine, mode);
+      Jpmcds::ErrMsg("%s:  Unknown mode %d\n", routine, mode);
 
       Free(tFile->filename);
       Free(tFile);
@@ -95,8 +95,8 @@ TFile *JpmcdsFopen(char *filename, /* (I) Filename. */
   }
   if (tFile->fileP == NULL) {
     // TODO work here
-    JpmcdsErrMsg("%s:  Error using file %s, errno %d\n", routine, filename,
-                 errno);
+    Jpmcds::ErrMsg("%s:  Error using file %s, errno %d\n", routine, filename,
+                   errno);
     Free(tFile->filename);
     Free(tFile);
     return NULL;
@@ -124,7 +124,7 @@ int JpmcdsFclose(TFile *tFile) /* (I) File handle. */
 done:
   if (status == FAILURE) {
     // TODO work here
-    JpmcdsErrMsg("%s:  Error closing file %s.\n", routine, tFile->filename);
+    Jpmcds::ErrMsg("%s:  Error closing file %s.\n", routine, tFile->filename);
   }
   Free(tFile->filename);
   Free(tFile);
@@ -142,7 +142,7 @@ int JpmcdsFflush(TFile *tFile) /* (I) File handle. */
 
   if (fflush((FILE *)tFile->fileP) != 0) {
     // TODO work here
-    JpmcdsErrMsg("%s:  Error flushing file %s.\n", routine, tFile->filename);
+    Jpmcds::ErrMsg("%s:  Error flushing file %s.\n", routine, tFile->filename);
     return FAILURE;
   }
   return SUCCESS;
@@ -186,7 +186,7 @@ int JpmcdsFputs(char *output, /* (I) Strings which contain data. */
 
   if (fputs(output, (FILE *)tFile->fileP) == EOF) {
     // TODO work here
-    JpmcdsErrMsg("%s:  Error writing file %s.\n", routine, tFile->filename);
+    Jpmcds::ErrMsg("%s:  Error writing file %s.\n", routine, tFile->filename);
     return FAILURE;
   }
   return SUCCESS;
@@ -206,7 +206,7 @@ int JpmcdsFread(char *ptr,    /* (I) Pointer to memory to store data. */
 
   if (tFile->hasLastChar == TRUE) {
     // TODO work here
-    JpmcdsErrMsg("%s:  Error mixing read and scanf.\n", routine);
+    Jpmcds::ErrMsg("%s:  Error mixing read and scanf.\n", routine);
     return FAILURE;
   }
 
@@ -231,7 +231,7 @@ int JpmcdsFwrite(char *ptr,    /* (I) Pointer to data to write. */
   numWrite = fwrite(ptr, 1, numItems, (FILE *)tFile->fileP);
   if (numWrite < 1) {
     // TODO work here
-    JpmcdsErrMsg("%s:  Error writing file %s.\n", routine, tFile->filename);
+    Jpmcds::ErrMsg("%s:  Error writing file %s.\n", routine, tFile->filename);
     return FAILURE;
   }
   return numWrite;
@@ -275,7 +275,7 @@ int JpmcdsFputc(char c,       /* (I) Character to write. */
   rc = putc(c, (FILE *)tFile->fileP);
   if (rc == EOF) {
     // TODO work here
-    JpmcdsErrMsg("%s:  Error writing file %s.\n", routine, tFile->filename);
+    Jpmcds::ErrMsg("%s:  Error writing file %s.\n", routine, tFile->filename);
     return FAILURE;
   }
 

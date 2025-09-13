@@ -135,7 +135,7 @@ THolidayList *JpmcdsHolidayListFromCache(
 
   /* Must have a name. */
   if (name == nullptr) {
-    JpmcdsErrMsg("%s: nullptr inputs.\n", routine);
+    Jpmcds::ErrMsg("%s: nullptr inputs.\n", routine);
     goto done;
   }
 
@@ -159,7 +159,7 @@ THolidayList *JpmcdsHolidayListFromCache(
 done:
 
   if (status != SUCCESS) {
-    JpmcdsErrMsg("%s: Failed.\n", routine);
+    Jpmcds::ErrMsg("%s: Failed.\n", routine);
     return nullptr;
   }
 
@@ -201,8 +201,8 @@ int JpmcdsHolidayListAddToCache(
     if (hol->name[0] == 'N') {
       if (strcmp(hol->name, "NONE") == 0 ||
           strcmp(hol->name, "NO_WEEKENDS") == 0) {
-        JpmcdsErrMsg("%s: Attempt to over-write standard holiday %s\n", routine,
-                     hol->name);
+        Jpmcds::ErrMsg("%s: Attempt to over-write standard holiday %s\n",
+                       routine, hol->name);
         goto done;
       }
     }
@@ -219,7 +219,7 @@ int JpmcdsHolidayListAddToCache(
 done:
   JpmcdsFreeHoliday(hol);
 
-  if (status != SUCCESS) JpmcdsErrMsg("%s: Failed.\n", routine);
+  if (status != SUCCESS) Jpmcds::ErrMsg("%s: Failed.\n", routine);
 
   return status;
 }
@@ -329,7 +329,7 @@ static THoliday *JpmcdsNewHoliday(
   THoliday *hol = nullptr;
 
   if (hl == nullptr || name == nullptr) {
-    JpmcdsErrMsg("%s: nullptr inputs.\n", routine);
+    Jpmcds::ErrMsg("%s: nullptr inputs.\n", routine);
     goto done;
   }
 
@@ -349,7 +349,7 @@ done:
   if (status != SUCCESS) {
     JpmcdsFreeHoliday(hol);
     hol = nullptr;
-    JpmcdsErrMsg("%s: Failed.\n", routine);
+    Jpmcds::ErrMsg("%s: Failed.\n", routine);
   }
 
   return hol;
@@ -429,7 +429,7 @@ done:
   if (status != SUCCESS) {
     JpmcdsHolidayListDelete(hl);
     hl = nullptr;
-    JpmcdsErrMsg("%s: Failed.\n", routine);
+    Jpmcds::ErrMsg("%s: Failed.\n", routine);
   }
 
   return hl;
@@ -483,7 +483,7 @@ THolidayList *JpmcdsHolidayListRead(
 
   fp = JpmcdsFopen(fileName, JPMCDS_FREAD);
   if (fp == nullptr) {
-    JpmcdsErrMsg("%s: Couldn't open file %s.\n", routine, fileName);
+    Jpmcds::ErrMsg("%s: Couldn't open file %s.\n", routine, fileName);
     goto done;
   }
 
@@ -502,7 +502,7 @@ THolidayList *JpmcdsHolidayListRead(
 
   fp = JpmcdsFopen(fileName, JPMCDS_FREAD);
   if (fp == nullptr) {
-    JpmcdsErrMsg("%s: Couldn't open file %s twice.\n", routine, fileName);
+    Jpmcds::ErrMsg("%s: Couldn't open file %s twice.\n", routine, fileName);
     goto done;
   }
 
@@ -552,8 +552,8 @@ THolidayList *JpmcdsHolidayListRead(
         TDate thisDate;
 
         if (idx >= numHols) {
-          JpmcdsErrMsg("%s: More dates on second scan of file %s.\n", routine,
-                       fileName);
+          Jpmcds::ErrMsg("%s: More dates on second scan of file %s.\n", routine,
+                         fileName);
           goto done;
         }
 
@@ -561,11 +561,11 @@ THolidayList *JpmcdsHolidayListRead(
         mdy.month = (dateVal - mdy.year * 10000) / 100;
         mdy.day = dateVal % 100;
         if (JpmcdsMDYToDate(&mdy, &thisDate) == FAILURE) {
-          JpmcdsErrMsg("%s: invalid date: %s", routine, buffer);
+          Jpmcds::ErrMsg("%s: invalid date: %s", routine, buffer);
           goto done;
         }
         if (idx > 0 && dl->fArray[idx - 1] >= thisDate) {
-          JpmcdsErrMsg("%s: Date out of order: %s", routine, buffer);
+          Jpmcds::ErrMsg("%s: Date out of order: %s", routine, buffer);
           goto done;
         }
         dl->fArray[idx] = thisDate;
@@ -575,15 +575,16 @@ THolidayList *JpmcdsHolidayListRead(
   }
 
   if (numHols < 1 && weekends == JPMCDS_WEEKEND_STANDARD) {
-    JpmcdsErrMsg("%s: No holiday information found in %s.\n", routine,
-                 fileName);
-    JpmcdsErrMsg("   Either week-end information or dates must be provided.\n");
+    Jpmcds::ErrMsg("%s: No holiday information found in %s.\n", routine,
+                   fileName);
+    Jpmcds::ErrMsg(
+        "   Either week-end information or dates must be provided.\n");
     goto done;
   }
 
   if (idx != numHols) {
-    JpmcdsErrMsg("%s: Less dates on second scan of file %s\n", routine,
-                 fileName);
+    Jpmcds::ErrMsg("%s: Less dates on second scan of file %s\n", routine,
+                   fileName);
     goto done;
   }
 
@@ -602,7 +603,7 @@ done:
 
   JpmcdsFclose(fp);
   JpmcdsFreeDateList(dl);
-  if (status != SUCCESS) JpmcdsErrMsg("%s: Failed.\n", routine);
+  if (status != SUCCESS) Jpmcds::ErrMsg("%s: Failed.\n", routine);
 
   return hl;
 }
@@ -636,10 +637,10 @@ static int verifyHolidayList(THolidayList *hl /* (I/O) Holiday list */
     TDate thisDate = hl->dateList->fArray[idx];
 
     if (thisDate <= lastDate) {
-      JpmcdsErrMsg("%s: Dates are not in strictly increasing order.\n",
-                   routine);
-      JpmcdsErrMsg("    [%ld] = %s; LastDate = %s.\n", idx,
-                   JpmcdsFormatDate(thisDate), JpmcdsFormatDate(lastDate));
+      Jpmcds::ErrMsg("%s: Dates are not in strictly increasing order.\n",
+                     routine);
+      Jpmcds::ErrMsg("    [%ld] = %s; LastDate = %s.\n", idx,
+                     JpmcdsFormatDate(thisDate), JpmcdsFormatDate(lastDate));
       goto done;
     }
 
@@ -658,7 +659,7 @@ static int verifyHolidayList(THolidayList *hl /* (I/O) Holiday list */
 
 done:
 
-  if (status != SUCCESS) JpmcdsErrMsg("%s: Failed.\n", routine);
+  if (status != SUCCESS) Jpmcds::ErrMsg("%s: Failed.\n", routine);
 
   return status;
 }

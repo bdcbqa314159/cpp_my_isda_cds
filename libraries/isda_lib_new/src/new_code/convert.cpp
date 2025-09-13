@@ -119,7 +119,7 @@ int JpmcdsStringToDate(char *mmddyyyy, /* (I) */
     if (cp == NULL) goto done;
     mdy.year = atol(cp);
     if (mdy.year > 99 && mdy.year < JPMCDS_TDATE_BASE_YEAR) {
-      JpmcdsErrMsg("%s: Year %ld out of range.\n", routine, mdy.year);
+      Jpmcds::ErrMsg("%s: Year %ld out of range.\n", routine, mdy.year);
       return FAILURE;
     }
 
@@ -254,7 +254,7 @@ int JpmcdsStringToDateInterval(
   status = JpmcdsMakeDateInterval(numPeriods, periodType, interval);
 
   if (status == FAILURE)
-    JpmcdsErrMsg("%s: Failed interpreting %s.\n", routine, label);
+    Jpmcds::ErrMsg("%s: Failed interpreting %s.\n", routine, label);
 
   return status;
 }
@@ -320,9 +320,10 @@ int JpmcdsMakeDateInterval(
     default:
       if (isprint((int)periodType)) /* If periodType is printable */
       {
-        JpmcdsErrMsg("%s: Interval type %c not valid.\n", routine, periodType);
+        Jpmcds::ErrMsg("%s: Interval type %c not valid.\n", routine,
+                       periodType);
       } else {
-        JpmcdsErrMsg("%s: Interval type (unprintable) not valid.\n", routine);
+        Jpmcds::ErrMsg("%s: Interval type (unprintable) not valid.\n", routine);
       }
       return FAILURE;
   }

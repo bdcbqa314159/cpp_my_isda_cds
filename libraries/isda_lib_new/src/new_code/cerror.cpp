@@ -18,8 +18,11 @@
 #include <string.h>
 #include <time.h>
 
+#include <cstddef>
+
 #include "cfileio.hpp"
 // #include "cmemory.hpp"
+#include "cgeneral.hpp"
 #include "common_files.hpp"
 #include "memory_utils.hpp"
 
@@ -110,6 +113,13 @@ struct Record {
 
 static Record record = {FALSE, 0, 0, 0, NULL, NULL};
 
+WriteMessageGuard::WriteMessageGuard(TBoolean &flag)
+    : m_flag(flag), m_oldValue(flag) {
+  flag = FALSE;
+}
+
+WriteMessageGuard::~WriteMessageGuard() { m_flag = m_oldValue; }
+
 /*
 ***************************************************************************
 ** Tells JpmcdsErrMsg to actually write something (either to log file or to
@@ -176,7 +186,7 @@ int JpmcdsErrMsgFileName(char *fileName, TBoolean append) {
   } else {
     /* Comes here on failure.
      */
-    JpmcdsErrMsg("%s: Failed to open file \"%s\".\n", routine, fileName);
+    Jpmcds::ErrMsg("%s: Failed to open file \"%s\".\n", routine, fileName);
     return FAILURE;
   }
 }
@@ -194,12 +204,21 @@ char *JpmcdsErrMsgGetFileName(void) { return GetFileName(); }
 ** Writes an error message with a variable number of arguments to a log file.
 ***************************************************************************
 */
-void JpmcdsErrMsg(char *format, ...) {
+
+namespace Jpmcds {
+void ErrMsg(const char *format, ...) {
   va_list parminfo;
   va_start(parminfo, format);
-  JpmcdsErrMsgV(format, parminfo);
+  ErrMsgV(format, parminfo);
   va_end(parminfo);
-  return;
+}
+}  // namespace Jpmcds
+
+void JpmcdsErrMsg(char *format, ...) {
+  va_list args;
+  va_start(args, format);
+  Jpmcds::ErrMsgV(static_cast<const char *>(format), args);
+  va_end(args);
 }
 
 /*
@@ -210,53 +229,40 @@ void JpmcdsErrMsg(char *format, ...) {
 ** Writes an error message with a variable number of arguments to a log file
 ***************************************************************************
 */
-void JpmcdsErrMsgV(char *format, va_list parminfo) {
-  TBoolean localpWriteMessage; /* Local copy of pWriteMessage */
 
-  /*
-   * We MUST turn off error logging while JpmcdsErrMsg is executing.
-   * If we don't, we could potentially land in an infinite loop.
-   */
-  localpWriteMessage = pWriteMessage;
-
-  if (!localpWriteMessage) {
-    return; /* Message writing not turned on */
+namespace Jpmcds {
+void ErrMsgV(const char *format, va_list args) {
+  if (!pWriteMessage) {
+    return;  // Message writing not turned on
   }
 
-  pWriteMessage = FALSE; /* Turn off message writing when executing
-                            JpmcdsErrMsg because we don't want an
-                            infinite loop of calls to JpmcdsErrMsg
-                         */
+  WriteMessageGuard guard(pWriteMessage);
 
-  if (pFp == NULL) {
+  if (pFp == nullptr) {
     char *fileName = GetFileName();
-
-    if (FileCreate(fileName, pAppendOnOpen) == FAILURE) goto done;
-
-    /* Just opened file from scratch. From now on, open on append.
-     * Save file name for next time.
-     */
+    if (FileCreate(fileName, pAppendOnOpen) == FAILURE) {
+      return;  // Early return on failure
+    }
     if (!pAppendOnOpen) {
       pAppendOnOpen = TRUE;
       SetFileName(fileName);
     }
   }
 
-  if (TimeStampRequired() != SUCCESS) goto done;
-
-  if (JpmcdsWriteToLog(TRUE, format, parminfo) != SUCCESS) {
-    pWriteMessage = localpWriteMessage; /* Restore the variable */
-    return;                             /* failed */
+  if (TimeStampRequired() != SUCCESS) {
+    return;  // Early return on failure
   }
 
-  /* Close file in between calls, unless user supplied file pointer to us.
-   * Note that if pFp is NULL, JpmcdsFClose does nothing.
-   */
-done:
+  if (JpmcdsWriteToLog(TRUE, const_cast<char *>(format), args) != SUCCESS) {
+    return;  // Early return on failure
+  }
   JpmcdsFclose(pFp);
-  pFp = NULL;
-  pWriteMessage = localpWriteMessage; /* Restore the variable */
-  return;
+  pFp = nullptr;
+}
+}  // namespace Jpmcds
+
+void JpmcdsErrMsgV(char *format, va_list parminfo) {
+  Jpmcds::ErrMsgV(format, parminfo);
 }
 
 /*
@@ -264,13 +270,15 @@ done:
 ** Writes an error message to a log file..
 ***************************************************************************
 */
-void JpmcdsErrLogWrite(char *message) {
-  if (!pWriteMessage) return; /* Message writing not turned on */
 
-  if (pFp == NULL) {
+namespace Jpmcds {
+void ErrLogWrite(const char *message) {
+  if (!pWriteMessage) return;
+
+  if (pFp == nullptr) {
     char *fileName = GetFileName();
 
-    if (FileCreate(fileName, pAppendOnOpen) == FAILURE) goto done;
+    if (FileCreate(fileName, pAppendOnOpen) == FAILURE) return; /* failed */
 
     /* Just opened file from scratch. From now on, open on append.
      * Save file name for next time.
@@ -281,18 +289,20 @@ void JpmcdsErrLogWrite(char *message) {
     }
   }
 
-  if (TimeStampRequired() != SUCCESS) goto done;
+  if (TimeStampRequired() != SUCCESS) return; /* failed */
 
-  if (JpmcdsWriteToLog(FALSE, message, NULL) != SUCCESS) return; /* failed */
+  if (JpmcdsWriteToLog(FALSE, const_cast<char *>(message), NULL) != SUCCESS)
+    return; /* failed */
 
   /* Close file in between calls, unless user supplied file pointer to us.
    * Note that if pFp is NULL, JpmcdsFClose does nothing.
    */
-done:
   JpmcdsFclose(pFp);
-  pFp = NULL;
-  return;
+  pFp = nullptr;
 }
+}  // namespace Jpmcds
+
+void JpmcdsErrLogWrite(char *message) { Jpmcds::ErrLogWrite(message); }
 
 /*
 ***************************************************************************
@@ -304,7 +314,7 @@ done:
 int JpmcdsErrMsgFailure(
     char *routine /* (I) Name of routine published in error log. */
 ) {
-  JpmcdsErrMsg("%s: Failed.\n", routine);
+  Jpmcds::ErrMsg("%s: Failed.\n", routine);
   return FAILURE;
 }
 
@@ -588,7 +598,7 @@ char **JpmcdsErrGetMsgRecord(void) {
    */
   temp = (char **)JpmcdsMallocSafe((record.number + 1) * sizeof(char *));
   if (temp == NULL) {
-    JpmcdsErrMsg("%s: JpmcdsMallocSafe failed.", routine);
+    Jpmcds::ErrMsg("%s: JpmcdsMallocSafe failed.", routine);
     return NULL;
   }
 

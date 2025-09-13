@@ -8,7 +8,7 @@
 
 EXPORT_C {
   inline void ProgramBug(const char* file, int line) {
-    JpmcdsErrMsg("Program bug: %s line %d\n", file, line);
+    Jpmcds::ErrMsg("Program bug: %s line %d\n", file, line);
   }
 
   // Deprecated function (fallback for old macro calls)
