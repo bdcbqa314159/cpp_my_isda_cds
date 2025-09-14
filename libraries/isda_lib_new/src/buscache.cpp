@@ -58,11 +58,11 @@
 /*t
  * Holiday cache information
  * */
-typedef struct _THoliday {
+struct THoliday {
   char *name;       /* Upper case name associated with this entry */
   THolidayList *hl; /* Holiday list */
-  void *next;
-} THoliday;
+  THoliday *next;
+};
 
 THoliday *cache = NULL;
 
