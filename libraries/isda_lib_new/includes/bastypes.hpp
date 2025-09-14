@@ -12,10 +12,6 @@
 #define BASTYPES_H
 
 #include "cdate.hpp"
-#include "cfinanci.hpp"
-#include "cgeneral.hpp"
-#include "mdydate.hpp"
-// #include "stub.hpp"
 
 #ifdef __cplusplus
 extern "C" {

@@ -10,6 +10,7 @@
 
 #include "cds.hpp"
 #include "cerror.hpp"
+#include "cfinanci.hpp"
 #include "contingentleg.hpp"
 #include "convert.hpp"
 #include "cxdatelist.hpp"
