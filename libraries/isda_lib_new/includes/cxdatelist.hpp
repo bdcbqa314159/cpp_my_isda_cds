@@ -3,7 +3,7 @@
  *
  * Copyright (C) 2009 International Swaps and Derivatives Association, Inc.
  * Developed and supported in collaboration with Markit
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the ISDA CDS Standard Model Public License.
  */
@@ -11,18 +11,15 @@
 #ifndef CX_DATELIST_H
 #define CX_DATELIST_H
 
-#include "datelist.h"
-
+#include "datelist.hpp"
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
-
 
 /*f
 ***************************************************************************
-** Adds dates to a TDateList. 
+** Adds dates to a TDateList.
 **
 ** If the original date list and date list to be added are sorted, then
 ** the resulting date list will be sorted and duplicate dates will be
@@ -42,11 +39,10 @@ extern "C"
 ** Note that if numItems=0, this will copy the given date list.
 ***************************************************************************
 */
-TDateList* JpmcdsDateListAddDates
-(TDateList *dl,          /* (I) Initial date list            */
- int         numItems,    /* (I) Number of dates to add       */
- TDate      *array);     /* (I) [numItems] Dates to be added */
-
+TDateList *JpmcdsDateListAddDates(
+    TDateList *dl, /* (I) Initial date list            */
+    int numItems,  /* (I) Number of dates to add       */
+    TDate *array); /* (I) [numItems] Dates to be added */
 
 /*f
 ***************************************************************************
@@ -87,11 +83,10 @@ TDateList* JpmcdsDateListAddDates
 ** date list at each step since this routine frees it for you.
 ***************************************************************************
 */
-TDateList* JpmcdsDateListAddDatesFreeOld
-(TDateList *dl,         /* (I/O) Initial date list - gets freed */
- int         numItems,   /* (I) Number of dates to add           */
- TDate     *array);     /* (I) [numItems] Dates to be added     */
-
+TDateList *JpmcdsDateListAddDatesFreeOld(
+    TDateList *dl, /* (I/O) Initial date list - gets freed */
+    int numItems,  /* (I) Number of dates to add           */
+    TDate *array); /* (I) [numItems] Dates to be added     */
 
 /*f
 ***************************************************************************
@@ -106,14 +101,13 @@ TDateList* JpmcdsDateListAddDatesFreeOld
 ** The input date list must be sorted.
 ***************************************************************************
 */
-TDateList* JpmcdsDateListTruncate
-(TDateList *dateList,       /* (I/O) Date list to be modified in place */
- TDate      truncationDate, /* (I) Date on which to perform trunctation */
- TBoolean   inclusive,      /* (I) TRUE=include truncation date if in list*/
- TBoolean   excludeBefore,  /* (I) TRUE=exclude dates before truncation date*/
- TBoolean   inPlace         /* (I) TRUE=modify date list in place */
+TDateList *JpmcdsDateListTruncate(
+    TDateList *dateList,    /* (I/O) Date list to be modified in place */
+    TDate truncationDate,   /* (I) Date on which to perform trunctation */
+    TBoolean inclusive,     /* (I) TRUE=include truncation date if in list*/
+    TBoolean excludeBefore, /* (I) TRUE=exclude dates before truncation date*/
+    TBoolean inPlace        /* (I) TRUE=modify date list in place */
 );
-
 
 /*f
 ***************************************************************************
@@ -129,16 +123,14 @@ TDateList* JpmcdsDateListTruncate
 ** The date interval must be positive.
 ***************************************************************************
 */
-TDateList* JpmcdsDateListMakeRegular
-(TDate          startDate,  /* (I) Start date */
- TDate          endDate,    /* (I) End date */
- TDateInterval *interval,   /* (I) Date interval */
- TStubMethod   *stubType);  /* (I) Stub type */
-
+TDateList *JpmcdsDateListMakeRegular(
+    TDate startDate,         /* (I) Start date */
+    TDate endDate,           /* (I) End date */
+    TDateInterval *interval, /* (I) Date interval */
+    TStubMethod *stubType);  /* (I) Stub type */
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif
-

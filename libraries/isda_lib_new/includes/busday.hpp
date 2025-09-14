@@ -3,7 +3,7 @@
  *
  * Copyright (C) 2009 International Swaps and Derivatives Association, Inc.
  * Developed and supported in collaboration with Markit
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the ISDA CDS Standard Model Public License.
  */
@@ -11,23 +11,22 @@
 #ifndef BUSDAY_H
 #define BUSDAY_H
 
-#include "cgeneral.h"
-#include "cdate.h"
-#include "buscache.h"
+#include "buscache.hpp"
+#include "cdate.hpp"
+#include "cgeneral.hpp"
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* Bad Day conventions
  */
-#define JPMCDS_BAD_DAY_FOLLOW   ((long)'F')   /* Use following good day */
-#define JPMCDS_BAD_DAY_PREVIOUS ((long)'P')   /* Use previous good day */
-#define JPMCDS_BAD_DAY_NONE     ((long)'N')   /* Dont check for bad days */
-#define JPMCDS_BAD_DAY_MODIFIED ((long)'M')   /* Try following, then previous*/
-                                           /* if a month boundary is crossed.*/
-#define JPMCDS_NUM_BAD_DAY_CONVS 4         /* # bad day conventions */
+#define JPMCDS_BAD_DAY_FOLLOW ((long)'F')   /* Use following good day */
+#define JPMCDS_BAD_DAY_PREVIOUS ((long)'P') /* Use previous good day */
+#define JPMCDS_BAD_DAY_NONE ((long)'N')     /* Dont check for bad days */
+#define JPMCDS_BAD_DAY_MODIFIED ((long)'M') /* Try following, then previous*/
+                                            /* if a month boundary is crossed.*/
+#define JPMCDS_NUM_BAD_DAY_CONVS 4          /* # bad day conventions */
 
 /*m
 ***************************************************************************
@@ -35,8 +34,8 @@ extern "C"
 ***************************************************************************
 */
 #define JPMCDS_IS_WEEKEND(date, weekends) ((1 << ((date) % 7)) & (weekends))
-#define JPMCDS_IS_WEEKDAY(date, weekends) (!(JPMCDS_IS_WEEKEND((date),(weekends))))
-
+#define JPMCDS_IS_WEEKDAY(date, weekends) \
+  (!(JPMCDS_IS_WEEKEND((date), (weekends))))
 
 /*
 ***************************************************************************
@@ -58,7 +57,6 @@ extern "C"
 ***************************************************************************
 */
 
-
 /*
 ***************************************************************************
 ** 1. The original interface. These are functions that use a string for
@@ -73,12 +71,11 @@ extern "C"
 ** from the original date
 ***************************************************************************
 */
-int  JpmcdsDateFromBusDaysOffset
-(TDate     fromDate,       /* (I) input date                 */
- long      offset,         /* (I) number of business days    */
- char     *holidayFile,    /* (I) holiday file specification */
- TDate    *result);        /* (O) resulting business date    */
-
+int JpmcdsDateFromBusDaysOffset(
+    TDate fromDate,    /* (I) input date                 */
+    long offset,       /* (I) number of business days    */
+    char *holidayFile, /* (I) holiday file specification */
+    TDate *result);    /* (O) resulting business date    */
 
 /*f
 ***************************************************************************
@@ -87,11 +84,10 @@ int  JpmcdsDateFromBusDaysOffset
 ** business day. Input and Output dates are represented as TDate types.
 ***************************************************************************
 */
-int  JpmcdsBusinessDay
-(TDate   date,                       /* (I) Input Date */
- long    method,                     /* (I) See ldate.h */
- char   *holidayFile,                /* (I) Filename w/ Holidays */
- TDate  *outDate);                   /* (O) output date */
+int JpmcdsBusinessDay(TDate date,        /* (I) Input Date */
+                      long method,       /* (I) See ldate.h */
+                      char *holidayFile, /* (I) Filename w/ Holidays */
+                      TDate *outDate);   /* (O) output date */
 
 /*f
 ***************************************************************************
@@ -100,29 +96,24 @@ int  JpmcdsBusinessDay
 */
 int JpmcdsBadDayConvValid(char *routine, long badDayConv);
 
-
 /*f
 ***************************************************************************
 ** Indicates whether a date is a business day.
 ***************************************************************************
 */
-int JpmcdsIsBusinessDay
-(TDate      date,                   /* (I) Input Date */
- char      *name,                   /* (I) Filename w/ Holidays */
- TBoolean  *isBusinessDay);         /* (O) */
-
+int JpmcdsIsBusinessDay(TDate date,               /* (I) Input Date */
+                        char *name,               /* (I) Filename w/ Holidays */
+                        TBoolean *isBusinessDay); /* (O) */
 
 /*f
 ***************************************************************************
 ** Computes the last business day of the month.
 ***************************************************************************
 */
-int JpmcdsDateToBusinessEOM
-(TDate  inDate,  /* (I) Date to be tested */
- char  *name,    /* (I) Name of holiday file */
- TDate *outDate  /* (O) TRUE or FALSE returned */
+int JpmcdsDateToBusinessEOM(TDate inDate,  /* (I) Date to be tested */
+                            char *name,    /* (I) Name of holiday file */
+                            TDate *outDate /* (O) TRUE or FALSE returned */
 );
-
 
 /*f
 ***************************************************************************
@@ -130,10 +121,9 @@ int JpmcdsDateToBusinessEOM
 ** exists.
 ***************************************************************************
 */
-EXPORT int JpmcdsHolidayLoadFromDisk
-(char  *name,                        /* (I) name associated with holidays */
- char  *filename);                   /* (I) filename to load */
-
+EXPORT int JpmcdsHolidayLoadFromDisk(
+    char *name,      /* (I) name associated with holidays */
+    char *filename); /* (I) filename to load */
 
 /*
 ***************************************************************************
@@ -141,7 +131,6 @@ EXPORT int JpmcdsHolidayLoadFromDisk
 **    structure and perform the actual holiday adjustments.
 ***************************************************************************
 */
-
 
 /*f
 ***************************************************************************
@@ -151,11 +140,10 @@ EXPORT int JpmcdsHolidayLoadFromDisk
 ** Indicates whether a date is a business day.
 ***************************************************************************
 */
-int JpmcdsHolidayListIsBusinessDay
-(TDate         date,              /* (I) Input Date */
- THolidayList *hl,                /* (I) Holiday list structure */
- TBoolean     *isBusinessDay);    /* (O) TRUE if a business day */
-
+int JpmcdsHolidayListIsBusinessDay(
+    TDate date,               /* (I) Input Date */
+    THolidayList *hl,         /* (I) Holiday list structure */
+    TBoolean *isBusinessDay); /* (O) TRUE if a business day */
 
 /*f
 ***************************************************************************
@@ -165,10 +153,10 @@ int JpmcdsHolidayListIsBusinessDay
 ** Does not take week-ends into account.
 ***************************************************************************
 */
-int JpmcdsHolidayListIsHoliday
-(TDate         date,       /* (I) Arbitrary date          */
- THolidayList *hl,         /* (I) Holiday list structure  */
- TBoolean     *isHoliday); /* (O) 0 = not a holiday, 1 = is a holiday */
+int JpmcdsHolidayListIsHoliday(
+    TDate date,           /* (I) Arbitrary date          */
+    THolidayList *hl,     /* (I) Holiday list structure  */
+    TBoolean *isHoliday); /* (O) 0 = not a holiday, 1 = is a holiday */
 
 /*f
 ***************************************************************************
@@ -181,16 +169,16 @@ int JpmcdsHolidayListIsHoliday
 ** instead of a holiday file. Should be used if efficiency is an issue.
 ***************************************************************************
 */
-int JpmcdsHolidayListBusinessDay
-(TDate         date,       /* (I) Arbitrary date. */
- long          badDayConv, /* (I) Bad day convention for adjusting
-                              non-business days. Use one of the following:
-                              JPMCDS_BAD_DAY_FOLLOW
-                              JPMCDS_BAD_DAY_PREVIOUS
-                              JPMCDS_BAD_DAY_MODIFIED
-                              JPMCDS_BAD_DAY_NONE */
- THolidayList *hl,         /* (I) Holiday file list. */
- TDate        *outDate);   /* (O) Valid business day. */
+int JpmcdsHolidayListBusinessDay(
+    TDate date,       /* (I) Arbitrary date. */
+    long badDayConv,  /* (I) Bad day convention for adjusting
+                         non-business days. Use one of the following:
+                         JPMCDS_BAD_DAY_FOLLOW
+                         JPMCDS_BAD_DAY_PREVIOUS
+                         JPMCDS_BAD_DAY_MODIFIED
+                         JPMCDS_BAD_DAY_NONE */
+    THolidayList *hl, /* (I) Holiday file list. */
+    TDate *outDate);  /* (O) Valid business day. */
 
 /*
 ***************************************************************************
@@ -199,17 +187,17 @@ int JpmcdsHolidayListBusinessDay
 ** (See JpmcdsHolidayListBusinessDay.)
 ***************************************************************************
 */
-int JpmcdsMultiHolidayListBusinessDay
-(TDate         date,             /* (I) Arbitrary date. */
- long          badDayConv,       /* (I) Bad day convention for adjusting
-                                    non-business days. Use one of the following:
-                                    JPMCDS_BAD_DAY_FOLLOW
-                                    JPMCDS_BAD_DAY_PREVIOUS
-                                    JPMCDS_BAD_DAY_MODIFIED
-                                    JPMCDS_BAD_DAY_NONE */
- int           numHolidayLists,  /* (I) Size of holidayLists[] array. */
- THolidayList *holidayLists[],   /* (I) Holiday lists. */
- TDate        *outDate);         /* (O) Valid business day. */
+int JpmcdsMultiHolidayListBusinessDay(
+    TDate date,                   /* (I) Arbitrary date. */
+    long badDayConv,              /* (I) Bad day convention for adjusting
+                                     non-business days. Use one of the following:
+                                     JPMCDS_BAD_DAY_FOLLOW
+                                     JPMCDS_BAD_DAY_PREVIOUS
+                                     JPMCDS_BAD_DAY_MODIFIED
+                                     JPMCDS_BAD_DAY_NONE */
+    int numHolidayLists,          /* (I) Size of holidayLists[] array. */
+    THolidayList *holidayLists[], /* (I) Holiday lists. */
+    TDate *outDate);              /* (O) Valid business day. */
 
 /*f
 ***************************************************************************
@@ -227,12 +215,11 @@ int JpmcdsMultiHolidayListBusinessDay
 ** issue.
 ***************************************************************************
 */
-int JpmcdsHolidayListBusinessDaysDiff
-    (TDate         fromDate,     /* (I) Earlier date       */
-     TDate         toDate,       /* (I) Later date         */
-     THolidayList *hl,           /* (I) Holiday list structure  */
-     long         *result);      /* (O) Result value       */
-
+int JpmcdsHolidayListBusinessDaysDiff(
+    TDate fromDate,   /* (I) Earlier date       */
+    TDate toDate,     /* (I) Later date         */
+    THolidayList *hl, /* (I) Holiday list structure  */
+    long *result);    /* (O) Result value       */
 
 /*f
 ***************************************************************************
@@ -243,29 +230,25 @@ int JpmcdsHolidayListBusinessDaysDiff
 ** is an issue.
 ***************************************************************************
 */
-int JpmcdsHolidayListAddBusinessDays
-    (TDate         fromDate,     /* (I) Input date                 */
-     long          numBusDays,   /* (I) Number of business days    */
-     THolidayList *hl,           /* (I) Holiday list structure     */
-     TDate        *resultDate);  /* (O) Resulting business date    */
-
+int JpmcdsHolidayListAddBusinessDays(
+    TDate fromDate,     /* (I) Input date                 */
+    long numBusDays,    /* (I) Number of business days    */
+    THolidayList *hl,   /* (I) Holiday list structure     */
+    TDate *resultDate); /* (O) Resulting business date    */
 
 /*f
 ***************************************************************************
 ** Computes the last business day of the month.
 ***************************************************************************
 */
-int JpmcdsHolidayListDateToBusinessEOM
-(TDate         inDate,  /* (I) Date to be tested */
- THolidayList *hl,    /* (I) Name of holiday file */
- TDate        *outDate  /* (O) TRUE or FALSE returned */
+int JpmcdsHolidayListDateToBusinessEOM(
+    TDate inDate,     /* (I) Date to be tested */
+    THolidayList *hl, /* (I) Name of holiday file */
+    TDate *outDate    /* (O) TRUE or FALSE returned */
 );
-
-
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif    /* BUSDAY_H */
-
+#endif /* BUSDAY_H */

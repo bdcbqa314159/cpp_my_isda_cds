@@ -3,21 +3,22 @@
  *
  * Copyright (C) 2009 International Swaps and Derivatives Association, Inc.
  * Developed and supported in collaboration with Markit
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the ISDA CDS Standard Model Public License.
  */
 
-#include <math.h>
-#include "cgeneral.h"
-#include "cerror.h"
-#include "bsearch.h"
+#include "bsearch.hpp"
 
-#define STR(x) # x
+#include <math.h>
+
+#include "cerror.hpp"
+#include "cgeneral.hpp"
+
+#define STR(x) #x
 #define STRING(x) STR(x)
 
 static TBoolean bSearchCheckOrder_g = TRUE;
-
 
 /*
 ***************************************************************************
@@ -31,33 +32,29 @@ static TBoolean bSearchCheckOrder_g = TRUE;
 ** else call JpmcdsBSearchDoubleFast.
 ***************************************************************************
 */
-int JpmcdsBSearchDouble
-    (double xDesired,                   /* (I) X for which Y is desired */
-     double *x,                         /* (I) Ordered Array of X values */
-     int skip,                          /* (I) # bytes between X values */
-                                        /* (=sizeof(X_TYPE) if x is an array)*/
-     int N,                             /* (I) # elements of X array */
-     int *lo_idx,                       /* (O) Low index for X array */
-     int *hi_idx)                       /* (O) High index for X array */
+int JpmcdsBSearchDouble(double xDesired, /* (I) X for which Y is desired */
+                        double *x,       /* (I) Ordered Array of X values */
+                        int skip,        /* (I) # bytes between X values */
+                                         /* (=sizeof(X_TYPE) if x is an array)*/
+                        int N,           /* (I) # elements of X array */
+                        int *lo_idx,     /* (O) Low index for X array */
+                        int *hi_idx)     /* (O) High index for X array */
 {
-    static char routine[] = "JpmcdsBSearchDouble";
+  static char routine[] = "JpmcdsBSearchDouble";
 
-    if (bSearchCheckOrder_g &&
-        JpmcdsCheckDoubleArrayOrder (routine, x, skip, N) != SUCCESS)
-    {
-        return FAILURE;
-    }
+  if (bSearchCheckOrder_g &&
+      JpmcdsCheckDoubleArrayOrder(routine, x, skip, N) != SUCCESS) {
+    return FAILURE;
+  }
 
-    if (JpmcdsBSearchDoubleFast (xDesired, x, skip, N, lo_idx, hi_idx)
-        != SUCCESS)
-    {
-        JpmcdsErrMsg ("%s: Failed.\n", routine);
-        return FAILURE;
-    }
+  if (JpmcdsBSearchDoubleFast(xDesired, x, skip, N, lo_idx, hi_idx) !=
+      SUCCESS) {
+    JpmcdsErrMsg("%s: Failed.\n", routine);
+    return FAILURE;
+  }
 
-    return SUCCESS;
+  return SUCCESS;
 }
-
 
 #define SEARCH_ROUTINE_NAME JpmcdsBSearchDoubleFast
 #define CHECK_ORDER_ROUTINE_NAME JpmcdsCheckDoubleArrayOrder
@@ -68,7 +65,6 @@ int JpmcdsBSearchDouble
 #undef CHECK_ORDER_ROUTINE_NAME
 #undef X_TYPE
 #undef XD_TYPE
-
 
 /*
 ***************************************************************************
@@ -82,33 +78,28 @@ int JpmcdsBSearchDouble
 ** else call JpmcdsBSearchLongFast.
 ***************************************************************************
 */
-int JpmcdsBSearchLong
-    (double xDesired,                   /* (I) X for which Y is desired */
-     long *x,                           /* (I) Ordered Array of X values */
-     int skip,                          /* (I) # bytes between X values */
-                                        /* (=sizeof(X_TYPE) if x is an array)*/
-     int N,                             /* (I) # elements of X array */
-     int *lo_idx,                       /* (O) Low index for X array */
-     int *hi_idx)                       /* (O) High index for X array */
+int JpmcdsBSearchLong(double xDesired, /* (I) X for which Y is desired */
+                      long *x,         /* (I) Ordered Array of X values */
+                      int skip,        /* (I) # bytes between X values */
+                                       /* (=sizeof(X_TYPE) if x is an array)*/
+                      int N,           /* (I) # elements of X array */
+                      int *lo_idx,     /* (O) Low index for X array */
+                      int *hi_idx)     /* (O) High index for X array */
 {
-    static char routine[] = "JpmcdsBSearchLong";
+  static char routine[] = "JpmcdsBSearchLong";
 
-    if (bSearchCheckOrder_g &&
-        JpmcdsCheckLongArrayOrder (routine, x, skip, N) != SUCCESS)
-    {
-        return FAILURE;
-    }
+  if (bSearchCheckOrder_g &&
+      JpmcdsCheckLongArrayOrder(routine, x, skip, N) != SUCCESS) {
+    return FAILURE;
+  }
 
-    if (JpmcdsBSearchLongFast (xDesired, x, skip, N, lo_idx, hi_idx)
-        != SUCCESS)
-    {
-        JpmcdsErrMsg ("%s: Failed.\n", routine);
-        return FAILURE;
-    }
+  if (JpmcdsBSearchLongFast(xDesired, x, skip, N, lo_idx, hi_idx) != SUCCESS) {
+    JpmcdsErrMsg("%s: Failed.\n", routine);
+    return FAILURE;
+  }
 
-    return SUCCESS;
+  return SUCCESS;
 }
-
 
 /* Define another binary routine with the following types. */
 #define SEARCH_ROUTINE_NAME JpmcdsBSearchLongFast
@@ -122,12 +113,12 @@ int JpmcdsBSearchLong
 #undef XD_TYPE
 
 TBoolean JpmcdsBSearchCheckOrder(
-    TBoolean        doCheckOrder)      /* (I) TRUE=> Default Yes check; FALSE=>Assume in order */
+    TBoolean
+        doCheckOrder) /* (I) TRUE=> Default Yes check; FALSE=>Assume in order */
 {
-    TBoolean     checkOrderWas = bSearchCheckOrder_g;
+  TBoolean checkOrderWas = bSearchCheckOrder_g;
 
-    bSearchCheckOrder_g = doCheckOrder;
+  bSearchCheckOrder_g = doCheckOrder;
 
-    return checkOrderWas;
+  return checkOrderWas;
 }
-

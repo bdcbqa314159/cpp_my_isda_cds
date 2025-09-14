@@ -3,7 +3,7 @@
  *
  * Copyright (C) 2009 International Swaps and Derivatives Association, Inc.
  * Developed and supported in collaboration with Markit
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the ISDA CDS Standard Model Public License.
  */
@@ -11,38 +11,32 @@
 #ifndef STRUTIL_H
 #define STRUTIL_H
 
-#include "cgeneral.h"
+#include "cgeneral.hpp"
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
-
 
 /*f
 ***************************************************************************
 ** Duplicates a string using our memory allocation.
 ***************************************************************************
 */
-char* JpmcdsStringDuplicate(
-   char    *in);          /* (I) input string to duplicate */
-
+char *JpmcdsStringDuplicate(char *in); /* (I) input string to duplicate */
 
 /*f
 ***************************************************************************
-** Removes any initial whitespace from an input string and converts all 
+** Removes any initial whitespace from an input string and converts all
 ** characters to uppercase.  Does not allocate any memory.
 **
 ** Needed for efficiency reasons when parsing user input.
 ***************************************************************************
 */
-int JpmcdsStringPreprocess
-(
- char   *inputString,    /* (I) String to preprocess. */
- int     n,              /* (I) Max. # of non-whitespace chars to examine. */
- char   *outputString    /* (O) Uppercase w/ no initial whitespace. */
+int JpmcdsStringPreprocess(
+    char *inputString, /* (I) String to preprocess. */
+    int n,             /* (I) Max. # of non-whitespace chars to examine. */
+    char *outputString /* (O) Uppercase w/ no initial whitespace. */
 );
-
 
 /*f
 ***************************************************************************
@@ -75,19 +69,18 @@ int JpmcdsStringPreprocess
 ** Suppose str = "abc,def,ghi"
 **
 ** Then after this call we would have:
-** 
+**
 **   str = "abc"
 **   str1 = "def"
 **   str2 = "ghi"
 **
 ***************************************************************************
 */
-int JpmcdsStringParser
-(char *str,        /* (I/O) Input string - modified by this function */
- char *delimiters, /* (I) Delimiters */
- ...               /* (O) Need to provide strlen(delimiters) char** */
+int JpmcdsStringParser(
+    char *str,        /* (I/O) Input string - modified by this function */
+    char *delimiters, /* (I) Delimiters */
+    ...               /* (O) Need to provide strlen(delimiters) char** */
 );
-
 
 /*f
 ***************************************************************************
@@ -104,21 +97,16 @@ int JpmcdsStringParser
 ** using numItems or by testing the string pointer.
 ***************************************************************************
 */
-int JpmcdsStringSplit
-(char   *str,       /* (I) Input string */
- char    separator, /* (I) Separator - note this is a character not a string */
- size_t *numItems,  /* (O) Number of items found */
- char ***split      /* (O) Array of strings found within input. User must
-                       FREE() this once they have finished with it. */
+int JpmcdsStringSplit(
+    char *str,      /* (I) Input string */
+    char separator, /* (I) Separator - note this is a character not a string */
+    size_t *numItems, /* (O) Number of items found */
+    char ***split     /* (O) Array of strings found within input. User must
+                         FREE() this once they have finished with it. */
 );
-
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif    /* STRUTIL_H */
-
-
-
-
+#endif /* STRUTIL_H */

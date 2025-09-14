@@ -3,18 +3,17 @@
  *
  * Copyright (C) 2009 International Swaps and Derivatives Association, Inc.
  * Developed and supported in collaboration with Markit
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the ISDA CDS Standard Model Public License.
  */
 
-#include "cgeneral.h"
-#include "cerror.h"
-#include "lintrp.h"
-#include "bsearch.h"
+#include "bsearch.hpp"
+#include "cerror.hpp"
+#include "cgeneral.hpp"
+#include "lintrp.hpp"
 
-
-#define STR(x) # x
+#define STR(x) #x
 #define STRING(x) STR(x)
 
 /* Define ONE-dimension routine for LONG arguments

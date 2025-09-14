@@ -3,7 +3,7 @@
  *
  * Copyright (C) 2009 International Swaps and Derivatives Association, Inc.
  * Developed and supported in collaboration with Markit
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the ISDA CDS Standard Model Public License.
  */
@@ -11,12 +11,10 @@
 #ifndef CDS_H
 #define CDS_H
 
-#include "cx.h"
-
+#include "cx.hpp"
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /*f
@@ -27,17 +25,16 @@ extern "C"
 ** protected - the start date is only protected if protectStart=True.
 ***************************************************************************
 */
-TContingentLeg* JpmcdsCdsContingentLegMake(
+TContingentLeg *JpmcdsCdsContingentLegMake(
     /** Date when protection begins. Either at start or end of day (depends
         on protectStart) */
-    TDate     startDate,
+    TDate startDate,
     /** Date when protection ends (end of day) */
-    TDate     endDate,
+    TDate endDate,
     /** Notional value protected */
-    double    notional,
+    double notional,
     /** Should protection include the start date */
-    TBoolean  protectStart);
-
+    TBoolean protectStart);
 
 /*f
 ***************************************************************************
@@ -50,27 +47,26 @@ TContingentLeg* JpmcdsCdsContingentLegMake(
 */
 int JpmcdsCdsContingentLegPV(
     /** Risk starts at the end of today */
-    TDate             today,
+    TDate today,
     /** Date for which the PV is calculated and cash settled */
-    TDate             valueDate,
+    TDate valueDate,
     /** Date when protection begins. Either at start or end of day (depends
         on protectStart) */
-    TDate             startDate,
+    TDate startDate,
     /** Date when protection ends (end of day) */
-    TDate             endDate,
+    TDate endDate,
     /** Notional value protected */
-    double            notional, 
+    double notional,
     /** Interest rate discount curve - assumes flat forward interpolation */
-    TCurve           *discCurve,
+    TCurve *discCurve,
     /** Credit clean spread curve */
-    TCurve           *spreadCurve,
+    TCurve *spreadCurve,
     /** Assumed recovery rate in case of default */
-    double            recoveryRate,
+    double recoveryRate,
     /** True => protection includes start date */
-    TBoolean          protectStart,
+    TBoolean protectStart,
     /** Output - the present value is returned */
-    double           *pv);
-
+    double *pv);
 
 /*f
 ***************************************************************************
@@ -86,33 +82,32 @@ int JpmcdsCdsContingentLegPV(
 ** than for an interest rate swap.
 ***************************************************************************
 */
-TFeeLeg* JpmcdsCdsFeeLegMake(
+TFeeLeg *JpmcdsCdsFeeLegMake(
     /** Date when protection begins. Either at start or end of day (depends
         on protectStart) */
-    TDate           startDate,
+    TDate startDate,
     /** Date when protection ends (end of day) */
-    TDate           endDate,
+    TDate endDate,
     /** Should accrued interest be paid on default. Usually set to TRUE */
-    TBoolean        payAccOnDefault,
+    TBoolean payAccOnDefault,
     /** Interval between coupon payments. Can be NULL when 3M is assumed */
-    TDateInterval  *couponInterval,
+    TDateInterval *couponInterval,
     /** If the startDate and endDate are not on cycle, then this parameter
         determines location of coupon dates. */
-    TStubMethod    *stubType,
+    TStubMethod *stubType,
     /** Notional value protected */
-    double          notional, 
+    double notional,
     /** Fixed coupon rate (a.k.a. spread) for the fee leg */
-    double          couponRate,
+    double couponRate,
     /** Day count convention for coupon payment. Normal is ACT_360 */
-    long            paymentDcc,
+    long paymentDcc,
     /** Bad day convention for adjusting coupon payment dates. */
-    long            badDayConv,
+    long badDayConv,
     /** Calendar used when adjusting coupon dates. Can be NULL which equals
         a calendar with no holidays and including weekends. */
-    char           *calendar,
+    char *calendar,
     /** Should protection include the start date */
-    TBoolean        protectStart);
-
+    TBoolean protectStart);
 
 /*f
 ***************************************************************************
@@ -131,46 +126,45 @@ TFeeLeg* JpmcdsCdsFeeLegMake(
 */
 int JpmcdsCdsFeeLegPV(
     /** Risk starts at the end of today */
-    TDate           today,
+    TDate today,
     /** Date for which the PV is calculated and cash settled */
-    TDate           valueDate,
+    TDate valueDate,
     /** Date when step-in becomes effective */
-    TDate           stepinDate,
+    TDate stepinDate,
     /** Date when protection begins. Either at start or end of day (depends
         on protectStart) */
-    TDate           startDate,
+    TDate startDate,
     /** Date when protection ends (end of day) */
-    TDate           endDate,
+    TDate endDate,
     /** Should accrued interest be paid on default. Usually set to TRUE */
-    TBoolean        payAccOnDefault,
+    TBoolean payAccOnDefault,
     /** Interval between coupon payments. Can be NULL when 3M is assumed */
-    TDateInterval  *couponInterval,
+    TDateInterval *couponInterval,
     /** If the startDate and endDate are not on cycle, then this parameter
         determines location of coupon dates. */
-    TStubMethod    *stubType,
+    TStubMethod *stubType,
     /** Notional value protected */
-    double          notional, 
+    double notional,
     /** Fixed coupon rate (a.k.a. spread) for the fee leg */
-    double          couponRate,
+    double couponRate,
     /** Day count convention for coupon payment. Normal is ACT_360 */
-    long            paymentDcc,
+    long paymentDcc,
     /** Bad day convention for adjusting coupon payment dates. */
-    long            badDayConv,
+    long badDayConv,
     /** Calendar used when adjusting coupon dates. Can be NULL which equals
         a calendar with no holidays and including weekends. */
-    char           *calendar,
+    char *calendar,
     /** Interest rate discount curve - assumes flat forward interpolation */
-    TCurve         *discCurve,
+    TCurve *discCurve,
     /** Credit clean spread curve */
-    TCurve         *spreadCurve,
+    TCurve *spreadCurve,
     /** Should protection include the start date */
-    TBoolean        protectStart,
+    TBoolean protectStart,
     /** Should the present value be computed as a clean price (removing
         accrued interest) */
-    TBoolean        isPriceClean,
+    TBoolean isPriceClean,
     /** Output - the present value is returned */
-    double         *pv);
-
+    double *pv);
 
 /*f
 ***************************************************************************
@@ -182,7 +176,8 @@ int JpmcdsCdsFeeLegPV(
 ** is set to True.
 **
 ** Interest accrues for the same number of days as there is protection.
-** Since protectStart is set to True you get one extra day of accrued interest in
+** Since protectStart is set to True you get one extra day of accrued interest
+*in
 ** comparison with an interest rate swap. This extra day is assumed to be
 ** the last day of the CDS and means that the last period is one day longer
 ** than for an interest rate swap.
@@ -190,48 +185,47 @@ int JpmcdsCdsFeeLegPV(
 */
 EXPORT int JpmcdsCdsPrice(
     /** Risk starts at the end of today */
-    TDate           today,
+    TDate today,
     /** Date for which the PV is calculated and cash settled */
-    TDate           valueDate,
+    TDate valueDate,
     /** Date when step-in becomes effective */
-    TDate           stepinDate,
+    TDate stepinDate,
     /** Date when protection begins. Either at start or end of day (depends
         on protectStart) */
-    TDate           startDate,
+    TDate startDate,
     /** Date when protection ends (end of day) */
-    TDate           endDate,
+    TDate endDate,
     /** Fixed coupon rate (a.k.a. spread) for the fee leg */
-    double          couponRate,
+    double couponRate,
     /** Should accrued interest be paid on default. Usually set to TRUE */
-    TBoolean        payAccOnDefault,
+    TBoolean payAccOnDefault,
     /** Interval between coupon payments. Can be NULL when 3M is assumed */
-    TDateInterval  *couponInterval,
+    TDateInterval *couponInterval,
     /** If the startDate and endDate are not on cycle, then this parameter
         determines location of coupon dates. */
-    TStubMethod    *stubType,
+    TStubMethod *stubType,
     /** Day count convention for coupon payment. Normal is ACT_360 */
-    long            paymentDcc,
+    long paymentDcc,
     /** Bad day convention for adjusting coupon payment dates. */
-    long            badDayConv,
+    long badDayConv,
     /** Calendar used when adjusting coupon dates. Can be NULL which equals
         a calendar with no holidays and including weekends. */
-    char           *calendar,
+    char *calendar,
     /** Interest rate discount curve - assumes flat forward interpolation */
-    TCurve         *discCurve,
+    TCurve *discCurve,
     /** Credit clean spread curve */
-    TCurve         *spreadCurve,
+    TCurve *spreadCurve,
     /** Assumed recovery rate in case of default */
-    double          recoveryRate,
+    double recoveryRate,
     /** Is the price expressed as a clean price (removing accrued interest) */
-    TBoolean        isPriceClean,
-    /** Output - price (a.k.a. upfront charge) for the CDS is returned 
+    TBoolean isPriceClean,
+    /** Output - price (a.k.a. upfront charge) for the CDS is returned
         (see also isPriceClean) */
-    double         *price);
+    double *price);
 
-  
 /*f
 ***************************************************************************
-** Computes the benchmark par spreads 
+** Computes the benchmark par spreads
 **
 ** Risk starts at the end of today. The PV is computed for a given value date.
 ** The CDS starts at startDate and ends at endDate. The last date is always
@@ -239,7 +233,8 @@ EXPORT int JpmcdsCdsPrice(
 ** is set to True.
 **
 ** Interest accrues for the same number of days as there is protection.
-** Since protectStart is set to True you get one extra day of accrued interest in
+** Since protectStart is set to True you get one extra day of accrued interest
+*in
 ** comparison with an interest rate swap. This extra day is assumed to be
 ** the last day of the CDS and means that the last period is one day longer
 ** than for an interest rate swap.
@@ -247,39 +242,38 @@ EXPORT int JpmcdsCdsPrice(
 */
 EXPORT int JpmcdsCdsParSpreads(
     /** Risk starts at the end of today */
-    TDate           today,
+    TDate today,
     /** Date when step-in becomes effective  */
-    TDate           stepinDate,
+    TDate stepinDate,
     /** Date when protection begins. Either at start or end of day (depends
         on protectStart) */
-    TDate           startDate,
+    TDate startDate,
     /** Number of benchmark dates */
-    long            nbEndDates,
+    long nbEndDates,
     /** Date when protection ends (end of day), no bad day adjustment */
-    TDate          *endDates,
+    TDate *endDates,
     /** Should accrued interest be paid on default. Usually set to TRUE */
-    TBoolean        payAccOnDefault,
+    TBoolean payAccOnDefault,
     /** Interval between coupon payments. Can be NULL when 3M is assumed */
-    TDateInterval  *couponInterval,
+    TDateInterval *couponInterval,
     /** If the startDate and endDate are not on cycle, then this parameter
         determines location of coupon dates. */
-    TStubMethod    *stubType,
+    TStubMethod *stubType,
     /** Day count convention for coupon payment. Normal is ACT_360 */
-    long            paymentDcc,
+    long paymentDcc,
     /** Bad day convention for adjusting coupon payment dates. */
-    long            badDayConv,
+    long badDayConv,
     /** Calendar used when adjusting coupon dates. Can be NULL which equals
         a calendar with no holidays and including weekends. */
-    char           *calendar,
+    char *calendar,
     /** Interest rate discount curve - assumes flat forward interpolation */
-    TCurve         *discCurve,
+    TCurve *discCurve,
     /** Credit clean spread curve */
-    TCurve         *spreadCurve,
+    TCurve *spreadCurve,
     /** Assumed recovery rate in case of default */
-    double          recoveryRate,
+    double recoveryRate,
     /** Output - par spreads for the CDS are returned (see also isPriceClean) */
-    double         *parSpread);
-
+    double *parSpread);
 
 /*f
 ***************************************************************************
@@ -287,35 +281,35 @@ EXPORT int JpmcdsCdsParSpreads(
 ** cash flows you will receive if there is no default.
 
 ** Interest accrues for the same number of days as there is protection.
-** Since protectStart is set to True you get one extra day of accrued interest in
+** Since protectStart is set to True you get one extra day of accrued interest
+in
 ** comparison with an interest rate swap. This extra day is assumed to be
 ** the last day of the CDS and means that the last period is one day longer
 ** than for an interest rate swap.
 ***************************************************************************
 */
-EXPORT TCashFlowList* JpmcdsCdsFeeLegFlows(
+EXPORT TCashFlowList *JpmcdsCdsFeeLegFlows(
     /** Date when protection begins. Either at start or end of day (depends
         on protectStart) */
-    TDate           startDate,
+    TDate startDate,
     /** Date when protection ends for each benchmark (end of day).*/
-    TDate           endDate,
+    TDate endDate,
     /** Interval between coupon payments. Can be NULL when 3M is assumed */
-    TDateInterval  *dateInterval,
+    TDateInterval *dateInterval,
     /** If the startDate and endDate are not on cycle, then this parameter
         determines location of coupon dates. */
-    TStubMethod    *stubType,
+    TStubMethod *stubType,
     /** Notional of the fee leg */
-    double          notional,
+    double notional,
     /** Fixed coupon rate (a.k.a. spread) for the fee leg */
-    double          couponRate,
+    double couponRate,
     /** Day count convention for coupon payment. Normal is ACT_360 */
-    long            paymentDcc,
+    long paymentDcc,
     /** Bad day convention for adjusting coupon payment dates. */
-    long            badDayConv,
+    long badDayConv,
     /** Calendar used when adjusting coupon dates. Can be NULL which equals
         a calendar with no holidays and including weekends. */
-    char           *calendar);
-
+    char *calendar);
 
 /*f
 ***************************************************************************
@@ -327,56 +321,55 @@ EXPORT TCashFlowList* JpmcdsCdsFeeLegFlows(
 ** is set to True.
 **
 ** Interest accrues for the same number of days as there is protection.
-** Since protectStart is set to True you get one extra day of accrued interest in
+** Since protectStart is set to True you get one extra day of accrued interest
+*in
 ** comparison with an interest rate swap. This extra day is assumed to be
 ** the last day of the CDS and means that the last period is one day longer
 ** than for an interest rate swap.
 ***************************************************************************
 */
-EXPORT TCurve* JpmcdsCleanSpreadCurve(
+EXPORT TCurve *JpmcdsCleanSpreadCurve(
     /** Risk starts at the end of today */
-    TDate           today,
+    TDate today,
     /** Interest rate discount curve - assumes flat forward interpolation */
-    TCurve         *discCurve,
+    TCurve *discCurve,
     /** Effective date of the benchmark CDS */
-    TDate           startDate,
+    TDate startDate,
     /** Step in date of the benchmark CDS */
-    TDate           stepinDate,
+    TDate stepinDate,
     /** Date when payment should be make */
-    TDate           cashSettleDate,
+    TDate cashSettleDate,
     /** Number of benchmark dates */
-    long            nbDate,
+    long nbDate,
     /** Dates when protection ends for each benchmark (end of day).
         Array of size nbDate */
-    TDate          *endDates,
+    TDate *endDates,
     /** Coupon rates for each benchmark instrument. Array of size nbDate */
-    double         *couponRates,
+    double *couponRates,
     /** Flags to denote that we include particular benchmarks. This makes it
         easy for the user to include or exclude benchmarks on a one-by-one
         basis. Can be NULL if all are included. Otherwise an array of size
         nbDate. */
-    TBoolean       *includes,
+    TBoolean *includes,
     /** Recovery rate in case of default */
-    double          recoveryRate,
+    double recoveryRate,
     /** Should accrued interest be paid on default. Usually set to TRUE */
-    TBoolean        payAccOnDefault,
+    TBoolean payAccOnDefault,
     /** Interval between coupon payments. Can be NULL when 3M is assumed */
-    TDateInterval  *couponInterval,
+    TDateInterval *couponInterval,
     /** Day count convention for coupon payment. Normal is ACT_360 */
-    long            paymentDcc,
+    long paymentDcc,
     /** If the startDate and endDate are not on cycle, then this parameter
         determines location of coupon dates. */
-    TStubMethod    *stubType,
+    TStubMethod *stubType,
     /** Bad day convention for adjusting coupon payment dates. */
-    long            badDayConv,
+    long badDayConv,
     /** Calendar used when adjusting coupon dates. Can be NULL which equals
         a calendar with no holidays and including weekends. */
-    char           *calendar
-);
+    char *calendar);
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif
-

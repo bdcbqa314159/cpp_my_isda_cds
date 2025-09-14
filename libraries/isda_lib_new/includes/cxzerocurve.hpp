@@ -3,7 +3,7 @@
  *
  * Copyright (C) 2009 International Swaps and Derivatives Association, Inc.
  * Developed and supported in collaboration with Markit
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the ISDA CDS Standard Model Public License.
  */
@@ -11,23 +11,18 @@
 #ifndef CX_ZEROCURVE_H
 #define CX_ZEROCURVE_H
 
-#include "tcurve.h"
+#include "tcurve.hpp"
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
-
 
 /*f
 ***************************************************************************
 ** Calculates the zero price for a given date. Returns NaN for errors.
 ***************************************************************************
 */
-EXPORT double JpmcdsZeroPrice
-(TCurve* zeroCurve,
- TDate   date);
-
+EXPORT double JpmcdsZeroPrice(TCurve* zeroCurve, TDate date);
 
 /*f
 ***************************************************************************
@@ -35,11 +30,8 @@ EXPORT double JpmcdsZeroPrice
 ** Returns NaN for errors.
 ***************************************************************************
 */
-double JpmcdsForwardZeroPrice
-(TCurve* zeroCurve,
- TDate   startDate,
- TDate   maturityDate);
-
+double JpmcdsForwardZeroPrice(TCurve* zeroCurve, TDate startDate,
+                              TDate maturityDate);
 
 /*f
 ***************************************************************************
@@ -47,10 +39,7 @@ double JpmcdsForwardZeroPrice
 ** compounded rates.
 ***************************************************************************
 */
-double JpmcdsZeroRate
-(TCurve* zeroCurve,
- TDate   date);
-
+double JpmcdsZeroRate(TCurve* zeroCurve, TDate date);
 
 /*f
 ***************************************************************************
@@ -58,18 +47,12 @@ double JpmcdsZeroRate
 ** Can also convert between ACT-style day count conventions.
 ***************************************************************************
 */
-int JpmcdsConvertCompoundRate 
-(double  inRate,
- double  inBasis,
- long    inDayCountConv,
- double  outBasis,
- long    outDayCountConv,
- double *outRate);
-
+int JpmcdsConvertCompoundRate(double inRate, double inBasis,
+                              long inDayCountConv, double outBasis,
+                              long outDayCountConv, double* outRate);
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* CX_ZERO_CURVE_D_H */
-

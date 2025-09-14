@@ -3,7 +3,7 @@
  *
  * Copyright (C) 2009 International Swaps and Derivatives Association, Inc.
  * Developed and supported in collaboration with Markit
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the ISDA CDS Standard Model Public License.
  */
@@ -11,11 +11,10 @@
 #ifndef TIMELINE_H
 #define TIMELINE_H
 
-#include "cx.h"
+#include "cx.hpp"
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /*f
@@ -32,12 +31,8 @@ extern "C"
 ** - nothing after endDate
 ***************************************************************************
 */
-TDateList* JpmcdsRiskyTimeLine
-(TDate             startDate,
- TDate             endDate,
- TCurve           *discCurve,
- TCurve           *riskyCurve);
-
+TDateList* JpmcdsRiskyTimeLine(TDate startDate, TDate endDate,
+                               TCurve* discCurve, TCurve* riskyCurve);
 
 /*f
 ***************************************************************************
@@ -51,16 +46,11 @@ TDateList* JpmcdsRiskyTimeLine
 ** - nothing after endDate
 ***************************************************************************
 */
-TDateList* JpmcdsTruncateTimeLine
-(TDateList* criticalDates,
- TDate      startDate,
- TDate      endDate);
+TDateList* JpmcdsTruncateTimeLine(TDateList* criticalDates, TDate startDate,
+                                  TDate endDate);
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif
-
-
-

@@ -3,7 +3,7 @@
  *
  * Copyright (C) 2009 International Swaps and Derivatives Association, Inc.
  * Developed and supported in collaboration with Markit
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the ISDA CDS Standard Model Public License.
  */
@@ -11,14 +11,12 @@
 #ifndef DTLIST_H
 #define DTLIST_H
 
-#include "cgeneral.h"
-#include "cdate.h"
+#include "cdate.hpp"
+#include "cgeneral.hpp"
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
-
 
 /*f
 ***************************************************************************
@@ -27,8 +25,7 @@ extern "C"
 ** Note that it is permissible to create a TDateList with 0 dates.
 ***************************************************************************
 */
-TDateList* JpmcdsNewEmptyDateList(int numDates);
-
+TDateList *JpmcdsNewEmptyDateList(int numDates);
 
 /*f
 ***************************************************************************
@@ -39,30 +36,24 @@ TDateList* JpmcdsNewEmptyDateList(int numDates);
 ** dateList unchanged.
 ***************************************************************************
 */
-int JpmcdsExtendDateList
-(TDateList *dateList,    /* (I/O) Date list to extend. */
- int        numDates     /* (I) New size of the date list. */
+int JpmcdsExtendDateList(TDateList *dateList, /* (I/O) Date list to extend. */
+                         int numDates /* (I) New size of the date list. */
 );
-
 
 /*f
 ***************************************************************************
 ** Allocates a new TDateList and copies supplied dates into it.
 ***************************************************************************
 */
-TDateList* JpmcdsNewDateListFromDates
-    (TDate      *dates,                 /* (I) */
-     int         numDates);             /* (I) */
-
+TDateList *JpmcdsNewDateListFromDates(TDate *dates,  /* (I) */
+                                      int numDates); /* (I) */
 
 /*f
 ***************************************************************************
 ** Frees a DateList
 ***************************************************************************
 */
-void JpmcdsFreeDateList
-     (TDateList *);                      /* (I)  */
-
+void JpmcdsFreeDateList(TDateList *); /* (I)  */
 
 /*f
 ***************************************************************************
@@ -77,10 +68,8 @@ void JpmcdsFreeDateList
 **    the other and returns it. If both are NULL, it returns NULL.
 ***************************************************************************
 */
-TDateList* JpmcdsMergeDateLists(
-               TDateList *dateList1,     /* (I) */
-               TDateList *dateList2);    /* (I) */
-
+TDateList *JpmcdsMergeDateLists(TDateList *dateList1,  /* (I) */
+                                TDateList *dateList2); /* (I) */
 
 /*f
 ***************************************************************************
@@ -89,13 +78,12 @@ TDateList* JpmcdsMergeDateLists(
 ** on the allowDuplicate flag (FALSE = remove duplicates, TRUE = keep them).
 ***************************************************************************
 */
-TDateList* JpmcdsJpmcdsDateListAddDates
-(TDateList *dateList,        /* (I) Original date list. */
- int        numDates,        /* (I) Number of dates to add. */
- TDate     *addDates,        /* (I) Dates to be added. */
- TBoolean   allowDuplicates  /* (I) Keep duplicate dates (or not) */
+TDateList *JpmcdsJpmcdsDateListAddDates(
+    TDateList *dateList,     /* (I) Original date list. */
+    int numDates,            /* (I) Number of dates to add. */
+    TDate *addDates,         /* (I) Dates to be added. */
+    TBoolean allowDuplicates /* (I) Keep duplicate dates (or not) */
 );
-
 
 /*f
 ***************************************************************************
@@ -104,11 +92,10 @@ TDateList* JpmcdsJpmcdsDateListAddDates
 ** Note the algorithm used may be inefficient if subDates is large.
 ***************************************************************************
 */
-TDateList* JpmcdsSubtractDateLists
-(TDateList *dateList,        /* (I) Original date list                     */
- TDateList *subDates         /* (I) date list to remove from original      */
+TDateList *JpmcdsSubtractDateLists(
+    TDateList *dateList, /* (I) Original date list                     */
+    TDateList *subDates  /* (I) date list to remove from original      */
 );
-
 
 /*f
 ***************************************************************************
@@ -117,19 +104,17 @@ TDateList* JpmcdsSubtractDateLists
 ** Returns NULL on error, or if the original datelist was NULL.
 ***************************************************************************
 */
-TDateList* JpmcdsCopyDateList(   /* duplicate a datelist */
-      TDateList   *dl);                        /* (I) date list to copy */
+TDateList *JpmcdsCopyDateList(                /* duplicate a datelist */
+                              TDateList *dl); /* (I) date list to copy */
 
 /*f
 ***************************************************************************
 ** Sorts a datelist.
-** 
+**
 ** Returns NULL on FAILURE, and the sorted DateList on success.
 ***************************************************************************
 */
-TDateList* JpmcdsSortDateList
-     (TDateList *dl);           /* (I) */
-
+TDateList *JpmcdsSortDateList(TDateList *dl); /* (I) */
 
 /*f
 ***************************************************************************
@@ -138,11 +123,9 @@ TDateList* JpmcdsSortDateList
 ** Especially, useful to clean up a DateList after going through bad-day adj.
 ***************************************************************************
 */
-TDateList* JpmcdsNewDateListDistinct
-(
-    TDateList *theDateList      /* (I) Input DateList to be cleaned */
+TDateList *JpmcdsNewDateListDistinct(
+    TDateList *theDateList /* (I) Input DateList to be cleaned */
 );
-
 
 /*f
 ***************************************************************************
@@ -154,17 +137,16 @@ TDateList* JpmcdsNewDateListDistinct
 ** The input date list must be sorted.
 ***************************************************************************
 */
-TDateList* JpmcdsJpmcdsDateListTruncate
-(TDateList *dateList,       /* (I/O) Date list to be modified in place */
- TDate      truncationDate, /* (I) Date on which to perform trunctation */
- TBoolean   inclusive,      /* (I) TRUE=include truncation date if in list*/
- TBoolean   excludeBefore,  /* (I) TRUE=exclude dates before truncation date */
- TBoolean   inPlace         /* (I) TRUE=modify date list in place */
+TDateList *JpmcdsJpmcdsDateListTruncate(
+    TDateList *dateList,    /* (I/O) Date list to be modified in place */
+    TDate truncationDate,   /* (I) Date on which to perform trunctation */
+    TBoolean inclusive,     /* (I) TRUE=include truncation date if in list*/
+    TBoolean excludeBefore, /* (I) TRUE=exclude dates before truncation date */
+    TBoolean inPlace        /* (I) TRUE=modify date list in place */
 );
-
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif    /* DTLIST_H */
+#endif /* DTLIST_H */

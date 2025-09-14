@@ -11,7 +11,7 @@
 #ifndef BADDAY_H
 #define BADDAY_H
 
-#include "bastypes.h"
+#include "bastypes.hpp"
 
 #ifdef __cplusplus
 extern "C" {

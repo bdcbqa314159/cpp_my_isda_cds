@@ -3,7 +3,7 @@
  *
  * Copyright (C) 2009 International Swaps and Derivatives Association, Inc.
  * Developed and supported in collaboration with Markit
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the ISDA CDS Standard Model Public License.
  */
@@ -12,17 +12,15 @@
 #define CHEADERS_H
 
 #include <stdlib.h>
-#include "cgeneral.h"
-#include "cdate.h"
-#include "cerror.h"
-#include "cfinanci.h"
-#include "cmemory.h"
+
+#include "cdate.hpp"
+#include "cerror.hpp"
+#include "cfinanci.hpp"
+#include "cgeneral.hpp"
+#include "cmemory.hpp"
 
 #ifdef __cplusplus
-extern "C"
-{
-}
+extern "C" {}
 #endif
 
-#endif    /* CHEADERS_H */
-
+#endif /* CHEADERS_H */

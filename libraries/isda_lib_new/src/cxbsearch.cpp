@@ -3,17 +3,17 @@
  *
  * Copyright (C) 2009 International Swaps and Derivatives Association, Inc.
  * Developed and supported in collaboration with Markit
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the ISDA CDS Standard Model Public License.
  */
 
-#include "cxbsearch.h"
-#include <assert.h>
-#include "macros.h"
-#include "macros.h"
-#include "cerror.h"
+#include "cxbsearch.hpp"
 
+#include <assert.h>
+
+#include "cerror.hpp"
+#include "macros.hpp"
 
 /*
 ***************************************************************************
@@ -48,133 +48,122 @@
 ** are going to slow it down by doing a linear check of the inputs.
 ***************************************************************************
 */
-int JpmcdsBinarySearchLong
-(long    xDesired,  /* (I) Value for which we seek */
- long   *xArray,    /* (I) Array in which we seek - assumes sorted in
+int JpmcdsBinarySearchLong(
+    long xDesired,  /* (I) Value for which we seek */
+    long *xArray,   /* (I) Array in which we seek - assumes sorted in
                        ascending order.*/
- size_t  skip,      /* (I) Size of elements in the array */
- long    arraySize, /* (I) Size of the array */
- long   *exact,     /* (O) Index of a value which is equal to xDesired,
+    size_t skip,    /* (I) Size of elements in the array */
+    long arraySize, /* (I) Size of the array */
+    long *exact,    /* (O) Index of a value which is equal to xDesired,
                        -1 if not found */
- long   *loBound,   /* (O) Index of last value strictly less than xDesired,
+    long *loBound,  /* (O) Index of last value strictly less than xDesired,
                        -1 if no such value exists. */
- long   *hiBound)   /* (O) Index of first value strictly greater than xDesired,
+    long *hiBound)  /* (O) Index of first value strictly greater than xDesired,
                        -1 if no such value exists. */
 {
-    static char routine[] = "JpmcdsBinarySearchLong";
-    int         status    = FAILURE;
+  static char routine[] = "JpmcdsBinarySearchLong";
+  int status = FAILURE;
 
-    int count;                 /* Used to check # search steps */
-    int lo;                    /* Index of low estimate */
-    int hi;                    /* Index of high estimate */
-    int mid = 0;               /* Index of best estimate */
-    char *xp = (char *)xArray; /* Ptr to x array */
+  int count;                 /* Used to check # search steps */
+  int lo;                    /* Index of low estimate */
+  int hi;                    /* Index of high estimate */
+  int mid = 0;               /* Index of best estimate */
+  char *xp = (char *)xArray; /* Ptr to x array */
 
-    REQUIRE (arraySize > 0);
-    REQUIRE (skip >= sizeof(long));
-    REQUIRE (exact != NULL);
+  REQUIRE(arraySize > 0);
+  REQUIRE(skip >= sizeof(long));
+  REQUIRE(exact != NULL);
 
 #undef ELEMENT
-#define ELEMENT(idx) *(long*)(xp + skip*(idx))
+#define ELEMENT(idx) *(long *)(xp + skip * (idx))
 
-    /* If we are not in the range then we are done */
-    if (xDesired < ELEMENT(0))
-    {
-        *exact   = -1;
-        *loBound = -1;
-        *hiBound = 0;
-        return SUCCESS;
-    }
-    else if (xDesired > ELEMENT(arraySize-1))
-    {
-        *exact   = -1;
-        *loBound = arraySize-1;
-        *hiBound = arraySize;
-        return SUCCESS;
-    }
+  /* If we are not in the range then we are done */
+  if (xDesired < ELEMENT(0)) {
+    *exact = -1;
+    *loBound = -1;
+    *hiBound = 0;
+    return SUCCESS;
+  } else if (xDesired > ELEMENT(arraySize - 1)) {
+    *exact = -1;
+    *loBound = arraySize - 1;
+    *hiBound = arraySize;
+    return SUCCESS;
+  }
 
-    /* arraySize of 1 we are done */
-    if (arraySize == 1)
-    {
-        assert (xDesired == ELEMENT(0));
-        *exact   = 0;
-        *loBound = -1;
-        *hiBound = arraySize;
-        return SUCCESS;
-    }
-    
-    lo = 0;
-    hi = arraySize - 2;
-    
-    /* Do binary search to find pair of x's which surround the desired
-     * X value.
-     */
-    for (count = arraySize+1; count > 0; --count)
-    {
-        mid = (hi + lo) / 2;
-        
-        if (xDesired < ELEMENT(mid))
-            hi = mid - 1;
-        else if (xDesired > ELEMENT(mid + 1))
-            lo = mid + 1;
-        else
-            break;                  /* Done */
-    }
-    
-    if (count == 0)
-    {
-        JpmcdsErrMsg("%s: x array not in increasing order.n", routine);
-        return FAILURE;
-    }
-    
-    /* Protect against a run of x values which are the same.
-     * Set two surrounding indices to be lo and hi.
-     * Note that there is no danger of running off the end
-     * since the only way for x[lo] = x[hi] is for both
-     * to be equal to xDesired. But from check at beginning,
-     * we know X[N-1] <> xDesired. 
-     */
+  /* arraySize of 1 we are done */
+  if (arraySize == 1) {
+    assert(xDesired == ELEMENT(0));
+    *exact = 0;
+    *loBound = -1;
+    *hiBound = arraySize;
+    return SUCCESS;
+  }
 
-    assert (mid < arraySize);
-    assert (xDesired >= ELEMENT(mid));
-    assert (xDesired <= ELEMENT(mid+1));
+  lo = 0;
+  hi = arraySize - 2;
 
-    lo = mid;
-    hi = mid+1;
-    
-    if (ELEMENT(lo) == xDesired)
-        *exact = lo;
-    else if (ELEMENT(hi) == xDesired)
-        *exact = hi;
+  /* Do binary search to find pair of x's which surround the desired
+   * X value.
+   */
+  for (count = arraySize + 1; count > 0; --count) {
+    mid = (hi + lo) / 2;
+
+    if (xDesired < ELEMENT(mid))
+      hi = mid - 1;
+    else if (xDesired > ELEMENT(mid + 1))
+      lo = mid + 1;
     else
-        *exact = -1;
+      break; /* Done */
+  }
 
-    if (loBound != NULL)
-    {
-        while (lo >= 0 && ELEMENT(lo) >= xDesired)
-            --lo;
-        
-        if (lo >= 0)
-            *loBound = lo;
-        else
-            *loBound = -1;
-    }
+  if (count == 0) {
+    JpmcdsErrMsg("%s: x array not in increasing order.n", routine);
+    return FAILURE;
+  }
 
-    if (hiBound != NULL)
-    {
-        while (hi < arraySize && ELEMENT(hi) <= xDesired)
-            ++hi;
-        
-        if (hi < arraySize)
-            *hiBound = hi;
-        else
-            *hiBound = arraySize;
-    }
-    status = SUCCESS;
+  /* Protect against a run of x values which are the same.
+   * Set two surrounding indices to be lo and hi.
+   * Note that there is no danger of running off the end
+   * since the only way for x[lo] = x[hi] is for both
+   * to be equal to xDesired. But from check at beginning,
+   * we know X[N-1] <> xDesired.
+   */
 
- done:
-    
-    if (status != SUCCESS) JpmcdsErrMsgFailure(routine);
-    return status;
+  assert(mid < arraySize);
+  assert(xDesired >= ELEMENT(mid));
+  assert(xDesired <= ELEMENT(mid + 1));
+
+  lo = mid;
+  hi = mid + 1;
+
+  if (ELEMENT(lo) == xDesired)
+    *exact = lo;
+  else if (ELEMENT(hi) == xDesired)
+    *exact = hi;
+  else
+    *exact = -1;
+
+  if (loBound != NULL) {
+    while (lo >= 0 && ELEMENT(lo) >= xDesired) --lo;
+
+    if (lo >= 0)
+      *loBound = lo;
+    else
+      *loBound = -1;
+  }
+
+  if (hiBound != NULL) {
+    while (hi < arraySize && ELEMENT(hi) <= xDesired) ++hi;
+
+    if (hi < arraySize)
+      *hiBound = hi;
+    else
+      *hiBound = arraySize;
+  }
+  status = SUCCESS;
+
+done:
+
+  if (status != SUCCESS) JpmcdsErrMsgFailure(routine);
+  return status;
 }
-

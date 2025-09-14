@@ -3,7 +3,7 @@
  *
  * Copyright (C) 2009 International Swaps and Derivatives Association, Inc.
  * Developed and supported in collaboration with Markit
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the ISDA CDS Standard Model Public License.
  */
@@ -11,46 +11,40 @@
 #ifndef CERROR_H
 #define CERROR_H
 
-#include "cgeneral.h"
 #include <stdarg.h>
 #include <stdio.h>
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
+#include "cgeneral.hpp"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /*t
  */
-typedef TBoolean (JpmcdsErrCallBackFunc)(char *string, void *callBackData);
-
+typedef TBoolean(JpmcdsErrCallBackFunc)(char *string, void *callBackData);
 
 /*f
 ***************************************************************************
-** Writes an error message with a variable number of arguments to a log 
+** Writes an error message with a variable number of arguments to a log
 ** file.
 ***************************************************************************
 */
-void JpmcdsErrMsg(
-    char *format,    /* (I) printf style format string. */
-    ...)             /* (I) Variable arguments. */
+void JpmcdsErrMsg(char *format, /* (I) printf style format string. */
+                  ...)          /* (I) Variable arguments. */
 #if __GNUC__ > 1
-__attribute__ ((format(printf, 1, 2)))
+    __attribute__((format(printf, 1, 2)))
 #endif
-;
-
+    ;
 
 /*f
 ***************************************************************************
 ** Same as JpmcdsErrMsg but using va_list for its arguments instead of ...
 ***************************************************************************
 */
-void JpmcdsErrMsgV(
-    char    *format,  /* (I) printf style format string */
-    va_list args      /* (I) Variable arguments */
+void JpmcdsErrMsgV(char *format, /* (I) printf style format string */
+                   va_list args  /* (I) Variable arguments */
 );
-
 
 /*f
 ***************************************************************************
@@ -58,7 +52,6 @@ void JpmcdsErrMsgV(
 ***************************************************************************
 */
 void JpmcdsErrLogWrite(char *message);
-
 
 /*f
 ***************************************************************************
@@ -68,7 +61,6 @@ void JpmcdsErrLogWrite(char *message);
 */
 void JpmcdsErrMsgOn(void);
 
-
 /*f
 ***************************************************************************
 ** Tells JpmcdsErrMsg NOT to actually write something (either to
@@ -77,18 +69,16 @@ void JpmcdsErrMsgOn(void);
 */
 void JpmcdsErrMsgOff(void);
 
-
 /*f
 ***************************************************************************
 ** Writes the message "%s: Failed.\n" to the error log and returns FAILURE.
 ** This is to enable a single function call on failing within a function as
-** follows: return (JpmcdsErrMsgFailure (routine)); 
+** follows: return (JpmcdsErrMsgFailure (routine));
 ***************************************************************************
 */
-int JpmcdsErrMsgFailure
-(char *routine /* (I) Name of routine published in error log. */
+int JpmcdsErrMsgFailure(
+    char *routine /* (I) Name of routine published in error log. */
 );
-
 
 /*f
 ***************************************************************************
@@ -98,14 +88,12 @@ int JpmcdsErrMsgFailure
 */
 int JpmcdsErrMsgFlush(void);
 
-
 /*f
 ***************************************************************************
 ** Returns the current logging state.
 ***************************************************************************
 */
 EXPORT TBoolean JpmcdsErrMsgStatus(void);
-
 
 /*f
 ***************************************************************************
@@ -114,28 +102,24 @@ EXPORT TBoolean JpmcdsErrMsgStatus(void);
 * file was successfully opened or not.
 ***************************************************************************
 */
-EXPORT int JpmcdsErrMsgFileName(
-    char *fileName,  /* (I)  File name to use. */
-    TBoolean append  /* (I)  Append flag. */
+EXPORT int JpmcdsErrMsgFileName(char *fileName, /* (I)  File name to use. */
+                                TBoolean append /* (I)  Append flag. */
 );
-
 
 /*f
 ***************************************************************************
-** Returns pointer to privately held error log file name which was set by 
+** Returns pointer to privately held error log file name which was set by
 ** JpmcdsErrMsgFileName.
 ***************************************************************************
 */
-EXPORT char* JpmcdsErrMsgGetFileName(void);
-
+EXPORT char *JpmcdsErrMsgGetFileName(void);
 
 /*f
 ***************************************************************************
 ** Turns on the error message record facility.
 ***************************************************************************
 */
-EXPORT char** JpmcdsErrGetMsgRecord(void);
-
+EXPORT char **JpmcdsErrGetMsgRecord(void);
 
 /*f
 ***************************************************************************
@@ -143,9 +127,8 @@ EXPORT char** JpmcdsErrGetMsgRecord(void);
 ***************************************************************************
 */
 EXPORT int JpmcdsErrMsgEnableRecord(
-    int numberOfMessages,     /* (I) Number of messages to save. */
-    int messageSize);         /* (I) Maximum size of each message. */
-
+    int numberOfMessages, /* (I) Number of messages to save. */
+    int messageSize);     /* (I) Maximum size of each message. */
 
 /*f
 ***************************************************************************
@@ -153,7 +136,6 @@ EXPORT int JpmcdsErrMsgEnableRecord(
 ***************************************************************************
 */
 EXPORT int JpmcdsErrMsgDisableRecord(void);
-
 
 /*f
 ***************************************************************************
@@ -186,24 +168,21 @@ TBoolean JpmcdsErrMsgRecordEnabled(void);
  * The callbackData provided in this function call will be made available
  * to the callback routine.
  */
-EXPORT void  JpmcdsErrMsgAddCallback(
-    JpmcdsErrCallBackFunc *userFunc,       /* (I) User callback function. */
-    TBoolean               sendTimeStamp,  /* (I) Send timestamp flag. */
-    void                  *callbackData    /* (I) User supplied data passed to cb.*/
+EXPORT void JpmcdsErrMsgAddCallback(
+    JpmcdsErrCallBackFunc *userFunc, /* (I) User callback function. */
+    TBoolean sendTimeStamp,          /* (I) Send timestamp flag. */
+    void *callbackData               /* (I) User supplied data passed to cb.*/
 );
 
 /*f
  * Returns callback information currently in use.
  */
-EXPORT void  JpmcdsErrMsgGetCallback
-   (JpmcdsErrCallBackFunc **userFunc,        /* (O) */
-    TBoolean               *sendTimeStamp,   /* (O) */
-    void                  **callBackData);   /* (O) */
-
+EXPORT void JpmcdsErrMsgGetCallback(JpmcdsErrCallBackFunc **userFunc, /* (O) */
+                                    TBoolean *sendTimeStamp,          /* (O) */
+                                    void **callBackData);             /* (O) */
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif    /* CERROR_H */
-
+#endif /* CERROR_H */

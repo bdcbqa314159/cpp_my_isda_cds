@@ -3,7 +3,7 @@
  *
  * Copyright (C) 2009 International Swaps and Derivatives Association, Inc.
  * Developed and supported in collaboration with Markit
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the ISDA CDS Standard Model Public License.
  */
@@ -11,12 +11,11 @@
 #ifndef BUSCACHE_H
 #define BUSCACHE_H
 
-#include "cgeneral.h"
-#include "cdate.h"
+#include "cdate.hpp"
+#include "cgeneral.hpp"
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /*
@@ -31,15 +30,16 @@ extern "C"
 ** By default when reading holidays from file, the weekend status will be
 ** JPMCDS_WEEKEND_STANDARD unless specifically over-ridden.
 */
-#define JPMCDS_WEEKEND_MONDAY      0x0001
-#define JPMCDS_WEEKEND_TUESDAY     0x0002
-#define JPMCDS_WEEKEND_WEDNESDAY   0x0004
-#define JPMCDS_WEEKEND_THURSDAY    0x0008
-#define JPMCDS_WEEKEND_FRIDAY      0x0010
-#define JPMCDS_WEEKEND_SATURDAY    0x0020
-#define JPMCDS_WEEKEND_SUNDAY      0x0040
+#define JPMCDS_WEEKEND_MONDAY 0x0001
+#define JPMCDS_WEEKEND_TUESDAY 0x0002
+#define JPMCDS_WEEKEND_WEDNESDAY 0x0004
+#define JPMCDS_WEEKEND_THURSDAY 0x0008
+#define JPMCDS_WEEKEND_FRIDAY 0x0010
+#define JPMCDS_WEEKEND_SATURDAY 0x0020
+#define JPMCDS_WEEKEND_SUNDAY 0x0040
 #define JPMCDS_WEEKEND_NO_WEEKENDS 0x0000
-#define JPMCDS_WEEKEND_STANDARD    (JPMCDS_WEEKEND_SATURDAY | JPMCDS_WEEKEND_SUNDAY)
+#define JPMCDS_WEEKEND_STANDARD \
+  (JPMCDS_WEEKEND_SATURDAY | JPMCDS_WEEKEND_SUNDAY)
 
 /*t
 ***************************************************************************
@@ -47,12 +47,10 @@ extern "C"
 ** particular days of the week are always holidays.
 ***************************************************************************
 */
-typedef struct _THolidayList
-{
-    TDateList  *dateList;     /* date list of holidays */
-    long        weekends;     /* weekends */
+typedef struct _THolidayList {
+  TDateList *dateList; /* date list of holidays */
+  long weekends;       /* weekends */
 } THolidayList;
-
 
 typedef struct _THolidayCache THolidayCache;
 
@@ -62,7 +60,8 @@ typedef struct _THolidayCache THolidayCache;
 ***************************************************************************
 */
 #define JPMCDS_IS_WEEKEND(date, weekends) ((1 << ((date) % 7)) & (weekends))
-#define JPMCDS_IS_WEEKDAY(date, weekends) (!(JPMCDS_IS_WEEKEND((date),(weekends))))
+#define JPMCDS_IS_WEEKDAY(date, weekends) \
+  (!(JPMCDS_IS_WEEKEND((date), (weekends))))
 
 /*
 ***************************************************************************
@@ -77,16 +76,12 @@ typedef struct _THolidayCache THolidayCache;
 ***************************************************************************
 */
 
-
-
-
 /*
 ***************************************************************************
 ** 1. Holiday cache manipulation functions. These are functions that
 **    manipulate the holiday cache but perform no significant analytics.
 ***************************************************************************
 */
-
 
 /*f
 ***************************************************************************
@@ -109,8 +104,8 @@ typedef struct _THolidayCache THolidayCache;
 ** Returns NULL on failure, a valid THolidayList pointer on success.
 ***************************************************************************
 */
-THolidayList * JpmcdsHolidayListFromCache
-(char *name);   /* (I) Name associated with the holidays */
+THolidayList *JpmcdsHolidayListFromCache(
+    char *name); /* (I) Name associated with the holidays */
 
 /*f
 ***************************************************************************
@@ -118,19 +113,17 @@ THolidayList * JpmcdsHolidayListFromCache
 ** in the cache, then the old version will be deleted.
 ***************************************************************************
 */
-int JpmcdsHolidayListAddToCache
-(char         *name,   /* (I) Name to associate holidays with */
- THolidayList *hl      /* (I) Adds shallow copy */
+int JpmcdsHolidayListAddToCache(
+    char *name,      /* (I) Name to associate holidays with */
+    THolidayList *hl /* (I) Adds shallow copy */
 );
-
 
 /*f
 ***************************************************************************
 ** Empty holiday cache
 ***************************************************************************
 */
-void JpmcdsHolidayEmptyCache (void);
-
+void JpmcdsHolidayEmptyCache(void);
 
 /*
 ***************************************************************************
@@ -139,7 +132,6 @@ void JpmcdsHolidayEmptyCache (void);
 **    analytics.
 ***************************************************************************
 */
-
 
 /*f
 ***************************************************************************
@@ -150,20 +142,17 @@ void JpmcdsHolidayEmptyCache (void);
 **      hl->dateList->fNumItems = 0;
 ***************************************************************************
 */
-THolidayList* JpmcdsHolidayListNewGeneral
-(TDateList *dateList,      /* (I) Date list to use */
- long       weekends       /* (I) Weekends flag - use JPMCDS_WEEKEND_... */
+THolidayList *JpmcdsHolidayListNewGeneral(
+    TDateList *dateList, /* (I) Date list to use */
+    long weekends        /* (I) Weekends flag - use JPMCDS_WEEKEND_... */
 );
-
 
 /*f
 ***************************************************************************
 ** Deletes a holiday list structure.
 ***************************************************************************
 */
-void JpmcdsHolidayListDelete
-(THolidayList *hl);  /* (I) Holiday list to delete */
-
+void JpmcdsHolidayListDelete(THolidayList *hl); /* (I) Holiday list to delete */
 
 /*f
 ***************************************************************************
@@ -183,15 +172,12 @@ void JpmcdsHolidayListDelete
 ** Dates must be in increasing order.
 ***************************************************************************
 */
-THolidayList* JpmcdsHolidayListRead
-(char *fileName   /* (I) Name of file to read (may differ) */
+THolidayList *JpmcdsHolidayListRead(
+    char *fileName /* (I) Name of file to read (may differ) */
 );
-
-
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif    /* BUSCACHE_H */
-
+#endif /* BUSCACHE_H */

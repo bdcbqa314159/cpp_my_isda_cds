@@ -3,18 +3,18 @@
  *
  * Copyright (C) 2009 International Swaps and Derivatives Association, Inc.
  * Developed and supported in collaboration with Markit
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the ISDA CDS Standard Model Public License.
  */
 
-#include "timeline.h"
-#include "cxdatelist.h"
-#include "macros.h"
-#include "cerror.h"
-#include "datelist.h"
-#include "tcurve.h"
+#include "timeline.hpp"
 
+#include "cerror.hpp"
+#include "cxdatelist.hpp"
+#include "datelist.hpp"
+#include "macros.hpp"
+#include "tcurve.hpp"
 
 /*
 ***************************************************************************
@@ -30,51 +30,45 @@
 ** - nothing after endDate
 ***************************************************************************
 */
-TDateList* JpmcdsRiskyTimeLine
-(TDate             startDate,
- TDate             endDate,
- TCurve*           discCurve,
- TCurve           *spreadCurve)
-{
-    static char routine[] = "JpmcdsRiskyTimeLine";
+TDateList* JpmcdsRiskyTimeLine(TDate startDate, TDate endDate,
+                               TCurve* discCurve, TCurve* spreadCurve) {
+  static char routine[] = "JpmcdsRiskyTimeLine";
 
-    TDateList *tl  = NULL;
-    TDate     *dates = NULL;
+  TDateList* tl = NULL;
+  TDate* dates = NULL;
 
-    REQUIRE (discCurve != NULL);
-    REQUIRE (spreadCurve != NULL);
-    REQUIRE (endDate > startDate);
-    REQUIRE (spreadCurve != NULL);
+  REQUIRE(discCurve != NULL);
+  REQUIRE(spreadCurve != NULL);
+  REQUIRE(endDate > startDate);
+  REQUIRE(spreadCurve != NULL);
 
-    /*
-    ** Timeline is points on the spreadCurve between startDate and endDate,
-    ** plus the startDate and endDate, plus the critical dates.
-    */
-    tl = JpmcdsNewDateListFromTCurve(discCurve);
-    if (tl == NULL) goto done;
+  /*
+  ** Timeline is points on the spreadCurve between startDate and endDate,
+  ** plus the startDate and endDate, plus the critical dates.
+  */
+  tl = JpmcdsNewDateListFromTCurve(discCurve);
+  if (tl == NULL) goto done;
 
-    dates = JpmcdsDatesFromCurve(spreadCurve);
-    tl = JpmcdsDateListAddDatesFreeOld(tl, spreadCurve->fNumItems, dates);
-    if (tl == NULL) goto done;
-    tl = JpmcdsDateListAddDatesFreeOld(tl, 1, &startDate);
-    if (tl == NULL) goto done;
-    tl = JpmcdsDateListAddDatesFreeOld(tl, 1, &endDate);
-    if (tl == NULL) goto done;
+  dates = JpmcdsDatesFromCurve(spreadCurve);
+  tl = JpmcdsDateListAddDatesFreeOld(tl, spreadCurve->fNumItems, dates);
+  if (tl == NULL) goto done;
+  tl = JpmcdsDateListAddDatesFreeOld(tl, 1, &startDate);
+  if (tl == NULL) goto done;
+  tl = JpmcdsDateListAddDatesFreeOld(tl, 1, &endDate);
+  if (tl == NULL) goto done;
 
-    /* remove dates strictly before startDate and strictly after endDate */
-    tl = JpmcdsDateListTruncate(tl, startDate, TRUE, TRUE, TRUE);
-    tl = JpmcdsDateListTruncate(tl, endDate, TRUE, FALSE, TRUE);
-    
- done:
+  /* remove dates strictly before startDate and strictly after endDate */
+  tl = JpmcdsDateListTruncate(tl, startDate, TRUE, TRUE, TRUE);
+  tl = JpmcdsDateListTruncate(tl, endDate, TRUE, FALSE, TRUE);
 
-    if (tl == NULL)
-        JpmcdsErrMsgFailure(routine);
+done:
 
-    FREE (dates);
+  if (tl == NULL) JpmcdsErrMsgFailure(routine);
 
-    return tl;
+  FREE(dates);
+
+  return tl;
 }
-
 
 /*
 ***************************************************************************
@@ -88,33 +82,28 @@ TDateList* JpmcdsRiskyTimeLine
 ** - nothing after endDate
 ***************************************************************************
 */
-TDateList* JpmcdsTruncateTimeLine
-(TDateList* criticalDates,
- TDate      startDate,
- TDate      endDate)
-{
-    static char routine[] = "JpmcdsTruncateTimeLine";
-    
-    TDateList *tl = NULL;
-    TDate      startEndDate[2];
+TDateList* JpmcdsTruncateTimeLine(TDateList* criticalDates, TDate startDate,
+                                  TDate endDate) {
+  static char routine[] = "JpmcdsTruncateTimeLine";
 
-    REQUIRE (endDate > startDate);
+  TDateList* tl = NULL;
+  TDate startEndDate[2];
 
-    startEndDate[0] = startDate;
-    startEndDate[1] = endDate;
+  REQUIRE(endDate > startDate);
 
-    tl = JpmcdsDateListAddDates (criticalDates, 2, startEndDate);
-    if (tl == NULL)
-        goto done;
+  startEndDate[0] = startDate;
+  startEndDate[1] = endDate;
 
-    /* remove dates strictly before startDate and strictly after endDate */
-    tl = JpmcdsDateListTruncate (tl, startDate, TRUE, TRUE, TRUE);
-    tl = JpmcdsDateListTruncate (tl, endDate, TRUE, FALSE, TRUE);
-    
- done:
+  tl = JpmcdsDateListAddDates(criticalDates, 2, startEndDate);
+  if (tl == NULL) goto done;
 
-    if (tl == NULL)
-        JpmcdsErrMsgFailure (routine);
-    
-    return tl;
+  /* remove dates strictly before startDate and strictly after endDate */
+  tl = JpmcdsDateListTruncate(tl, startDate, TRUE, TRUE, TRUE);
+  tl = JpmcdsDateListTruncate(tl, endDate, TRUE, FALSE, TRUE);
+
+done:
+
+  if (tl == NULL) JpmcdsErrMsgFailure(routine);
+
+  return tl;
 }

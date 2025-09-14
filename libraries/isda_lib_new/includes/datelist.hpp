@@ -3,7 +3,7 @@
  *
  * Copyright (C) 2009 International Swaps and Derivatives Association, Inc.
  * Developed and supported in collaboration with Markit
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the ISDA CDS Standard Model Public License.
  */
@@ -11,15 +11,13 @@
 #ifndef DATELIST_H
 #define DATELIST_H
 
-#include "cgeneral.h"
-#include "bastypes.h"
-#include "dtlist.h"
+#include "bastypes.hpp"
+#include "cgeneral.hpp"
+#include "dtlist.hpp"
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
-
 
 /*f
 ***************************************************************************
@@ -34,12 +32,11 @@ extern "C"
 ** Returns a new DateList on success, and NULL on failure.
 ***************************************************************************
 */
-TDateList* JpmcdsNewDateList(
-    TDate startDate,                    /* (I) Start Date */
-    TDate maturityDate,                 /* (I) Maturity Date */
-    TDateInterval *interval,            /* (I) Increment */
-    TBoolean stubAtEnd);                /* (I) T=Stub at end; F=Stub at beg. */
-
+TDateList *JpmcdsNewDateList(
+    TDate startDate,         /* (I) Start Date */
+    TDate maturityDate,      /* (I) Maturity Date */
+    TDateInterval *interval, /* (I) Increment */
+    TBoolean stubAtEnd);     /* (I) T=Stub at end; F=Stub at beg. */
 
 /*f
 ***************************************************************************
@@ -57,16 +54,15 @@ TDateList* JpmcdsNewDateList(
 ** Returns a new DateList on success, and NULL on failure.
 ***************************************************************************
 */
-TDateList* JpmcdsNewDateListExtended(
-    TDate startDate,                    /* (I) Start Date */
-    TDate maturityDate,                 /* (I) Maturity Date */
-    TDateInterval *interval,            /* (I) Increment */
-    TBoolean stubAtEnd);                /* (I) T=Stub at end; F=Stub at beg. */
-
+TDateList *JpmcdsNewDateListExtended(
+    TDate startDate,         /* (I) Start Date */
+    TDate maturityDate,      /* (I) Maturity Date */
+    TDateInterval *interval, /* (I) Increment */
+    TBoolean stubAtEnd);     /* (I) T=Stub at end; F=Stub at beg. */
 
 /*f
 ***************************************************************************
-** Makes an array of dates using startDate, MaturityDate, rollDate & 
+** Makes an array of dates using startDate, MaturityDate, rollDate &
 ** interval. If rollDate is non-zero and stubAtEnd is False, then the rollDate
 ** is used to generate cash flow dates. First starting from roll-date we see if
 ** we can count forward an integral number of intervals to the maturity date.
@@ -76,38 +72,34 @@ TDateList* JpmcdsNewDateListExtended(
 ** Returns a new DateList on success, and NULL on failure.
 ***************************************************************************
 */
-TDateList *   JpmcdsNewDateListExtendedRoll(
-    TDate startDate,                    /* (I) Start Date */
-    TDate maturityDate,                 /* (I) Maturity Date */
-    TDate rollDate,                     /* (I) Date for roll information */
-    TDateInterval *interval,            /* (I) Increment */
-    TBoolean stubAtEnd);                 /* (I) T=Stub at end; F=Stub at beg. */
-
+TDateList *JpmcdsNewDateListExtendedRoll(
+    TDate startDate,         /* (I) Start Date */
+    TDate maturityDate,      /* (I) Maturity Date */
+    TDate rollDate,          /* (I) Date for roll information */
+    TDateInterval *interval, /* (I) Increment */
+    TBoolean stubAtEnd);     /* (I) T=Stub at end; F=Stub at beg. */
 
 /*f
 ***************************************************************************
-** Allocates a new TDateList and copies supplied dates into it from 
+** Allocates a new TDateList and copies supplied dates into it from
 ** supplied TCurve.
 **
 ** This provides a convenient way to isolate the dates of a TCurve.
 ***************************************************************************
 */
-TDateList* JpmcdsNewDateListFromTCurve
-    (TCurve     *curve);        /* (I) Given curve */
-
+TDateList *JpmcdsNewDateListFromTCurve(TCurve *curve); /* (I) Given curve */
 
 /*f
 ***************************************************************************
-** Allocates a new TDateList by calling JpmcdsNewDateList, and then removing 
+** Allocates a new TDateList by calling JpmcdsNewDateList, and then removing
 ** the startDate.
 ***************************************************************************
 */
-TDateList* JpmcdsNewPayDates
-    (TDate          startDate,          /* (I) This date is not included */
-     TDate          matDate,            /* (I) */
-     TDateInterval *payInterval,        /* (I) */
-     TBoolean       stubAtEnd);         /* (I) */
-
+TDateList *JpmcdsNewPayDates(
+    TDate startDate,            /* (I) This date is not included */
+    TDate matDate,              /* (I) */
+    TDateInterval *payInterval, /* (I) */
+    TBoolean stubAtEnd);        /* (I) */
 
 /*f
 ***************************************************************************
@@ -115,31 +107,26 @@ TDateList* JpmcdsNewPayDates
 ** datelist, using the supplied busisness day adjustment convention.
 ***************************************************************************
 */
-TDateList* JpmcdsNewDateListBusDayAdj
-(
-    TDateList *dateList,        /* (I) Unadjusted date list  */ 
-    long       badDayConv,      /* (I) See JpmcdsBusinessDay */
-    char      *holidayFile      /* (I) Holiday date file */
+TDateList *JpmcdsNewDateListBusDayAdj(
+    TDateList *dateList, /* (I) Unadjusted date list  */
+    long badDayConv,     /* (I) See JpmcdsBusinessDay */
+    char *holidayFile    /* (I) Holiday date file */
 );
-
 
 /*f
 ***************************************************************************
-** Adjusts a datelist (in-place) according to the supplied business day 
+** Adjusts a datelist (in-place) according to the supplied business day
 ** adjustment convention.
 ***************************************************************************
 */
-int JpmcdsDateListBusDayAdj
-(
-    TDateList *dateList,        /* (I/O) Date list to adjust (in-place) */ 
-    long       badDayConv,      /* (I) See JpmcdsBusinessDay */
-    char      *holidayFile      /* (I) Holiday date file */
+int JpmcdsDateListBusDayAdj(
+    TDateList *dateList, /* (I/O) Date list to adjust (in-place) */
+    long badDayConv,     /* (I) See JpmcdsBusinessDay */
+    char *holidayFile    /* (I) Holiday date file */
 );
-
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif    /* DATELIST_H */
-
+#endif /* DATELIST_H */
