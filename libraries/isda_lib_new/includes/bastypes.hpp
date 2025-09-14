@@ -42,18 +42,18 @@ struct TCurve {
 /*t
  * Defines a single fixed cashflow.
  */
-typedef struct {
+struct TCashFlow {
   TDate fDate;
   double fAmount;
-} TCashFlow;
+};
 
 /*t
  * CashFlowList is a list of CashFlows (date and amount)
  */
-typedef struct {
+struct TCashFlowList {
   int fNumItems;
-  TCashFlow *fArray;
-} TCashFlowList;
+  struct TCashFlow *fArray;
+};
 
 /*t
  * Defines dates required for one floating payment.

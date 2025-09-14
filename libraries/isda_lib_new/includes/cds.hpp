@@ -288,7 +288,7 @@ in
 ** than for an interest rate swap.
 ***************************************************************************
 */
-EXPORT TCashFlowList *JpmcdsCdsFeeLegFlows(
+EXPORT struct TCashFlowList *JpmcdsCdsFeeLegFlows(
     /** Date when protection begins. Either at start or end of day (depends
         on protectStart) */
     TDate startDate,

@@ -85,10 +85,11 @@ TDate *JpmcdsDatesFromCurve(
 ** Calculate present value of a cash flow list.
 ***************************************************************************
 */
-int JpmcdsCashFlowPV(TCashFlowList *cashFlows, /* (I) Arbitrary cashflows */
-                     struct TCurve *zeroCurve, /* (I) Zero-coupon curve */
-                     long interpType,          /* (I) For zcurve */
-                     double *thePV); /* (O) Present value of cashflows */
+int JpmcdsCashFlowPV(
+    struct TCashFlowList *cashFlows, /* (I) Arbitrary cashflows */
+    struct TCurve *zeroCurve,        /* (I) Zero-coupon curve */
+    long interpType,                 /* (I) For zcurve */
+    double *thePV);                  /* (O) Present value of cashflows */
 
 /*f
 ***************************************************************************
