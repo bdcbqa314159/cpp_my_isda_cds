@@ -22,6 +22,7 @@ set(project3 isda_test)
 # target_include_directories(${project2} PUBLIC ${includes})
 # target_link_libraries(${project2} my_dynamic_lib)
 
-add_executable(${project3} main.c)
+# add_executable(${project3} main.c)
+add_executable(${project3} main_new.c)
 target_include_directories(${project3} PUBLIC ${includes})
 target_link_libraries(${project3} isda_lib_new)
