@@ -12,6 +12,7 @@
 #define ZEROCURVE_H_
 
 #include "bastypes.hpp"
+#include "cgeneral.hpp"
 
 #ifdef __cplusplus
 extern "C" {

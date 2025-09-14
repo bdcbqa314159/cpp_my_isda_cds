@@ -12,6 +12,7 @@
 #define TCURVE_H
 
 #include "bastypes.hpp"
+#include "cgeneral.hpp"
 #include "interp.hpp"
 
 #ifdef __cplusplus

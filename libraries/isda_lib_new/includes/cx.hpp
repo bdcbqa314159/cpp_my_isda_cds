@@ -12,6 +12,7 @@
 #define _CX_H
 
 #include "bastypes.hpp"
+#include "cgeneral.hpp"
 
 #ifdef __cplusplus
 extern "C" {

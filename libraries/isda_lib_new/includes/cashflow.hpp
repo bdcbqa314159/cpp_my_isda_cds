@@ -12,6 +12,7 @@
 #define CASHFLOW_H
 
 #include "bastypes.hpp"
+#include "cgeneral.hpp"
 
 #ifdef __cplusplus
 extern "C" {
