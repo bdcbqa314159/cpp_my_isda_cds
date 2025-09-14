@@ -154,7 +154,6 @@ resources
 build_manual
 install/
 .vs
-# isda_cds_model_c_v1.8.3
-**/isda_lib_new/
 **/my_static_lib/
 **/my_dynamic_lib/
+**/isda_lib_original/
