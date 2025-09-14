@@ -19,14 +19,14 @@
 extern "C" {
 #endif
 
-typedef struct _swapDates {
+struct TSwapDates {
   TDate *adjusted;   /* Adjusted dates */
   TDate *original;   /* UNadjusted dates */
   TDate *previous;   /* Previous coupon dates */
   TBoolean *onCycle; /* T=Count fwd from Val date */
                      /* F=Count bckwd from Mat date */
   int numDates;      /* Length of all 4 arrays. */
-} TSwapDates;
+};
 
 /*f
 ***************************************************************************

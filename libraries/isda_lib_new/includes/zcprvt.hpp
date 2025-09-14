@@ -21,7 +21,7 @@
 extern "C" {
 #endif
 
-typedef struct {     /* stores curve of zero rates */
+struct ZCurve {      /* stores curve of zero rates */
   TDate valueDate;   /* base date all rates start at */
   double *rate;      /* array of rates */
   TDate *date;       /* array of dates */
@@ -30,9 +30,9 @@ typedef struct {     /* stores curve of zero rates */
   int numAlloc;      /* number of items allowed in arrays */
   long basis;        /* compounding basis: usually annual */
   long dayCountConv; /* day counting convention */
-} ZCurve;
+};
 
-typedef struct {         /* data for forward stub methods */
+struct TStubData {       /* data for forward stub methods */
   double userRate;       /* user rate: annualized rate */
   long userBasis;        /* user rate: compounding basis */
   long userDayCountConv; /* user rate: day counting conv */
@@ -40,9 +40,9 @@ typedef struct {         /* data for forward stub methods */
   double *interpRates;   /* array of rates for interping */
   int interpN;           /* number of elements for interping*/
   double rate;           /* euro-money rate (simple annual) */
-} TStubData;
+};
 
-typedef struct TInterpDataTag {     /* interpolation data type */
+struct TInterpData {                /* interpolation data type */
   TDateInterval interval;           /* linear FWDs: length of forward */
   long dayCountConv;                /*    ""   ""   day counting conv */
   long basis;                       /*    ""   ""   compounding basis */
@@ -51,7 +51,7 @@ typedef struct TInterpDataTag {     /* interpolation data type */
                                      * start,1y,2y,5y,10y,end */
   TBoolean enableGeneration;        /* enable generation of zc points
                                      * at coupon dates */
-} TInterpData;
+};
 
 /*f
 ***************************************************************************
