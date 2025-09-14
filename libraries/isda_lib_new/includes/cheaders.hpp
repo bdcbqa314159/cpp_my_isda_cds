@@ -13,12 +13,6 @@
 
 #include <stdlib.h>
 
-// #include "cdate.hpp"
-// #include "cerror.hpp"
-// #include "cfinanci.hpp"
-// #include "cgeneral.hpp"
-// #include "cmemory.hpp"
-
 #ifdef __cplusplus
 extern "C" {}
 #endif
