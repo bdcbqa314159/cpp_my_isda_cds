@@ -12,9 +12,6 @@
 #define CASHFLOW_H
 
 #include "bastypes.hpp"
-#include "busday.hpp"
-#include "ldate.hpp"
-#include "stub.hpp"
 
 #ifdef __cplusplus
 extern "C" {
