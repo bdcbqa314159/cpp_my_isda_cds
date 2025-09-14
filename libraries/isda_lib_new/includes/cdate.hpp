@@ -37,7 +37,7 @@ typedef double TDateTime;
 #define JPMCDS_WEEKS_PER_LUNAR_MONTH 4
 
 /* --------- Definition of a date interval -------------------- */
-typedef struct {
+struct TDateInterval {
   int prd;      /* number of periods from offset date                  */
   char prd_typ; /* type of periods                                     */
                 /* D - day; M - month; W - week                        */
@@ -56,7 +56,7 @@ typedef struct {
                -1 - offset is the previous date in the date array
                x - any other number is index into array of intervals.
                    the date at that location is an offset */
-} TDateInterval;
+};
 
 /*
  * SET_TDATE_INTERVAL macro.
@@ -78,10 +78,10 @@ typedef struct {
 /*t
  *  TDateList is a list of dates.
  */
-typedef struct {
+struct TDateList {
   int fNumItems;
   TDate *fArray;
-} TDateList;
+};
 
 /*t
  * TDateAdjIntvl is a time interval expressed in business
@@ -108,12 +108,12 @@ typedef struct {
 ** the last business day of the month, but this is not done
 ** automatically).
 */
-typedef struct {
+struct TDateAdjIntvl {
   TDateInterval interval; /* Must be in days if isBusDays=T */
   int isBusDays;          /* see JPMCDS_DATE_ADJ_TYPE_... constants */
   char *holidayFile;      /* Holiday file specification */
   long badDayConv;        /* Only applies if isBusDays=F */
-} TDateAdjIntvl;
+};
 
 #define JPMCDS_SET_ADJ_INTERVAL_DAYS(adjIntval, days)  \
   adjIntval.interval.prd = days;                       \

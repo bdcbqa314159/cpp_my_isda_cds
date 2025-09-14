@@ -18,7 +18,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-typedef struct {
+struct TFile {
   void *fileP;
   char *filename;
   int type;
@@ -28,7 +28,7 @@ typedef struct {
   int lastChar;         /* Make this int instead of char */
   TBoolean hasLastChar; /* to avoid problems with char/int */
   int stringBufSize;    /* conversion. */
-} TFile;
+};
 
 #ifdef __cplusplus
 }
@@ -49,12 +49,12 @@ extern "C" {
 /*
  *  Added JPMCDS_FAPPEND.  Trying to phase out JPMCDS_APPEND.
  */
-typedef enum {
+enum TMODE {
   JPMCDS_FWRITE = 1,
   JPMCDS_APPEND = 2,
   JPMCDS_FREAD = 3,
   JPMCDS_FAPPEND = 4
-} TMODE;
+};
 
 #ifndef JPMCDS_PATH_SEPARATOR
 
