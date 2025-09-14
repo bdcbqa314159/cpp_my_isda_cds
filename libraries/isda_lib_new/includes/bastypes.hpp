@@ -58,22 +58,22 @@ struct TCashFlowList {
 /*t
  * Defines dates required for one floating payment.
  */
-typedef struct _TCouponDates {
+struct TCouponDates {
   TDate resetDate;
   TDate payDate;
   TDate accrueStartDate;
   TDate accrueEndDate;
   TDate exDividendDate;
-} TCouponDates;
+};
 
 /*t
  * Defines dates needed for a list of floating payments.
  */
-typedef struct _TCouponDateList {
+struct TCouponDateList {
   int fNumItems;
   TCouponDates *fArray;
   long stubLocation;
-} TCouponDateList;
+};
 
 /*t
  * TFloatRate defines a floating rate. For example, a 5 year semi-annual
@@ -97,7 +97,7 @@ typedef struct _TCouponDateList {
  * Note that the holiday file and bad day convention in the
  * TDateAdjIntvl are used to adjust dates used to compute the rate.
  */
-typedef struct _TFloatRate {
+struct TFloatRate {
   TDateInterval matInterval; /* Time to maturity of rate */
   TDateInterval payInterval; /* Time between payments for rate */
   long dayCountConv;         /* Day count convention of rate */
@@ -105,7 +105,7 @@ typedef struct _TFloatRate {
   double spread;             /* Added to the rate  */
   long rateType;             /* JPMCDS_SIMPLE_BASIS, JPMCDS_ANNUAL_BASIS*/
   double weight;             /* Multiplied by rate */
-} TFloatRate;
+};
 
 #ifdef __cplusplus
 }
