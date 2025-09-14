@@ -1,4 +1,4 @@
-project(isda_lib_old)
+project(isda_lib_new)
 
 set(includes includes/)
 # set(sources src/my_isda_cds_lib.cpp)
