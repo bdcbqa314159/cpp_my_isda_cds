@@ -18,24 +18,24 @@ extern "C" {
 #endif
 
 /** Protection payment convention for CDS in case of default. */
-typedef enum {
+enum TProtPayConv {
   /** Protection payment is due at default */
   PROT_PAY_DEF, /* Default */
   /** Protection payment is only due at the maturity of the protection leg. */
   PROT_PAY_MAT /* Maturity */
-} TProtPayConv;
+};
 
 /** Accrual payment convention for CDS in case of default. */
-typedef enum {
+enum TAccrualPayConv {
   /** No accrual in case of default. */
   ACCRUAL_PAY_NONE, /* None */
   /** Interest since the last accrual date is due in case of default. */
   ACCRUAL_PAY_ALL /* All */
-} TAccrualPayConv;
+};
 
 /** Contingent leg (a.k.a. protection leg). Defines notional amount and
     protection start and end dates. */
-typedef struct _TContingentLeg {
+struct TContingentLeg {
   /** Start date of protection. You are protected from the end of this date. */
   TDate startDate;
   /** End date of protection. */
@@ -45,10 +45,10 @@ typedef struct _TContingentLeg {
   TProtPayConv payType;
   /** if TRUE, startDate -= 1  */
   TBoolean protectStart;
-} TContingentLeg;
+};
 
 /** Fee leg with fixed payments. */
-typedef struct _TFeeLeg {
+struct TFeeLeg {
   /** Defines array size for accStartDates, accEndDates, payDates, notionals,
    * couponRates. */
   int nbDates;
@@ -73,7 +73,7 @@ typedef struct _TFeeLeg {
   /** Denotes whether observation of defaults is at the start of the day
       or the end of the day for the accrual start and end dates. */
   TBoolean obsStartOfDay;
-} TFeeLeg;
+};
 
 /*f
 ***************************************************************************
