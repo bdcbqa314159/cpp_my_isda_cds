@@ -22,7 +22,7 @@ extern "C" {
 ** Calculates the zero price for a given date. Returns NaN for errors.
 ***************************************************************************
 */
-EXPORT double JpmcdsZeroPrice(TCurve* zeroCurve, TDate date);
+EXPORT double JpmcdsZeroPrice(struct TCurve* zeroCurve, TDate date);
 
 /*f
 ***************************************************************************
@@ -30,7 +30,7 @@ EXPORT double JpmcdsZeroPrice(TCurve* zeroCurve, TDate date);
 ** Returns NaN for errors.
 ***************************************************************************
 */
-double JpmcdsForwardZeroPrice(TCurve* zeroCurve, TDate startDate,
+double JpmcdsForwardZeroPrice(struct TCurve* zeroCurve, TDate startDate,
                               TDate maturityDate);
 
 /*f
@@ -39,7 +39,7 @@ double JpmcdsForwardZeroPrice(TCurve* zeroCurve, TDate startDate,
 ** compounded rates.
 ***************************************************************************
 */
-double JpmcdsZeroRate(TCurve* zeroCurve, TDate date);
+double JpmcdsZeroRate(struct TCurve* zeroCurve, TDate date);
 
 /*f
 ***************************************************************************

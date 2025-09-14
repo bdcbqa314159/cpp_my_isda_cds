@@ -30,7 +30,7 @@ EXPORT int JpmcdsCdsoneUpfrontCharge(
     TDate stepinDate, TDate startDate, /* CDS start date, can be in the past */
     TDate endDate, double couponRate, TBoolean payAccruedOnDefault,
     TDateInterval *dateInterval, TStubMethod *stubType, long accrueDCC,
-    long badDayConv, char *calendar, TCurve *discCurve, double oneSpread,
+    long badDayConv, char *calendar, struct TCurve *discCurve, double oneSpread,
     double recoveryRate, TBoolean payAccruedAtStart, double *upfrontCharge);
 
 /*f
@@ -45,8 +45,9 @@ EXPORT int JpmcdsCdsoneSpread(
     TDate stepinDate, TDate startDate, /* CDS start date, can be in the past */
     TDate endDate, double couponRate, TBoolean payAccruedOnDefault,
     TDateInterval *dateInterval, TStubMethod *stubType, long accrueDCC,
-    long badDayConv, char *calendar, TCurve *discCurve, double upfrontCharge,
-    double recoveryRate, TBoolean payAccruedAtStart, double *oneSpread);
+    long badDayConv, char *calendar, struct TCurve *discCurve,
+    double upfrontCharge, double recoveryRate, TBoolean payAccruedAtStart,
+    double *oneSpread);
 
 #ifdef __cplusplus
 }

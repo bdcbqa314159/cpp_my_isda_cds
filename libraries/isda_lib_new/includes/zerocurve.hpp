@@ -22,7 +22,7 @@ extern "C" {
 ** Build zero curve from money market, and swap instruments.
 ***************************************************************************
 */
-EXPORT TCurve *JpmcdsBuildIRZeroCurve(
+EXPORT struct TCurve *JpmcdsBuildIRZeroCurve(
     TDate valueDate,    /* (I) Value date                       */
     char *instrNames,   /* (I) Array of 'M' or 'S'              */
     TDate *dates,       /* (I) Array of swaps dates             */

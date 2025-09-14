@@ -58,9 +58,9 @@ int JpmcdsCdsContingentLegPV(
     /** Notional value protected */
     double notional,
     /** Interest rate discount curve - assumes flat forward interpolation */
-    TCurve *discCurve,
+    struct TCurve *discCurve,
     /** Credit clean spread curve */
-    TCurve *spreadCurve,
+    struct TCurve *spreadCurve,
     /** Assumed recovery rate in case of default */
     double recoveryRate,
     /** True => protection includes start date */
@@ -155,9 +155,9 @@ int JpmcdsCdsFeeLegPV(
         a calendar with no holidays and including weekends. */
     char *calendar,
     /** Interest rate discount curve - assumes flat forward interpolation */
-    TCurve *discCurve,
+    struct TCurve *discCurve,
     /** Credit clean spread curve */
-    TCurve *spreadCurve,
+    struct TCurve *spreadCurve,
     /** Should protection include the start date */
     TBoolean protectStart,
     /** Should the present value be computed as a clean price (removing
@@ -212,9 +212,9 @@ EXPORT int JpmcdsCdsPrice(
         a calendar with no holidays and including weekends. */
     char *calendar,
     /** Interest rate discount curve - assumes flat forward interpolation */
-    TCurve *discCurve,
+    struct TCurve *discCurve,
     /** Credit clean spread curve */
-    TCurve *spreadCurve,
+    struct TCurve *spreadCurve,
     /** Assumed recovery rate in case of default */
     double recoveryRate,
     /** Is the price expressed as a clean price (removing accrued interest) */
@@ -267,9 +267,9 @@ EXPORT int JpmcdsCdsParSpreads(
         a calendar with no holidays and including weekends. */
     char *calendar,
     /** Interest rate discount curve - assumes flat forward interpolation */
-    TCurve *discCurve,
+    struct TCurve *discCurve,
     /** Credit clean spread curve */
-    TCurve *spreadCurve,
+    struct TCurve *spreadCurve,
     /** Assumed recovery rate in case of default */
     double recoveryRate,
     /** Output - par spreads for the CDS are returned (see also isPriceClean) */
@@ -328,11 +328,11 @@ EXPORT TCashFlowList *JpmcdsCdsFeeLegFlows(
 ** than for an interest rate swap.
 ***************************************************************************
 */
-EXPORT TCurve *JpmcdsCleanSpreadCurve(
+EXPORT struct TCurve *JpmcdsCleanSpreadCurve(
     /** Risk starts at the end of today */
     TDate today,
     /** Interest rate discount curve - assumes flat forward interpolation */
-    TCurve *discCurve,
+    struct TCurve *discCurve,
     /** Effective date of the benchmark CDS */
     TDate startDate,
     /** Step in date of the benchmark CDS */

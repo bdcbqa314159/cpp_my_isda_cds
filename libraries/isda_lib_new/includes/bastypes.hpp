@@ -23,21 +23,21 @@ extern "C" {
 
 /*t
  */
-typedef struct {
+struct TRatePt {
   TDate fDate;
   double fRate;
-} TRatePt;
+};
 
 /*t
  * Holds a zero-coupon rate curve or clean spread curve.
  */
-typedef struct _TCurve {
-  int fNumItems;      /* Number of TRatePts in fArray */
-  TRatePt *fArray;    /* Dates & rates */
-  TDate fBaseDate;    /* Discount date */
-  double fBasis;      /* Number compounding periods / year */
-  long fDayCountConv; /* How the year fraction is computed */
-} TCurve;
+struct TCurve {
+  int fNumItems;          /* Number of TRatePts in fArray */
+  struct TRatePt *fArray; /* Dates & rates */
+  TDate fBaseDate;        /* Discount date */
+  double fBasis;          /* Number compounding periods / year */
+  long fDayCountConv;     /* How the year fraction is computed */
+};
 
 /*t
  * Defines a single fixed cashflow.

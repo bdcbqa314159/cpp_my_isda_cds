@@ -19,18 +19,19 @@ extern "C" {
 
 /*t
  */
-typedef TCurve *(TCurveInterpFunc)(TDateList *desiredDates, TCurve *oldCurve,
-                                   void *interpData);
+typedef struct TCurve *(TCurveInterpFunc)(TDateList *desiredDates,
+                                          struct TCurve *oldCurve,
+                                          void *interpData);
 
 /*f
 ***************************************************************************
 ** Interpolates a TCurve at a TDate using the specified interp method.
 ***************************************************************************
 */
-int JpmcdsInterpRate(TDate desiredDate, /* (I) Date to interpolate at */
-                     TCurve *curve,     /* (I) Curve with rates */
-                     long interpType,   /* (I) Type of interpolation to use */
-                     double *rate);     /* (O) Interpolated rate */
+int JpmcdsInterpRate(TDate desiredDate,    /* (I) Date to interpolate at */
+                     struct TCurve *curve, /* (I) Curve with rates */
+                     long interpType, /* (I) Type of interpolation to use */
+                     double *rate);   /* (O) Interpolated rate */
 
 /*f
 ***************************************************************************
@@ -38,10 +39,10 @@ int JpmcdsInterpRate(TDate desiredDate, /* (I) Date to interpolate at */
 ***************************************************************************
 */
 int JpmcdsInterpRateExact(
-    double desiredDate, /* (I) Date to interpolate at */
-    TCurve *curve,      /* (I) Curve with rates */
-    long interpType,    /* (I) Type of interpolation to use */
-    double *rate);      /* (O) Interpolated rate */
+    double desiredDate,   /* (I) Date to interpolate at */
+    struct TCurve *curve, /* (I) Curve with rates */
+    long interpType,      /* (I) Type of interpolation to use */
+    double *rate);        /* (O) Interpolated rate */
 
 #define JPMCDS_LINEAR_INTERP 0L
 

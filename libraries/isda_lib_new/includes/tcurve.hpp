@@ -26,10 +26,11 @@ extern "C" {
 ** Only allocates memory for the array when it is returning a valid TCurve.
 ***************************************************************************
 */
-TCurve *JpmcdsNewTCurve(TDate baseDate, /* (I) Value date */
-                        int numPts,     /* (I) Length of dates & rates */
-                        double basis, /* (I) Basis. See JpmcdsRateToDiscount */
-                        long dayCountConv); /* (I) See JpmcdsDayCountFraction */
+struct TCurve *JpmcdsNewTCurve(
+    TDate baseDate,     /* (I) Value date */
+    int numPts,         /* (I) Length of dates & rates */
+    double basis,       /* (I) Basis. See JpmcdsRateToDiscount */
+    long dayCountConv); /* (I) See JpmcdsDayCountFraction */
 
 /*f
 ***************************************************************************
@@ -41,7 +42,7 @@ TCurve *JpmcdsNewTCurve(TDate baseDate, /* (I) Value date */
 ** less than the whole range by terminating with a 1 or 0.
 ***************************************************************************
 */
-EXPORT TCurve *JpmcdsMakeTCurve(
+EXPORT struct TCurve *JpmcdsMakeTCurve(
     TDate baseDate,     /* (I) Value date */
     TDate *dates,       /* (I) Array of dates for curve */
     double *rates,      /* (I) Array of rates for dates of curve */
@@ -62,7 +63,7 @@ EXPORT TCurve *JpmcdsMakeTCurve(
 ** rates. JpmcdsMakeTCurve checks that the rates are all greater than -1.
 ***************************************************************************
 */
-TCurve *JpmcdsMakeTCurveNoRateCheck(
+struct TCurve *JpmcdsMakeTCurveNoRateCheck(
     TDate baseDate,     /* (I) Discount date  */
     TDate *dates,       /* (I) Dates in curve */
     double *rates,      /* (I) Associated rates */
@@ -76,7 +77,8 @@ TCurve *JpmcdsMakeTCurveNoRateCheck(
 ** the array on success and NULL on failure.
 ***************************************************************************
 */
-TDate *JpmcdsDatesFromCurve(TCurve *curve); /* (I) Curve to get dates from */
+TDate *JpmcdsDatesFromCurve(
+    struct TCurve *curve); /* (I) Curve to get dates from */
 
 /*f
 ***************************************************************************
@@ -84,7 +86,7 @@ TDate *JpmcdsDatesFromCurve(TCurve *curve); /* (I) Curve to get dates from */
 ***************************************************************************
 */
 int JpmcdsCashFlowPV(TCashFlowList *cashFlows, /* (I) Arbitrary cashflows */
-                     TCurve *zeroCurve,        /* (I) Zero-coupon curve */
+                     struct TCurve *zeroCurve, /* (I) Zero-coupon curve */
                      long interpType,          /* (I) For zcurve */
                      double *thePV); /* (O) Present value of cashflows */
 
@@ -93,24 +95,24 @@ int JpmcdsCashFlowPV(TCashFlowList *cashFlows, /* (I) Arbitrary cashflows */
 ** Calculate discount factor for specified date and zero curve.
 ***************************************************************************
 */
-int JpmcdsDiscountDate(TDate date,        /* (I) Date */
-                       TCurve *zeroCurve, /* (I) Zero Curve */
-                       long interpType,   /* (I) For zcurve. */
-                       double *discount); /* (O) Present Value */
+int JpmcdsDiscountDate(TDate date,               /* (I) Date */
+                       struct TCurve *zeroCurve, /* (I) Zero Curve */
+                       long interpType,          /* (I) For zcurve. */
+                       double *discount);        /* (O) Present Value */
 
 /*f
 ***************************************************************************
 ** Frees a TCurve.
 ***************************************************************************
 */
-void JpmcdsFreeTCurve(TCurve *); /* (I) TCurve to be deallocated */
+void JpmcdsFreeTCurve(struct TCurve *); /* (I) TCurve to be deallocated */
 
 /*f
 ***************************************************************************
 ** Creates a copy of the curve.
 ***************************************************************************
 */
-TCurve *JpmcdsCopyCurve(TCurve *aCurve); /* (I) */
+struct TCurve *JpmcdsCopyCurve(struct TCurve *aCurve); /* (I) */
 
 /*f
 ***************************************************************************
@@ -126,8 +128,8 @@ TCurve *JpmcdsCopyCurve(TCurve *aCurve); /* (I) */
 ** might not be based on real information.
 ***************************************************************************
 */
-int JpmcdsCurveFirstDate(TCurve *curve,   /* (I) */
-                         TDate *firstDate /* (O) */
+int JpmcdsCurveFirstDate(struct TCurve *curve, /* (I) */
+                         TDate *firstDate      /* (O) */
 );
 
 #ifdef __cplusplus

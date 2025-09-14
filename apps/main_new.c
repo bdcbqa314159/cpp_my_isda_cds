@@ -28,10 +28,10 @@
 ** Build IR zero curve.
 ***************************************************************************
 */
-TCurve* BuildExampleZeroCurve()
+struct TCurve* BuildExampleZeroCurve()
 {
     static char  *routine = "BuildExampleZeroCurve";
-    TCurve       *zc = NULL;
+    struct TCurve       *zc = NULL;
     char         *types = "MMMMMSSSSSSSSS";
     char         *expiries[14] = {"1M", "2M", "3M", "6M", "9M", "1Y", "2Y", "3Y", "4Y", "5Y", "6Y", "7Y", "8Y", "9Y"};
     TDate        *dates = NULL;
@@ -105,7 +105,7 @@ done:
 ** Calculate upfront charge.
 ***************************************************************************
 */
-double CalcUpfrontCharge(TCurve* curve, double couponRate)
+double CalcUpfrontCharge(struct TCurve* curve, double couponRate)
 {
     static char  *routine = "CalcUpfrontCharge";
     TDate         today;
@@ -180,7 +180,7 @@ int main(int argc, char** argv)
     char    version[256];
     char  **lines = NULL;
     int     i;
-    TCurve *zerocurve = NULL;
+    struct TCurve *zerocurve = NULL;
 
     if (JpmcdsVersionString(version) != SUCCESS)
         goto done;
