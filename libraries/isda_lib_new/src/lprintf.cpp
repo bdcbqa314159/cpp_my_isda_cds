@@ -88,10 +88,10 @@ int JpmcdsLocalFwrite(char *ptr, int nitems, TFile *tFile) {
 *******************************************************************************
 */
 int JpmcdsVfprintf(TFile *tFile, char *fmt, va_list arg) {
-  register int c, i, nwritten = 0;
-  register unsigned long n;
+  int c, i, nwritten = 0;
+  unsigned long n;
   double x;
-  register char *s;
+  char *s;
   char buf[BUFLEN], *digits, *t;
   char buf2[BUFLEN];
   struct format F;
@@ -322,12 +322,18 @@ int JpmcdsVfprintf(TFile *tFile, char *fmt, va_list arg) {
           i = (unsigned char)*s++;
           if (F.havePrecision && i > F.precision) i = F.precision;
         } else {
-          if (!F.havePrecision)
-            i = strlen(s);
-          else if ((t = memchr(s, '\0', F.precision)) != 0)
-            i = t - s;
-          else
-            i = F.precision;
+          if (!F.havePrecision) i = strlen(s);
+          //   else if ((t = memchr(s, '\0', F.precision)) != 0)
+          //     i = t - s;
+          //   else
+          //     i = F.precision;
+          else {
+            if (t != nullptr) {
+              i = t - s;  // Null terminator found within `F.precision`
+            } else {
+              i = F.precision;  // Truncate to `F.precision`
+            }
+          }
         }
         break;
 

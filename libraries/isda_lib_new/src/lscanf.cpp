@@ -138,9 +138,9 @@ static int localIsspace(int c) { return isspace(c); }
 int JpmcdsLvfscanf(TFile *tFile, char *fmt, va_list arg) {
   int nassigned = 0, nconverted = 0, nread = 0;
   int overflow, state;
-  register short c, base = 0, digit;
-  register long result = 0;
-  register char *s = NULL;
+  short c, base = 0, digit;
+  long result = 0;
+  char *s = NULL;
   struct format F;
   struct decrec D;
 
