@@ -1,0 +1,5 @@
+#pragma once
+#ifndef MY_ISDA_CDS_LIB_OLD_INCLUDES
+#define MY_ISDA_CDS_LIB_OLD_INCLUDES
+
+#endif  // MY_ISDA_CDS_LIB_OLD_INCLUDES
