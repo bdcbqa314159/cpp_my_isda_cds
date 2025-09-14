@@ -1,3 +1,4 @@
+# Convert all .h files to .hpp files
 for file in $(find . -type f -name "*.h"); do
     mv "$file" "${file%.h}.hpp"
 done

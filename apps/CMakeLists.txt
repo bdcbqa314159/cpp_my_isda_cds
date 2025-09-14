@@ -24,4 +24,4 @@ set(project3 isda_test)
 
 add_executable(${project3} main.c)
 target_include_directories(${project3} PUBLIC ${includes})
-target_link_libraries(${project3} isda_lib_old)
+target_link_libraries(${project3} isda_lib_new)

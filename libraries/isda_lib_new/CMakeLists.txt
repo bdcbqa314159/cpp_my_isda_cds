@@ -2,7 +2,7 @@ project(isda_lib_new)
 
 set(includes includes/)
 # set(sources src/my_isda_cds_lib.cpp)
-file(GLOB SOURCES "src/*.c" "src/*.cpp")
+file(GLOB SOURCES "src/*.cpp")
 
 
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
