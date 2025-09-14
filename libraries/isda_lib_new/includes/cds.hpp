@@ -12,6 +12,7 @@
 #define CDS_H
 
 #include "cx.hpp"
+#include "stub.hpp"
 
 #ifdef __cplusplus
 extern "C" {
