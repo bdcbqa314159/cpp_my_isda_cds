@@ -17,6 +17,7 @@
 #include "bastypes.hpp"
 #include "bsearch.hpp"
 #include "busday.hpp"
+#include "cerror.hpp"
 #include "cheaders.hpp"
 #include "convert.hpp"
 #include "date_sup.hpp"

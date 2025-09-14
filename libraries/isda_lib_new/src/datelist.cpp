@@ -14,6 +14,7 @@
 #include <string.h>
 
 #include "bastypes.hpp"
+#include "cerror.hpp"
 #include "cheaders.hpp"
 #include "convert.hpp"
 #include "date_sup.hpp"

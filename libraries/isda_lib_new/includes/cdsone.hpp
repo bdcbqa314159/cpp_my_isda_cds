@@ -11,7 +11,6 @@
 #ifndef CDSONE_H
 #define CDSONE_H
 
-#include "cx.hpp"
 #include "stub.hpp"
 
 #ifdef __cplusplus

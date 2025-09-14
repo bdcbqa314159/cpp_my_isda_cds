@@ -37,7 +37,6 @@ struct TFile {
 /* lprintf.h needs to use a TFile and so also includes this file. Therefore
  * define TFile before including lprintf.h
  */
-#include "lprintf.hpp"
 
 #ifdef __cplusplus
 extern "C" {

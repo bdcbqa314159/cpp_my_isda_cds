@@ -11,8 +11,6 @@
 #ifndef CDATE_H
 #define CDATE_H
 
-// #include "cgeneral.hpp"
-
 #ifdef __cplusplus
 extern "C" {
 #endif

@@ -13,6 +13,8 @@
 #include <math.h>
 
 #include "bastypes.hpp"
+#include "cerror.hpp"
+#include "cfinanci.hpp"
 #include "cheaders.hpp"
 #include "convert.hpp"
 #include "datelist.hpp"
