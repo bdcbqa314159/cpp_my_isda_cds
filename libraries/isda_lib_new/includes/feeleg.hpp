@@ -11,6 +11,7 @@
 #ifndef FEE_LEG_H
 #define FEE_LEG_H
 
+#include "bastypes.hpp"
 #include "cx.hpp"
 
 #ifdef __cplusplus

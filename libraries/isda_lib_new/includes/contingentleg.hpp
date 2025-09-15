@@ -11,6 +11,7 @@
 #ifndef CONTINGENT_LEG_H
 #define CONTINGENT_LEG_H
 
+#include "bastypes.hpp"
 #include "cx.hpp"
 
 #ifdef __cplusplus
@@ -29,8 +30,8 @@ extern "C" {
 */
 int JpmcdsContingentLegPV(TContingentLeg *cl, /* (I) Contingent leg */
                           TDate today, /* (I) No observations before today    */
-                          TDate valueDate,  /* (I) Value date for discounting  */
-                          TDate stepinDate, /* (I) Step-in date */
+                          TDate valueDate, /* (I) Value date for discounting  */
+                          TDate stepinDate,      /* (I) Step-in date */
                           TCurve *discountCurve, /* (I) Risk-free curve */
                           TCurve *spreadCurve,   /* (I) Spread curve   */
                           double recoveryRate,   /* (I) Recovery rate   */

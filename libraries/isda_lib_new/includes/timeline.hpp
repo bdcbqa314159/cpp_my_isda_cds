@@ -11,6 +11,7 @@
 #ifndef TIMELINE_H
 #define TIMELINE_H
 
+#include "bastypes.hpp"
 #include "cx.hpp"
 
 #ifdef __cplusplus

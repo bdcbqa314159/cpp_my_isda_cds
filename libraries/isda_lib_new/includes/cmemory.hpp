@@ -13,8 +13,6 @@
 
 #include <stdlib.h>
 
-#include "cgeneral.hpp"
-
 #ifdef __cplusplus
 extern "C" {
 #endif

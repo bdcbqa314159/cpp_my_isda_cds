@@ -12,8 +12,8 @@
 #define FLTRATE_H
 
 #include "bastypes.hpp"
-#include "cgeneral.hpp"
-#include "interp.hpp"
+// #include "cgeneral.hpp"
+// #include "interp.hpp"
 
 #ifdef __cplusplus
 extern "C" {

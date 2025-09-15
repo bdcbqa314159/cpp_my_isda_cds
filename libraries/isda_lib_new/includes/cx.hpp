@@ -11,7 +11,7 @@
 #ifndef _CX_H
 #define _CX_H
 
-#include "bastypes.hpp"
+#include "cdate.hpp"
 #include "cgeneral.hpp"
 
 #ifdef __cplusplus
