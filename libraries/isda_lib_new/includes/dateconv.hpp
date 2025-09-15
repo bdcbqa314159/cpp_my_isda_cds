@@ -12,7 +12,6 @@
 #define DATECONV_H
 
 #include "cdate.hpp"
-#include "cgeneral.hpp"
 #include "mdydate.hpp"
 
 #ifdef __cplusplus

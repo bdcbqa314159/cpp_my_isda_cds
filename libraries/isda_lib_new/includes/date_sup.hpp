@@ -12,7 +12,6 @@
 #define DATE_SUP_H
 
 #include "cdate.hpp"
-#include "cgeneral.hpp"
 
 #ifdef __cplusplus
 extern "C" {

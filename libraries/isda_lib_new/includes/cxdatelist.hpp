@@ -11,7 +11,6 @@
 #ifndef CX_DATELIST_H
 #define CX_DATELIST_H
 
-#include "datelist.hpp"
 #include "stub.hpp"
 
 #ifdef __cplusplus

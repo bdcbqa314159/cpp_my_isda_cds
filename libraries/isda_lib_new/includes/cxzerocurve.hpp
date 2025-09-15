@@ -11,7 +11,8 @@
 #ifndef CX_ZEROCURVE_H
 #define CX_ZEROCURVE_H
 
-#include "tcurve.hpp"
+#include "bastypes.hpp"
+#include "cgeneral.hpp"
 
 #ifdef __cplusplus
 extern "C" {
