@@ -12,7 +12,6 @@
 #define ZCSWDATE_H
 
 #include "badday.hpp"
-#include "bastypes.hpp"
 #include "cgeneral.hpp"
 
 #ifdef __cplusplus

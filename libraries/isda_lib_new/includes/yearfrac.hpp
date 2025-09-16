@@ -11,8 +11,6 @@
 #ifndef YEARFRAC_H
 #define YEARFRAC_H
 
-#include "bastypes.hpp"
-#include "cgeneral.hpp"
 #include "metric.hpp"
 
 #ifdef __cplusplus

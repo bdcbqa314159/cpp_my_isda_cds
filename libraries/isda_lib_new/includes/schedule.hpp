@@ -13,8 +13,6 @@
 
 #include "bastypes.hpp"
 #include "cgeneral.hpp"
-#include "convert.hpp"
-#include "ldate.hpp"
 
 #ifdef __cplusplus
 extern "C" {

@@ -14,9 +14,7 @@
 #include "badday.hpp"
 #include "bastypes.hpp"
 #include "cgeneral.hpp"
-#include "interp.hpp"
 #include "stub.hpp"
-#include "tcurve.hpp"
 
 #ifdef __cplusplus
 extern "C" {

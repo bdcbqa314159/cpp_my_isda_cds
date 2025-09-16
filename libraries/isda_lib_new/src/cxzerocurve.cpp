@@ -17,10 +17,12 @@
 #include <string.h>
 
 #include "cerror.hpp"
+#include "cfinanci.hpp"
 #include "convert.hpp"
 #include "cxbsearch.hpp"
 #include "cxdatelist.hpp"
 #include "datelist.hpp"
+#include "interp.hpp"
 #include "ldate.hpp"
 #include "macros.hpp"
 #include "tcurve.hpp"

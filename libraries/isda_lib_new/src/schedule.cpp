@@ -18,6 +18,7 @@
 #include "cashflow.hpp"
 #include "cerror.hpp"
 #include "cmemory.hpp"
+#include "convert.hpp"
 #include "date_sup.hpp"
 #include "datelist.hpp"
 #include "dtlist.hpp"

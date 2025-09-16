@@ -22,6 +22,7 @@
 #include "convert.hpp"
 #include "date_sup.hpp"
 #include "datelist.hpp"
+#include "interp.hpp"
 #include "ldate.hpp"
 #include "lintrp.hpp"
 #include "macros.hpp"

@@ -11,7 +11,8 @@
 #ifndef STUB_H
 #define STUB_H
 
-#include "yearfrac.hpp"
+#include "cdate.hpp"
+#include "cgeneral.hpp"
 
 #ifdef __cplusplus
 extern "C" {

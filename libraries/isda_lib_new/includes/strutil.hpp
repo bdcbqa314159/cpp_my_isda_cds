@@ -11,7 +11,7 @@
 #ifndef STRUTIL_H
 #define STRUTIL_H
 
-#include "cgeneral.hpp"
+#include <stdlib.h>
 
 #ifdef __cplusplus
 extern "C" {

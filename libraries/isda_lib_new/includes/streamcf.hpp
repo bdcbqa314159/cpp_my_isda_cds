@@ -12,8 +12,6 @@
 #define STREAMCF_H
 
 #include "bastypes.hpp"
-#include "cashflow.hpp"
-#include "ldate.hpp"
 #include "schedule.hpp"
 
 #ifdef __cplusplus

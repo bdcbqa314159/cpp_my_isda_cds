@@ -12,9 +12,7 @@
 #define ZR2COUP_H
 
 #include "bastypes.hpp"
-#include "cashflow.hpp"
-#include "interp.hpp"
-#include "ldate.hpp"
+#include "cgeneral.hpp"
 
 #ifdef __cplusplus
 extern "C" {
