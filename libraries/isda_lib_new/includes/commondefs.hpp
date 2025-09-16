@@ -5,26 +5,6 @@
 #include "code_cpp.hpp"
 
 EXPORT_C {
-  // from cdate.hpp
-  //   typedef long int TDate;
-
-  //   /*
-  //    * (double) value of TDate with any fractional part
-  //    * being a fraction of elapsed day.
-  //    */
-  //   typedef double TDateTime;
-
-  // /* Date constants */
-  // #define MAX_DAYS_PER_MONTH 31
-  // #define JPMCDS_MONTHS_PER_YEAR 12
-  // #define JPMCDS_MONTHS_PER_SEMI 6
-  // #define JPMCDS_MONTHS_PER_QUARTER 3
-  // #define JPMCDS_DAYS_PER_WEEK 7
-  // #define JPMCDS_DAYS_PER_YEAR 365
-  // #define JPMCDS_YEARS_PER_DAY (1. / 365.)
-  // #define JPMCDS_DAYS_PER_LUNAR_MONTH 28
-  // #define JPMCDS_WEEKS_PER_LUNAR_MONTH 4
-
   // from busday.hpp
 
   /* Bad Day conventions

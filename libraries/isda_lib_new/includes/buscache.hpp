@@ -46,10 +46,10 @@ extern "C" {
 ** particular days of the week are always holidays.
 ***************************************************************************
 */
-typedef struct _THolidayList {
+struct THolidayList {
   TDateList *dateList; /* date list of holidays */
   long weekends;       /* weekends */
-} THolidayList;
+};
 
 typedef struct _THolidayCache THolidayCache;
 
