@@ -26,3 +26,11 @@ set(project3 isda_test)
 add_executable(${project3} main_new.cpp)
 target_include_directories(${project3} PUBLIC ${includes})
 target_link_libraries(${project3} isda_lib_new)
+
+target_compile_options(${project3} PRIVATE
+    $<$<COMPILE_LANGUAGE:CXX>:
+        -Wno-logical-not-parentheses
+        -Wno-writable-strings
+        -Wno-implicit-function-declaration
+    >
+)

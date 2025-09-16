@@ -141,28 +141,18 @@ done:
 ** Can be called eight times from the same print statement, but not more.
 ***************************************************************************
 */
-char *JpmcdsFormatDate(TDate date) /* (I) */
-{
+char *JpmcdsFormatDate(TDate date) {
   static int ibuf;
 #define MAX_STR_LEN 16
-#define MAX_AT_ONCE 8 /* Must be a power of 2 */
+#define MAX_AT_ONCE 8
   static char format[MAX_AT_ONCE][MAX_STR_LEN];
   TMonthDayYear mdy;
   ibuf = (ibuf + 1) & (MAX_AT_ONCE - 1); /* Toggle buffers */
-
-  if (JpmcdsDateToMDY(date, &mdy) == FAILURE)
-    sprintf(&format[ibuf][0], "%s", "bad date");
-  else {
-    if (mdy.month < 10 && mdy.day < 10) {
-      sprintf(&format[ibuf][0], "%ld0%ld0%ld", mdy.year, mdy.month, mdy.day);
-    } else if (mdy.month < 10 && mdy.day >= 10) {
-      sprintf(&format[ibuf][0], "%ld0%ld%ld", mdy.year, mdy.month, mdy.day);
-    } else if (mdy.month >= 10 && mdy.day < 10) {
-      sprintf(&format[ibuf][0], "%ld%ld0%ld", mdy.year, mdy.month, mdy.day);
-    } else /* month && day >= 10 */
-    {
-      sprintf(&format[ibuf][0], "%ld%ld%ld", mdy.year, mdy.month, mdy.day);
-    }
+  if (JpmcdsDateToMDY(date, &mdy) == FAILURE) {
+    snprintf(&format[ibuf][0], MAX_STR_LEN, "bad date");
+  } else {
+    snprintf(&format[ibuf][0], MAX_STR_LEN, "%ld%02ld%02ld", mdy.year,
+             mdy.month, mdy.day);
   }
   return &format[ibuf][0];
 }
@@ -219,7 +209,7 @@ char *JpmcdsFormatDateInterval(TDateInterval *interval) /* (I) */
       numPeriods = interval->prd;
   }
 
-  sprintf(&format[ibuf][0], "%d%c", numPeriods, periodType);
+  snprintf(&format[ibuf][0], MAX_STR_LEN, "%d%c", numPeriods, periodType);
   return &format[ibuf][0];
 }
 

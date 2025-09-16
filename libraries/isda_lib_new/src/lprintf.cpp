@@ -16,6 +16,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <cstdio>
+
 #include "cerror.hpp"
 #include "cfileio.hpp"
 #include "cgeneral.hpp"
@@ -268,7 +270,8 @@ int JpmcdsVfprintf(TFile *tFile, char *fmt, va_list arg) {
       case 'f':
         x = va_arg(arg, double);
         if (!F.havePrecision) F.precision = JPMCDS_DEF_PRECISION;
-        sprintf(buf2, "%.*f", F.precision, x);
+        // sprintf(buf2, "%.*f", F.precision, x);
+        std::snprintf(buf2, sizeof(buf2), "%.*f", F.precision, x);
         goto floating;
 
         /*  floating-point  */
@@ -278,9 +281,12 @@ int JpmcdsVfprintf(TFile *tFile, char *fmt, va_list arg) {
         x = va_arg(arg, double);
         if (!F.havePrecision) F.precision = 6;
         if (c == 'e')
-          sprintf(buf2, "%.*e", F.precision, x);
+          // sprintf(buf2, "%.*e", F.precision, x);
+          std::snprintf(buf2, sizeof(buf2), "%.*e", F.precision, x);
         else
-          sprintf(buf2, "%.*E", F.precision, x);
+          // sprintf(buf2, "%.*E", F.precision, x);
+          std::snprintf(buf2, sizeof(buf2), "%.*E", F.precision, x);
+
         goto floating;
 
         /*  "general" notation  */
@@ -294,9 +300,11 @@ int JpmcdsVfprintf(TFile *tFile, char *fmt, va_list arg) {
           F.precision = 1;
         F.exponent = (char)(c - 2);
         if (c == 'g')
-          sprintf(buf2, "%.*g", F.precision, x);
+          // sprintf(buf2, "%.*g", F.precision, x);
+          std::snprintf(buf2, sizeof(buf2), "%.*g", F.precision, x);
         else
-          sprintf(buf2, "%.*G", F.precision, x);
+          // sprintf(buf2, "%.*G", F.precision, x);
+          std::snprintf(buf2, sizeof(buf2), "%.*G", F.precision, x);
         goto floating;
 
         /*  floating (common code)  */

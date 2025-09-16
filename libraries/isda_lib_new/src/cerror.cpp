@@ -461,7 +461,8 @@ static int JpmcdsWriteToLog(TBoolean formatted, char *format,
   char *bufp = buffer;
 
   if (formatted) {
-    vsprintf(buffer, format, parminfo);
+    // vsprintf(buffer, format, parminfo);
+    vsnprintf(buffer, sizeof(buffer), format, parminfo);
   } else {
     bufp = format;
   }
