@@ -11,11 +11,7 @@
 #ifndef LDATE_H
 #define LDATE_H
 
-// #include "busday.hpp"
-
 #include "cdate.hpp"
-// #include "dateadj.hpp"
-// #include "dateconv.hpp"
 
 #ifdef __cplusplus
 extern "C" {

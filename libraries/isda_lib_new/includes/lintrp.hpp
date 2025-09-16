@@ -11,7 +11,6 @@
 #ifndef LINTRP_H
 #define LINTRP_H
 
-#include "cgeneral.hpp"
 #include "metric.hpp"
 
 #ifdef __cplusplus

@@ -14,7 +14,6 @@
 #include <stdarg.h>
 
 #include "cfileio.hpp"
-#include "cgeneral.hpp"
 
 #ifdef __cplusplus
 extern "C" {

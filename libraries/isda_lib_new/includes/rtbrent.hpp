@@ -11,8 +11,6 @@
 #ifndef RTBRENT_H
 #define RTBRENT_H
 
-#include "cgeneral.hpp"
-
 #ifdef __cplusplus
 extern "C" {
 #endif
