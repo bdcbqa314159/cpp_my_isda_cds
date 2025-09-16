@@ -12,10 +12,7 @@
 #define GTOZC_H
 
 #include "bastypes.hpp"
-#include "cheaders.hpp"
-#include "ldate.hpp"
 #include "stub.hpp"
-#include "tcurve.hpp"
 
 #ifdef __cplusplus
 extern "C" {

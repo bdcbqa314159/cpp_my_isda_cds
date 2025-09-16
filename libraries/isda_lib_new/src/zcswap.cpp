@@ -14,6 +14,7 @@
 
 #include "badday.hpp"
 #include "bastypes.hpp"
+#include "busday.hpp"
 #include "cashflow.hpp"
 #include "cerror.hpp"
 #include "cgeneral.hpp"
@@ -31,6 +32,7 @@
 #include "tcurve.hpp"
 #include "zcprvt.hpp"
 #include "zcswdate.hpp"
+
 
 /* Defaults for JpmcdsNewCouponDatesSwap. */
 #define PAY_OFFSET 0

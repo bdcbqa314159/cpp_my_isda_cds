@@ -14,6 +14,7 @@
 
 #include "cerror.hpp"
 #include "gtozc.hpp"
+#include "ldate.hpp"
 #include "macros.hpp"
 #include "tcurve.hpp"
 

@@ -12,6 +12,7 @@
 #define SCHEDULE_H
 
 #include "bastypes.hpp"
+#include "cgeneral.hpp"
 #include "convert.hpp"
 #include "ldate.hpp"
 

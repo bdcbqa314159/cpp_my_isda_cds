@@ -13,6 +13,7 @@
 #include <math.h>
 
 #include "bastypes.hpp"
+#include "cdate.hpp"
 #include "cerror.hpp"
 #include "cgeneral.hpp"
 #include "cmemory.hpp"

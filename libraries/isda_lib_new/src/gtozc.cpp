@@ -13,6 +13,7 @@
 #include <stdlib.h>
 
 #include "bastypes.hpp"
+#include "busday.hpp"
 #include "cerror.hpp"
 #include "cgeneral.hpp"
 #include "convert.hpp"

@@ -12,6 +12,10 @@
 
 #include <math.h>
 
+#include "busday.hpp"
+#include "dateconv.hpp"
+#include "mdydate.hpp"
+
 #ifdef __cplusplus
 extern "C" {
 #endif

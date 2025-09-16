@@ -16,6 +16,7 @@
 #include "busday.hpp"
 #include "cerror.hpp"
 #include "convert.hpp"
+#include "dateconv.hpp"
 #include "ldate.hpp"
 #include "macros.hpp"
 #include "strutil.hpp"

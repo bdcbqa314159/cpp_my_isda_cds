@@ -14,6 +14,7 @@
 #include <string.h>
 
 #include "bastypes.hpp"
+#include "busday.hpp"
 #include "cerror.hpp"
 #include "cheaders.hpp"
 #include "convert.hpp"

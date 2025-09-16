@@ -14,6 +14,7 @@
 #include <string.h>
 
 #include "bastypes.hpp"
+#include "busday.hpp"
 #include "cashflow.hpp"
 #include "cerror.hpp"
 #include "cmemory.hpp"
