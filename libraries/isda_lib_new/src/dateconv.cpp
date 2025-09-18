@@ -14,8 +14,6 @@
 
 #include "cerror.hpp"
 #include "cgeneral.hpp"
-#include "convert.hpp"
-#include "macros.hpp"
 
 #define DAYS_IN_1_YEAR 365L
 #define DAYS_IN_4_YEARS 1461L
@@ -750,8 +748,9 @@ int JpmcdsMDYToDate(TMonthDayYear *mdy, /* (I) Month/Day/Year format */
 
   /* Make sure day is in range.
    */
-  if (day >= 1 && day <= 28) /*EMPTY*/; /* Guaranteed to be OK */
-                                        /* Avoid doing check below */
+  if (day >= 1 && day <= 28) /*EMPTY*/
+    ;                        /* Guaranteed to be OK */
+                             /* Avoid doing check below */
   else if (day < 1 || (isLeap ? day > leapDays[month] : day > (days[month]))) {
     JpmcdsErrMsg("%s: date %ld/%ld/%ld  not valid.\n", routine, mdy->month,
                  mdy->day, mdy->year);

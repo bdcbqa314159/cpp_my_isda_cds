@@ -14,16 +14,7 @@
 
 #include "bastypes.hpp"
 #include "cdate.hpp"
-#include "cerror.hpp"
 #include "cgeneral.hpp"
-#include "cmemory.hpp"
-#include "convert.hpp"
-#include "date_sup.hpp"
-#include "ldate.hpp"
-#include "stub.hpp"
-#include "yearfrac.hpp"
-#include "zr2coup.hpp"
-#include "zr2fwd.hpp"
 
 /*
 ***************************************************************************

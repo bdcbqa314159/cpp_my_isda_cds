@@ -15,13 +15,9 @@
 #include "bastypes.hpp"
 #include "cerror.hpp"
 #include "cfinanci.hpp"
-#include "cheaders.hpp"
 #include "convert.hpp"
-#include "datelist.hpp"
-#include "dtlist.hpp"
 #include "interp.hpp"
 #include "ldate.hpp"
-#include "lintrp.hpp"
 #include "macros.hpp"
 #include "yearfrac.hpp"
 

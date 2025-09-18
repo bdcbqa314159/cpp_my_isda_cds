@@ -12,16 +12,13 @@
 
 #include <ctype.h>
 #include <math.h>
-#include <string.h>
 
 #include "cdate.hpp"
 #include "cerror.hpp"
 #include "cgeneral.hpp"
 #include "convert.hpp"
-#include "dateconv.hpp"
 #include "ldate.hpp"
 #include "macros.hpp"
-#include "mdydate.hpp"
 
 /*
 ***************************************************************************

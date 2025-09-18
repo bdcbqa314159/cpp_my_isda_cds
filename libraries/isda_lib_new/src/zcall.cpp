@@ -13,17 +13,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "badday.hpp"
 #include "bsearch.hpp"
 #include "cerror.hpp"
 #include "cfinanci.hpp"
-#include "cmemory.hpp"
 #include "convert.hpp"
-#include "date_sup.hpp"
-#include "datelist.hpp"
 #include "interp.hpp"
 #include "ldate.hpp"
-#include "lintrp.hpp"
 #include "macros.hpp"
 #include "rtbrent.hpp"
 #include "tcurve.hpp"

@@ -14,7 +14,6 @@
 #include "cerror.hpp"
 #include "contingentleg.hpp"
 #include "cxdatelist.hpp"
-#include "cxzerocurve.hpp"
 #include "dtlist.hpp"
 #include "feeleg.hpp"
 #include "macros.hpp"

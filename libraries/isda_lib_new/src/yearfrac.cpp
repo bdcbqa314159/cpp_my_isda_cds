@@ -10,12 +10,10 @@
 
 #include "yearfrac.hpp"
 
-#include <ctype.h>
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "bastypes.hpp"
 #include "cdate.hpp"
 #include "cerror.hpp"
 #include "cgeneral.hpp"

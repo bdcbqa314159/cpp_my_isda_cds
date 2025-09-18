@@ -12,13 +12,6 @@
 
 #include <stdlib.h>
 
-#include "bastypes.hpp"
-#include "cerror.hpp"
-#include "cmemory.hpp"
-#include "convert.hpp"
-#include "date_sup.hpp"
-#include "macros.hpp"
-
 /*
 ***************************************************************************
 ** This function converts a bad day to a good one (if it's in list).

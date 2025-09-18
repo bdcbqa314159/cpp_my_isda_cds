@@ -10,17 +10,13 @@
 
 #include "schedule.hpp"
 
-#include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "busday.hpp"
-#include "cashflow.hpp"
 #include "cerror.hpp"
-#include "cmemory.hpp"
 #include "convert.hpp"
 #include "date_sup.hpp"
-#include "datelist.hpp"
 #include "dtlist.hpp"
 #include "ldate.hpp"
 #include "macros.hpp"

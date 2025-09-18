@@ -21,21 +21,15 @@ extern "C" {
 #endif
 
 #include <ctype.h>
-#include <string.h>
 
 #ifdef __cplusplus
 }
 #endif
 
-#include "bastypes.hpp"
 #include "cdate.hpp"
 #include "cerror.hpp"
 #include "cgeneral.hpp"
-#include "cmemory.hpp"
-#include "convert.hpp"
-#include "date_sup.hpp"
 #include "macros.hpp"
-#include "strutil.hpp"
 
 static int dateToMDYFast(TDate startDate,     /* (I) */
                          TMonthDayYear *mdy); /* (O) */

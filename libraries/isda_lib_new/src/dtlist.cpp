@@ -12,9 +12,7 @@
 
 #include <string.h>
 
-#include "bsearch.hpp"
 #include "cerror.hpp"
-#include "convert.hpp"
 #include "macros.hpp"
 
 /*

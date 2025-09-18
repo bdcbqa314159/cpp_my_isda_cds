@@ -14,7 +14,6 @@
 #include <math.h>
 #include <string.h>
 
-#include "bastypes.hpp"
 #include "cerror.hpp"
 #include "cgeneral.hpp"
 #include "convert.hpp"

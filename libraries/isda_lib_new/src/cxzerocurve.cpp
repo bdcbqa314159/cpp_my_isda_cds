@@ -11,22 +11,15 @@
 #include "cxzerocurve.hpp"
 
 #include <assert.h>
-#include <ctype.h>
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "cerror.hpp"
 #include "cfinanci.hpp"
-#include "convert.hpp"
 #include "cxbsearch.hpp"
-#include "cxdatelist.hpp"
-#include "datelist.hpp"
-#include "interp.hpp"
 #include "ldate.hpp"
 #include "macros.hpp"
-#include "tcurve.hpp"
-#include "zr2fwd.hpp"
 
 #define NaN sqrt(-1.0)
 

@@ -16,11 +16,8 @@
 #include "busday.hpp"
 #include "cerror.hpp"
 #include "cgeneral.hpp"
-#include "convert.hpp"
 #include "date_sup.hpp"
 #include "dateconv.hpp"
-#include "datelist.hpp"
-#include "ldate.hpp"
 #include "macros.hpp"
 #include "mdydate.hpp"
 

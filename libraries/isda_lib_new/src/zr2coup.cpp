@@ -10,7 +10,6 @@
 
 #include "zr2coup.hpp"
 
-#include <float.h>
 #include <math.h>
 #include <string.h>
 
@@ -20,10 +19,6 @@
 #include "cerror.hpp"
 #include "cgeneral.hpp"
 #include "convert.hpp"
-#include "date_sup.hpp"
-#include "datelist.hpp"
-#include "ldate.hpp"
-#include "macros.hpp"
 #include "tcurve.hpp"
 
 /*

@@ -16,13 +16,8 @@
 #include "bastypes.hpp"
 #include "busday.hpp"
 #include "cerror.hpp"
-#include "cheaders.hpp"
-#include "convert.hpp"
 #include "date_sup.hpp"
 #include "dtlist.hpp"
-#include "ldate.hpp"
-#include "macros.hpp"
-#include "yearfrac.hpp"
 
 /*
 ***************************************************************************

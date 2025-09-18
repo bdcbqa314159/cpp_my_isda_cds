@@ -18,13 +18,10 @@
 #include "cashflow.hpp"
 #include "cerror.hpp"
 #include "cgeneral.hpp"
-#include "cmemory.hpp"
 #include "convert.hpp"
 #include "date_sup.hpp"
-#include "datelist.hpp"
 #include "interp.hpp"
 #include "ldate.hpp"
-#include "lintrp.hpp"
 #include "macros.hpp"
 #include "rtbrent.hpp"
 #include "schedule.hpp"
@@ -33,7 +30,6 @@
 #include "tcurve.hpp"
 #include "zcprvt.hpp"
 #include "zcswdate.hpp"
-
 
 /* Defaults for JpmcdsNewCouponDatesSwap. */
 #define PAY_OFFSET 0

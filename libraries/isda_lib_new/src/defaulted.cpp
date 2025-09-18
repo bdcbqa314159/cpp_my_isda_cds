@@ -13,7 +13,6 @@
 #include "cds.hpp"
 #include "cerror.hpp"
 #include "ldate.hpp"
-#include "macros.hpp"
 
 EXPORT int JpmcdsDefaultAccrual(TDate tradeDate, TDate edd, TDate startDate,
                                 TDate endDate, TDateInterval *couponInterval,

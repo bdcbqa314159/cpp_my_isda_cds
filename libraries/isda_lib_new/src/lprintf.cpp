@@ -18,10 +18,8 @@
 
 #include <cstdio>
 
-#include "cerror.hpp"
 #include "cfileio.hpp"
 #include "cgeneral.hpp"
-#include "macros.hpp"
 
 #define BUFLEN 512
 

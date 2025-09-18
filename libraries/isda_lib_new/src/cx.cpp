@@ -10,12 +10,8 @@
 
 #include "cx.hpp"
 
-#include <ctype.h>
-
 #include "cerror.hpp"
-#include "convert.hpp"
 #include "macros.hpp"
-#include "tcurve.hpp"
 
 /*
 ***************************************************************************

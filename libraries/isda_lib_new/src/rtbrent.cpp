@@ -10,7 +10,7 @@
 
 #include "rtbrent.hpp"
 
-#include <ctype.h>
+// #include <ctype.h>
 #include <math.h>
 
 #include "cerror.hpp"

@@ -19,7 +19,6 @@
 #include "cerror.hpp"
 #include "cfileio.hpp"
 #include "cgeneral.hpp"
-#include "macros.hpp"
 
 /*static void clearset(int);*/
 static int testbit(int);

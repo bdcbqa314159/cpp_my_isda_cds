@@ -13,7 +13,6 @@
 #include <assert.h>
 
 #include "cerror.hpp"
-// #include "cxbsearch.hpp"
 #include "dtlist.hpp"
 #include "ldate.hpp"
 #include "macros.hpp"

@@ -8,7 +8,6 @@
  * under the terms of the ISDA CDS Standard Model Public License.
  */
 
-#include <ctype.h>
 #include <math.h>
 
 #include "bastypes.hpp"
@@ -16,15 +15,11 @@
 #include "cerror.hpp"
 #include "cfinanci.hpp"
 #include "cgeneral.hpp"
-#include "convert.hpp"
 #include "interp.hpp"
 #include "ldate.hpp"
 #include "lintrp.hpp"
 #include "macros.hpp"
-#include "strutil.hpp"
-#include "tcurve.hpp"
 #include "yearfrac.hpp"
-#include "zr2fwd.hpp"
 
 /*
 ***************************************************************************

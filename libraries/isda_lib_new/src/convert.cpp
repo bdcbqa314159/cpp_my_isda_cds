@@ -18,7 +18,6 @@
 #include "cfileio.hpp"
 #include "cgeneral.hpp"
 #include "dateconv.hpp"
-#include "macros.hpp"
 
 #define CROSSOVER_YEAR                                                 \
   60 /* If double digit year less than this, assume year belongs to 21 \

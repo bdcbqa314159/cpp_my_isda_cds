@@ -14,9 +14,7 @@
 
 #include "bsearch.hpp"
 #include "cerror.hpp"
-#include "cfileio.hpp"
 #include "dateconv.hpp"
-#include "dtlist.hpp"
 #include "macros.hpp"
 
 /*---------------------------------------------------------------------------

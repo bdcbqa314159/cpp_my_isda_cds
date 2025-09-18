@@ -12,11 +12,8 @@
 
 #include <math.h>
 
-#include "busday.hpp"
-#include "cashflow.hpp"
 #include "cerror.hpp"
 #include "convert.hpp"
-#include "cxdatelist.hpp"
 #include "cxzerocurve.hpp"
 #include "dtlist.hpp"
 #include "macros.hpp"
