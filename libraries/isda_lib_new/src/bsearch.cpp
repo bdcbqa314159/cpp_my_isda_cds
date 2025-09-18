@@ -56,15 +56,142 @@ int JpmcdsBSearchDouble(double xDesired, /* (I) X for which Y is desired */
   return SUCCESS;
 }
 
-#define SEARCH_ROUTINE_NAME JpmcdsBSearchDoubleFast
-#define CHECK_ORDER_ROUTINE_NAME JpmcdsCheckDoubleArrayOrder
 #define X_TYPE double
-#define XD_TYPE double
-#include "bsearch.inc"
-#undef SEARCH_ROUTINE_NAME
-#undef CHECK_ORDER_ROUTINE_NAME
+#define XARRAY(IDX) (*((X_TYPE *)((char *)xp + (IDX) * skip)))
+int JpmcdsBSearchDoubleFast(double xDesired, /* (I) X for which Y is desired */
+                            double *x,       /* (I) Ordered Array of X values */
+                            int skip,        /* (I) # bytes between X values */
+                            /* (=sizeof(X_TYPE) if x is an array)*/
+                            int N,       /* (I) # elements of X array */
+                            int *lo_idx, /* (O) Low index for X array */
+                            int *hi_idx  /* (O) High index for X array */
+) {
+  int count;            /* Used to check # search steps */
+  int lo;               /* Index of low estimate */
+  int hi;               /* Index of high estimate */
+  int mid = 0;          /* Index of best estimate */
+  char *xp = (char *)x; /* Ptr to x array */
+  int shiftValue;
+
+  /* Get base two log of skip, if skip is a power of 2. Otherwise 0.
+   * Was getShift()...
+   */
+  switch (skip) {
+    case 16:
+      shiftValue = 4;
+      break;
+    case 8:
+      shiftValue = 3;
+      break;
+    case 4:
+      shiftValue = 2;
+      break;
+    case 2:
+      shiftValue = 1;
+      break;
+    default:
+      shiftValue = 0;
+      break;
+  }
+
+  if (N < 2) {
+    if (N < 1) /* Less than 1 point */
+    {
+      // JpmcdsErrMsg("%s: # points (%d) must be >= 1\n",
+      //  STRING(SEARCH_ROUTINE_NAME), N);
+      return FAILURE;
+    } else /* Only 1 point */
+    {
+      *lo_idx = 0; /* Best estimate is that point */
+      *hi_idx = 0;
+      return SUCCESS;
+    }
+  }
+
+  /* Extrapolate if desired X is less than smallest in X array.
+   */
+  if (xDesired <= XARRAY(0)) {
+    *lo_idx = 0;
+    *hi_idx = 1;
+    return SUCCESS;
+  }
+
+  /* Extrapolate if desired X is greater than biggest in X array.
+   */
+  if (xDesired >= XARRAY(N - 1)) {
+    *lo_idx = N - 2;
+    *hi_idx = N - 1;
+    return SUCCESS;
+  }
+  lo = 0;
+  hi = N - 2;
+
+  /* Do binary search to find pair of x's which surround the desired
+   * X value.
+   */
+  for (count = N + 1; count > 0; count--) {
+    mid = (hi + lo) / 2;
+
+    if (xDesired < XARRAY(mid))
+      hi = mid - 1;
+
+    else if (xDesired > XARRAY(mid + 1))
+      lo = mid + 1;
+
+    else
+      break; /* Done */
+  }
+
+  if (count == 0) {
+    // JpmcdsErrMsg("%s: x array not in increasing order.\n",
+    //  STRING(SEARCH_ROUTINE_NAME));
+    return FAILURE;
+  }
+
+  /* Protect against a run of x values which are the same.
+   * Set two surrounding indices to be lo and hi.
+   * Note that there is no danger of running off the end
+   * since the only way for x[lo] = x[hi] is for both
+   * to be equal to xDesired. But from check at beginning,
+   * we know X[N-1] <> xDesired.
+   */
+  lo = mid;
+  hi = mid + 1;
+
+  while (XARRAY(lo) == XARRAY(hi)) hi++;
+
+  *lo_idx = lo;
+  *hi_idx = hi;
+
+  return SUCCESS;
+}
+#undef XARRAY
 #undef X_TYPE
-#undef XD_TYPE
+
+int JpmcdsCheckDoubleArrayOrder(char *routine, /* (I) For error messages only */
+                                double *x, /* (I) Ordered Array of X values */
+                                int skip,  /* (I) # bytes between X values */
+                                /* (=sizeof(double ) if x is an array)*/
+                                int N /* (I) # elements of X array */
+) {
+  int idx;
+  double *cur;
+  double *nxt;
+
+  nxt = x;
+
+  for (idx = 0; idx < N - 1; idx++) {
+    cur = nxt;
+    nxt = (double *)((char *)cur + skip);
+    if (*cur >= *nxt) {
+      // JpmcdsErrMsg("%s: Domain array element %d (%f) <= element %d (%f).\n",
+      //  routine, idx + 1, (double)(*nxt), idx, (double)(*cur));
+      return FAILURE;
+    }
+  }
+
+  return SUCCESS;
+}
 
 /*
 ***************************************************************************
@@ -75,9 +202,10 @@ int JpmcdsBSearchDouble(double xDesired, /* (I) X for which Y is desired */
 ** Normally checks that the array is in sequence. This slows the function
 ** down to a linear search + binary search. You can either call
 ** JpmcdsBSearchCheckOrder to turn this checking off (and back on again), or
-** else call JpmcdsBSearchLongFast.
+** else call JpmcdsBSearchLongFast).
 ***************************************************************************
 */
+
 int JpmcdsBSearchLong(double xDesired, /* (I) X for which Y is desired */
                       long *x,         /* (I) Ordered Array of X values */
                       int skip,        /* (I) # bytes between X values */
@@ -94,23 +222,150 @@ int JpmcdsBSearchLong(double xDesired, /* (I) X for which Y is desired */
   }
 
   if (JpmcdsBSearchLongFast(xDesired, x, skip, N, lo_idx, hi_idx) != SUCCESS) {
-    JpmcdsErrMsg("%s: Failed.\n", routine);
+    // JpmcdsErrMsg("%s: Failed.\n", routine);
     return FAILURE;
   }
 
   return SUCCESS;
 }
 
-/* Define another binary routine with the following types. */
-#define SEARCH_ROUTINE_NAME JpmcdsBSearchLongFast
-#define CHECK_ORDER_ROUTINE_NAME JpmcdsCheckLongArrayOrder
 #define X_TYPE long
-#define XD_TYPE double
-#include "bsearch.inc"
-#undef SEARCH_ROUTINE_NAME
-#undef CHECK_ORDER_ROUTINE_NAME
+#define XARRAY(IDX) (*((X_TYPE *)((char *)xp + (IDX) * skip)))
+int JpmcdsBSearchLongFast(long xDesired, /* (I) X for which Y is desired */
+                          long *x,       /* (I) Ordered Array of X values */
+                          int skip,      /* (I) # bytes between X values */
+                          /* (=sizeof(X_TYPE) if x is an array)*/
+                          int N,       /* (I) # elements of X array */
+                          int *lo_idx, /* (O) Low index for X array */
+                          int *hi_idx  /* (O) High index for X array */
+) {
+  int count;            /* Used to check # search steps */
+  int lo;               /* Index of low estimate */
+  int hi;               /* Index of high estimate */
+  int mid = 0;          /* Index of best estimate */
+  char *xp = (char *)x; /* Ptr to x array */
+  int shiftValue;
+
+  /* Get base two log of skip, if skip is a power of 2. Otherwise 0.
+   * Was getShift()...
+   */
+  switch (skip) {
+    case 16:
+      shiftValue = 4;
+      break;
+    case 8:
+      shiftValue = 3;
+      break;
+    case 4:
+      shiftValue = 2;
+      break;
+    case 2:
+      shiftValue = 1;
+      break;
+    default:
+      shiftValue = 0;
+      break;
+  }
+
+  if (N < 2) {
+    if (N < 1) /* Less than 1 point */
+    {
+      // JpmcdsErrMsg("%s: # points (%d) must be >= 1\n",
+      //  STRING(SEARCH_ROUTINE_NAME), N);
+      return FAILURE;
+    } else /* Only 1 point */
+    {
+      *lo_idx = 0; /* Best estimate is that point */
+      *hi_idx = 0;
+      return SUCCESS;
+    }
+  }
+
+  /* Extrapolate if desired X is less than smallest in X array.
+   */
+  if (xDesired <= XARRAY(0)) {
+    *lo_idx = 0;
+    *hi_idx = 1;
+    return SUCCESS;
+  }
+
+  /* Extrapolate if desired X is greater than biggest in X array.
+   */
+  if (xDesired >= XARRAY(N - 1)) {
+    *lo_idx = N - 2;
+    *hi_idx = N - 1;
+    return SUCCESS;
+  }
+  lo = 0;
+  hi = N - 2;
+
+  /* Do binary search to find pair of x's which surround the desired
+   * X value.
+   */
+  for (count = N + 1; count > 0; count--) {
+    mid = (hi + lo) / 2;
+
+    if (xDesired < XARRAY(mid))
+      hi = mid - 1;
+
+    else if (xDesired > XARRAY(mid + 1))
+      lo = mid + 1;
+
+    else
+      break; /* Done */
+  }
+
+  if (count == 0) {
+    // JpmcdsErrMsg("%s: x array not in increasing order.\n",
+    //  STRING(SEARCH_ROUTINE_NAME));
+    return FAILURE;
+  }
+
+  /* Protect against a run of x values which are the same.
+   * Set two surrounding indices to be lo and hi.
+   * Note that there is no danger of running off the end
+   * since the only way for x[lo] = x[hi] is for both
+   * to be equal to xDesired. But from check at beginning,
+   * we know X[N-1] <> xDesired.
+   */
+  lo = mid;
+  hi = mid + 1;
+
+  while (XARRAY(lo) == XARRAY(hi)) hi++;
+
+  *lo_idx = lo;
+  *hi_idx = hi;
+
+  return SUCCESS;
+}
+#undef XARRAY
 #undef X_TYPE
-#undef XD_TYPE
+
+int JpmcdsCheckLongArrayOrder(char *routine, /* (I) For error messages only */
+                              long *x,       /* (I) Ordered Array of X values */
+                              int skip,      /* (I) # bytes between X values */
+                              /* (=sizeof(long) if x is an array)*/
+                              int N /* (I) # elements of X array */
+) {
+  int idx;
+  long *cur;
+  long *nxt;
+
+  nxt = x;
+
+  for (idx = 0; idx < N - 1; idx++) {
+    cur = nxt;
+    nxt = (long *)((char *)cur + skip);
+    if (*cur >= *nxt) {
+      // JpmcdsErrMsg("%s: Domain array element %d (%f) <= element %d
+      //  (%f).\n",
+      //               routine, idx + 1, (double)(*nxt), idx, (double)(*cur));
+      return FAILURE;
+    }
+  }
+
+  return SUCCESS;
+}
 
 TBoolean JpmcdsBSearchCheckOrder(
     TBoolean

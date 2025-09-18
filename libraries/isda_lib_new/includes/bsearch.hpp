@@ -16,7 +16,6 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
 /*f
  ***************************************************************************
  ** Binary search through an array. This can be an array of doubles (set
@@ -32,10 +31,10 @@ extern "C" {
 int JpmcdsBSearchDouble(double xDesired, /* (I) X for which Y is desired */
                         double *x,       /* (I) Ordered Array of X values */
                         int skip,        /* (I) # bytes between X values */
-                                         /* (=sizeof(X_TYPE) if x is an array)*/
-                        int N,           /* (I) # elements of X array */
-                        int *lo_idx,     /* (O) Low index for X array */
-                        int *hi_idx);    /* (O) High index for X array */
+                        /* (=sizeof(X_TYPE) if x is an array)*/
+                        int N,        /* (I) # elements of X array */
+                        int *lo_idx,  /* (O) Low index for X array */
+                        int *hi_idx); /* (O) High index for X array */
 
 /*f
 ***************************************************************************
@@ -97,9 +96,9 @@ int JpmcdsBSearchLong(double xDesired, /* (I) X for which Y is desired */
 ** Assumes that the array is in sequence.
 ***************************************************************************
 */
-int JpmcdsBSearchLongFast(double xDesired, /* (I) X for which Y is desired */
-                          long *x,         /* (I) Ordered Array of X values */
-                          int skip,        /* (I) # bytes between X values */
+int JpmcdsBSearchLongFast(long xDesired, /* (I) X for which Y is desired */
+                          long *x,       /* (I) Ordered Array of X values */
+                          int skip,      /* (I) # bytes between X values */
                           /* (=sizeof(X_TYPE) if x is an array)*/
                           int N,        /* (I) # elements of X array */
                           int *lo_idx,  /* (O) Low index for X array */
@@ -124,7 +123,8 @@ typedef double (*TCompareFunc)(const void *p1, const void *p2);
 
 /*f
 ***************************************************************************
-** Sets flag indicating whether to check that input Array of X vals is in order
+** Sets flag indicating whether to check that input Array of X vals is in
+*order
 ** The default state is TRUE (check IS performed).
 ** JpmcdsBSearchCheckOrder() returns state before it is switched to
 *'doCheckOrder'
